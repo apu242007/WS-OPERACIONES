@@ -223,12 +223,12 @@ export const FacilityInspectionForm: React.FC<Props> = ({ initialData, onSave, o
                       <div className="flex w-full sm:contents border-t sm:border-t-0 border-gray-200">
                           {/* SI */}
                           <div 
-                            className="flex-1 sm:col-span-1 sm:border-r border-black p-2 sm:p-0 flex items-center justify-center cursor-pointer hover:bg-green-50 transition-colors"
+                            className="flex-1 sm:col-span-1 sm:border-r border-black p-2 flex items-center justify-center cursor-pointer hover:bg-green-50 transition-colors"
                             onClick={() => handleRowChange(row.id, 'status', row.status === 'SI' ? null : 'SI')}
                           >
                              <div className="flex items-center gap-2 sm:block">
                                 <span className="sm:hidden text-xs font-bold text-gray-500">SI</span>
-                                <div className={`w-6 h-6 sm:w-full sm:h-full flex items-center justify-center border rounded sm:border-0 ${row.status === 'SI' ? 'bg-black text-white sm:text-black sm:bg-transparent font-bold' : ''}`}>
+                                <div className={`w-6 h-6 sm:w-5 sm:h-5 flex items-center justify-center border rounded ${row.status === 'SI' ? 'bg-black text-white sm:text-black sm:bg-transparent font-bold' : ''}`}>
                                    {row.status === 'SI' && <span className="sm:inline hidden">X</span>}
                                    {row.status === 'SI' && <span className="sm:hidden inline">✓</span>}
                                 </div>
@@ -237,12 +237,12 @@ export const FacilityInspectionForm: React.FC<Props> = ({ initialData, onSave, o
 
                           {/* NO */}
                           <div 
-                            className="flex-1 sm:col-span-1 sm:border-r border-black p-2 sm:p-0 flex items-center justify-center cursor-pointer hover:bg-red-50 transition-colors"
+                            className="flex-1 sm:col-span-1 sm:border-r border-black p-2 flex items-center justify-center cursor-pointer hover:bg-red-50 transition-colors"
                             onClick={() => handleRowChange(row.id, 'status', row.status === 'NO' ? null : 'NO')}
                           >
                              <div className="flex items-center gap-2 sm:block">
                                 <span className="sm:hidden text-xs font-bold text-gray-500">NO</span>
-                                <div className={`w-6 h-6 sm:w-full sm:h-full flex items-center justify-center border rounded sm:border-0 ${row.status === 'NO' ? 'bg-black text-white sm:text-black sm:bg-transparent font-bold' : ''}`}>
+                                <div className={`w-6 h-6 sm:w-5 sm:h-5 flex items-center justify-center border rounded ${row.status === 'NO' ? 'bg-black text-white sm:text-black sm:bg-transparent font-bold' : ''}`}>
                                    {row.status === 'NO' && <span className="sm:inline hidden">X</span>}
                                    {row.status === 'NO' && <span className="sm:hidden inline">✕</span>}
                                 </div>
@@ -251,12 +251,12 @@ export const FacilityInspectionForm: React.FC<Props> = ({ initialData, onSave, o
 
                           {/* NA */}
                           <div 
-                            className="flex-1 sm:col-span-1 sm:border-r border-black p-2 sm:p-0 flex items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors"
+                            className="flex-1 sm:col-span-1 sm:border-r border-black p-2 flex items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors"
                             onClick={() => handleRowChange(row.id, 'status', row.status === 'NA' ? null : 'NA')}
                           >
                              <div className="flex items-center gap-2 sm:block">
                                 <span className="sm:hidden text-xs font-bold text-gray-500">N/A</span>
-                                <div className={`w-6 h-6 sm:w-full sm:h-full flex items-center justify-center border rounded sm:border-0 ${row.status === 'NA' ? 'bg-black text-white sm:text-black sm:bg-transparent font-bold' : ''}`}>
+                                <div className={`w-6 h-6 sm:w-5 sm:h-5 flex items-center justify-center border rounded ${row.status === 'NA' ? 'bg-black text-white sm:text-black sm:bg-transparent font-bold' : ''}`}>
                                    {row.status === 'NA' && <span className="sm:inline hidden">X</span>}
                                    {row.status === 'NA' && <span className="sm:hidden inline">-</span>}
                                 </div>

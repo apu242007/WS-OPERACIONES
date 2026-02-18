@@ -242,13 +242,13 @@ export const ForkliftLiftingPlanForm: React.FC<Props> = ({ initialData, onSave, 
               {checklist.map(item => (
                  <div key={item.id} className="flex border-b border-gray-200 last:border-b-0 hover:bg-gray-50 items-center min-h-[40px] sm:min-h-[30px]">
                     <div className="flex-1 p-2 leading-tight">{item.question}</div>
-                    <div className={`w-10 border-l border-gray-200 h-full flex items-center justify-center cursor-pointer ${item.status === 'SI' ? 'bg-black text-white font-bold' : 'hover:bg-gray-100'}`} onClick={() => handleChecklistChange(item.id, 'SI')}>
+                    <div className={`w-10 border-l border-gray-200 min-h-[36px] flex items-center justify-center cursor-pointer ${item.status === 'SI' ? 'bg-black text-white font-bold' : 'hover:bg-gray-100'}`} onClick={() => handleChecklistChange(item.id, 'SI')}>
                       {item.status === 'SI' && 'X'}
                     </div>
-                    <div className={`w-10 border-l border-gray-200 h-full flex items-center justify-center cursor-pointer ${item.status === 'NO' ? 'bg-black text-white font-bold' : 'hover:bg-gray-100'}`} onClick={() => handleChecklistChange(item.id, 'NO')}>
+                    <div className={`w-10 border-l border-gray-200 min-h-[36px] flex items-center justify-center cursor-pointer ${item.status === 'NO' ? 'bg-black text-white font-bold' : 'hover:bg-gray-100'}`} onClick={() => handleChecklistChange(item.id, 'NO')}>
                       {item.status === 'NO' && 'X'}
                     </div>
-                    <div className={`w-10 border-l border-gray-200 h-full flex items-center justify-center cursor-pointer ${item.status === 'NA' ? 'bg-black text-white font-bold' : 'hover:bg-gray-100'}`} onClick={() => handleChecklistChange(item.id, 'NA')}>
+                    <div className={`w-10 border-l border-gray-200 min-h-[36px] flex items-center justify-center cursor-pointer ${item.status === 'NA' ? 'bg-black text-white font-bold' : 'hover:bg-gray-100'}`} onClick={() => handleChecklistChange(item.id, 'NA')}>
                       {item.status === 'NA' && 'X'}
                     </div>
                  </div>
