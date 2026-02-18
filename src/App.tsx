@@ -572,23 +572,30 @@ const AppContent = () => {
           <button onClick={handleStartNewINDControl} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Planilla IND</button>
           <button onClick={handleStartNewInertia} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Calculo Inercia</button>
           <button onClick={handleStartNewMaintenance} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Mantenimiento</button>
+          <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-4 mb-2 px-2">📋 Reportes Operativos</div>
           <button onClick={handleStartNewOilChange} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Cambio Aceite y Filtros</button>
           <button onClick={handleStartNewOutsourced} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Control Tercerizados</button>
           <button onClick={handleStartNewSwabbing} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Inf. Pistoneo</button>
+          <button onClick={handleStartNewQHSE} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Inf. Mensual QHSE</button>
+          <button onClick={handleStartNewMaintenance} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Mantenimiento</button>
           <button onClick={handleStartNewThickness} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Medición Espesores</button>
           <button onClick={handleStartNewToolMovement} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Mov. Herramientas</button>
+          <button onClick={handleStartNewDaily} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Parte Diario</button>
+          <button onClick={handleStartNewINDControl} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Planilla IND</button>
+          <button onClick={handleStartNewWellFilling} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Planilla Llenado Pozo</button>
+          <button onClick={handleStartNewTubingMeasurement} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Planilla Medición Tubing</button>
           <button onClick={handleStartNewTorque} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Registro de Torque</button>
           <button onClick={handleStartNewTowerPressure} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Reg. Presiones Torre</button>
-          <button onClick={handleStartNewTubingMeasurement} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Planilla Medición Tubing</button>
-          <button onClick={handleStartNewWellFilling} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Planilla Llenado Pozo</button>
+          <button onClick={handleStartNewCableWork} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Trab. Cable</button>
+          <button onClick={handleStartNewInertia} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Calculo Inercia</button>
 
           <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-4 mb-2 px-2">✅ Checklists</div>
           <button onClick={handleStartNewBOPConnection} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Conexión de BOP</button>
-          <button onClick={handleStartNewElectrical} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Check-List Eléctrico</button>
-          <button onClick={handleStartNewElectricalTool} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Check-List Herr. Eléctricas</button>
           <button onClick={handleStartNewFBUChecklist} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Check List FBU</button>
           <button onClick={handleStartNewFlareChecklist} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Check List Flare Móvil</button>
           <button onClick={handleStartNewMechanicalChecklist} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Check-List Mecánico</button>
+          <button onClick={handleStartNewElectrical} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Check-List Eléctrico</button>
+          <button onClick={handleStartNewElectricalTool} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Check-List Herr. Eléctricas</button>
           <button onClick={handleStartNewPreAssemblyChecklist} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Checklist Pre-Montaje</button>
           <button onClick={handleStartNewPullingChecklist} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Check Pulling</button>
           <button onClick={handleStartNewTransportChecklist} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Check Transp.</button>
@@ -596,32 +603,32 @@ const AppContent = () => {
           <button onClick={handleStartNewWorkoverChecklist} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Check Workover</button>
 
           <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-4 mb-2 px-2">🔍 Inspecciones</div>
-          <button onClick={handleStartNewDailyInspectionCatI} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Insp. Visual Diaria (Cat I)</button>
+          <button onClick={handleStartNewStilsonControl} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Control Stilsons</button>
           <button onClick={handleStartNewDroppedObjects} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Check Caída Objetos</button>
-          <button onClick={handleStartNewFacilityInspection} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Insp. Instalaciones</button>
           <button onClick={handleStartNewFirstAid} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Insp. Botiquín</button>
+          <button onClick={handleStartNewSlingInspection} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Insp. Eslingas</button>
+          <button onClick={handleStartNewFacilityInspection} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Insp. Instalaciones</button>
+          <button onClick={handleStartNewPlatform} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Insp. Plataforma Elevadora</button>
+          <button onClick={handleStartNewStilson} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Insp. Stilson</button>
+          <button onClick={handleStartNewDailyInspectionCatI} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Insp. Visual Diaria (Cat I)</button>
           <button onClick={handleStartNewForklift} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Inspección Montacargas</button>
           <button onClick={handleStartNewLiftingPlan} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Plan de Izaje Montacarga</button>
-          <button onClick={handleStartNewPlatform} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Insp. Plataforma Elevadora</button>
-          <button onClick={handleStartNewSlingInspection} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Insp. Eslingas</button>
-          <button onClick={handleStartNewStilson} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Insp. Stilson</button>
-          <button onClick={handleStartNewStilsonControl} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Control Stilsons</button>
 
           <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-4 mb-2 px-2">⚠️ QHSE / Seguridad</div>
-          <button onClick={handleStartNewAccumulatorTest} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Prueba de Acumulador</button>
           <button onClick={handleStartNewATS} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ ATS</button>
           <button onClick={handleStartNewBumpTest} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Bump Test Multigas</button>
-          <button onClick={handleStartNewCircuitBreaker} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Prueba Disyuntores</button>
           <button onClick={handleStartNewEmergencyDrill} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Simulacro de Emergencia</button>
-          <button onClick={handleStartNewFoam} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Sist. Espumigeno</button>
-          <button onClick={handleStartNewFoamTest} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Prueba Espumígeno</button>
           <button onClick={handleStartNewIPCR} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Identificación Peligros IPCR</button>
           <button onClick={handleStartNewMastAssemblyRoles} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Roles Montaje Mástil</button>
-          <button onClick={handleStartNewQHSE} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Inf. Mensual QHSE</button>
           <button onClick={handleStartNewShiftChange} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Reunion C. Turno</button>
+          <button onClick={handleStartNewFoam} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Sist. Espumigeno</button>
+          <button onClick={handleStartNewAccumulatorTest} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Prueba de Acumulador</button>
+          <button onClick={handleStartNewCircuitBreaker} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Prueba Disyuntores</button>
+          <button onClick={handleStartNewFoamTest} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Prueba Espumígeno</button>
 
           <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-4 mb-2 px-2">📊 Registros / Admin</div>
           <button onClick={handleStartNewCustomerPropertyCustody} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Custodia Propiedad del Cliente</button>
+          <button onClick={handleStartNewPerformanceEvaluation} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Evaluación de Desempeño</button>
           <button onClick={handleStartNewLocationHandover} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Recibo y Entrega Locación</button>
           <button onClick={handleStartNewManagerialVisit} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Visita Gerencial</button>
           <button onClick={handleStartNewPerformanceEvaluation} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Evaluación de Desempeño</button>
