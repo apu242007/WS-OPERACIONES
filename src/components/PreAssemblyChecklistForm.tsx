@@ -146,24 +146,21 @@ export const PreAssemblyChecklistForm: React.FC<Props> = ({ initialData, onSave,
                  {item.question}
               </div>
               
-              {/* Mobile Actions */}
+              {/* SI / NO */}
               <div className="flex w-full sm:contents border-t sm:border-t-0 border-gray-200">
-                  {/* SI Checkbox */}
-                  <div 
-                    className={`flex-1 sm:col-span-1 border-r border-black p-2 sm:p-0 flex items-center justify-center cursor-pointer transition-colors ${item.status === 'SI' ? 'bg-black text-white font-bold' : 'hover:bg-gray-100'}`}
+                  <div
+                    className={`flex-1 sm:col-span-1 border-r border-black p-2 flex items-center justify-center cursor-pointer transition-colors min-h-[40px] ${item.status === 'SI' ? 'bg-green-600 text-white font-bold' : 'hover:bg-green-50'}`}
                     onClick={() => handleItemChange(item.id, 'status', item.status === 'SI' ? null : 'SI')}
                   >
-                     <span className="sm:hidden text-xs font-bold mr-2 text-gray-500">SI</span>
-                     {item.status === 'SI' && 'X'}
+                     <span className="sm:hidden text-xs font-bold mr-1 text-gray-400">SI</span>
+                     {item.status === 'SI' ? '✓' : <span className="hidden sm:block text-gray-300">·</span>}
                   </div>
-
-                  {/* NO Checkbox */}
-                  <div 
-                    className={`flex-1 sm:col-span-1 sm:border-r border-black p-2 sm:p-0 flex items-center justify-center cursor-pointer transition-colors ${item.status === 'NO' ? 'bg-black text-white font-bold' : 'hover:bg-gray-100'}`}
+                  <div
+                    className={`flex-1 sm:col-span-1 sm:border-r border-black p-2 flex items-center justify-center cursor-pointer transition-colors min-h-[40px] ${item.status === 'NO' ? 'bg-red-600 text-white font-bold' : 'hover:bg-red-50'}`}
                     onClick={() => handleItemChange(item.id, 'status', item.status === 'NO' ? null : 'NO')}
                   >
-                     <span className="sm:hidden text-xs font-bold mr-2 text-gray-500">NO</span>
-                     {item.status === 'NO' && 'X'}
+                     <span className="sm:hidden text-xs font-bold mr-1 text-gray-400">NO</span>
+                     {item.status === 'NO' ? '✕' : <span className="hidden sm:block text-gray-300">·</span>}
                   </div>
               </div>
 
