@@ -106,6 +106,262 @@ const usoOcupacion: { uso: string; m2: number }[] = [
   { uso: 'm) Depósitos', m2: 30 },
 ];
 
+// ── TABLA 1: Carga de fuego por tipo de local (kg madera/m²) ──────────────────
+const tabla1: { destino: string; carga: number }[] = [
+  { destino: 'Dormitorio (placard incluido)', carga: 24.4 },
+  { destino: 'Comedor', carga: 16.6 },
+  { destino: 'Pasillos', carga: 4.9 },
+  { destino: 'Cocina', carga: 5.9 },
+  { destino: 'Sala de estar', carga: 19.0 },
+  { destino: 'Garaje', carga: 31.2 },
+  { destino: 'Guardarropa (2,7 m² promedio)', carga: 24.9 },
+  { destino: 'Ropero (1,5 m² promedio)', carga: 57.1 },
+  { destino: 'Placard cocina (1,5 m²)', carga: 19.5 },
+  { destino: 'Oficina', carga: 21.8 },
+  { destino: 'Oficina de recepción', carga: 12.2 },
+  { destino: 'Oficina de ficheros', carga: 35.9 },
+  { destino: 'Clasificación de documentos', carga: 202.6 },
+  { destino: 'Oficina jurídica', carga: 82.5 },
+  { destino: 'Centro de documentación', carga: 122.6 },
+];
+
+// ── TABLA 2: Depósitos y establecimientos (Mcal/m²) ──────────────────────────
+const tabla2: { destino: string; mcal: number; categoria: string }[] = [
+  // 1) Depósitos
+  { destino: 'Abonos artificiales', mcal: 40, categoria: 'Depósito' },
+  { destino: 'Acumuladores', mcal: 200, categoria: 'Depósito' },
+  { destino: 'Aceites en tambores', mcal: 4500, categoria: 'Depósito' },
+  { destino: 'Alimentos', mcal: 200, categoria: 'Depósito' },
+  { destino: 'Alquitrán de hulla', mcal: 800, categoria: 'Depósito' },
+  { destino: 'Algodón de fardos', mcal: 300, categoria: 'Depósito' },
+  { destino: 'Aparatos eléctricos', mcal: 40, categoria: 'Depósito' },
+  { destino: 'Archivos de documentos', mcal: 400, categoria: 'Depósito' },
+  { destino: 'Artículos de odontología', mcal: 80, categoria: 'Depósito' },
+  { destino: 'Artículos de madera', mcal: 300, categoria: 'Depósito' },
+  { destino: 'Asfalto', mcal: 800, categoria: 'Depósito' },
+  { destino: 'Autos, partes de', mcal: 40, categoria: 'Depósito' },
+  { destino: 'Azúcar', mcal: 2000, categoria: 'Depósito' },
+  { destino: 'Vendas', mcal: 200, categoria: 'Depósito' },
+  { destino: 'Bobinas de madera', mcal: 120, categoria: 'Depósito' },
+  { destino: 'Bolsas de yute', mcal: 180, categoria: 'Depósito' },
+  { destino: 'Bolsas de fibra sintética', mcal: 6000, categoria: 'Depósito' },
+  { destino: 'Bolsas de papel', mcal: 3000, categoria: 'Depósito' },
+  { destino: 'Barnices y afines', mcal: 600, categoria: 'Depósito' },
+  { destino: 'Cables en bobinas de madera', mcal: 150, categoria: 'Depósito' },
+  { destino: 'Café', mcal: 700, categoria: 'Depósito' },
+  { destino: 'Caucho en bruto', mcal: 6800, categoria: 'Depósito' },
+  { destino: 'Caucho, espuma de', mcal: 600, categoria: 'Depósito' },
+  { destino: 'Caucho, objeto de', mcal: 1200, categoria: 'Depósito' },
+  { destino: 'Cáñamo', mcal: 300, categoria: 'Depósito' },
+  { destino: 'Cartón impregnado', mcal: 500, categoria: 'Depósito' },
+  { destino: 'Cartón en hojas apiladas', mcal: 1000, categoria: 'Depósito' },
+  { destino: 'Cartón, objeto de', mcal: 100, categoria: 'Depósito' },
+  { destino: 'Cartón ondulado', mcal: 300, categoria: 'Depósito' },
+  { destino: 'Celuloide', mcal: 800, categoria: 'Depósito' },
+  { destino: 'Cereales en bolsas', mcal: 1600, categoria: 'Depósito' },
+  { destino: 'Cereales en silos', mcal: 3200, categoria: 'Depósito' },
+  { destino: 'Carbón', mcal: 2500, categoria: 'Depósito' },
+  { destino: 'Chocolate', mcal: 800, categoria: 'Depósito' },
+  { destino: 'Cigarrillos', mcal: 600, categoria: 'Depósito' },
+  { destino: 'Ceras', mcal: 800, categoria: 'Depósito' },
+  { destino: 'Ceras para pisos', mcal: 1200, categoria: 'Depósito' },
+  { destino: 'Colas', mcal: 800, categoria: 'Depósito' },
+  { destino: 'Canastos de mimbre', mcal: 40, categoria: 'Depósito' },
+  { destino: 'Cordelería', mcal: 150, categoria: 'Depósito' },
+  { destino: 'Colchones', mcal: 120, categoria: 'Depósito' },
+  { destino: 'Cosmética, artículos de', mcal: 120, categoria: 'Depósito' },
+  { destino: 'Crin animal', mcal: 150, categoria: 'Depósito' },
+  { destino: 'Corcho', mcal: 200, categoria: 'Depósito' },
+  { destino: 'Cuero', mcal: 400, categoria: 'Depósito' },
+  { destino: 'Cuero, objetos de', mcal: 150, categoria: 'Depósito' },
+  { destino: 'Cuero sintético', mcal: 400, categoria: 'Depósito' },
+  { destino: 'Cuero sintético, objetos de', mcal: 200, categoria: 'Depósito' },
+  { destino: 'Depósito de mercaderías', mcal: 100, categoria: 'Depósito' },
+  { destino: 'Desechos de madera', mcal: 600, categoria: 'Depósito' },
+  { destino: 'Desechos de trapos', mcal: 800, categoria: 'Depósito' },
+  { destino: 'Desechos de papeles en fardos', mcal: 500, categoria: 'Depósito' },
+  { destino: 'Desechos textiles', mcal: 200, categoria: 'Depósito' },
+  { destino: 'Decorados de teatros', mcal: 250, categoria: 'Depósito' },
+  { destino: 'Droguerías', mcal: 80, categoria: 'Depósito' },
+  { destino: 'Dulces', mcal: 200, categoria: 'Depósito' },
+  { destino: 'Escobas', mcal: 100, categoria: 'Depósito' },
+  { destino: 'Encajes y puntillas', mcal: 150, categoria: 'Depósito' },
+  { destino: 'Fibras de coco', mcal: 300, categoria: 'Depósito' },
+  { destino: 'Fieltro', mcal: 200, categoria: 'Depósito' },
+  { destino: 'Forrajes', mcal: 800, categoria: 'Depósito' },
+  { destino: 'Flores artificiales', mcal: 40, categoria: 'Depósito' },
+  { destino: 'Fósforos', mcal: 200, categoria: 'Depósito' },
+  { destino: 'Gas licuado en cilindros de acero', mcal: 1500, categoria: 'Depósito' },
+  { destino: 'Grasas', mcal: 4500, categoria: 'Depósito' },
+  { destino: 'Harina en bolsas', mcal: 2000, categoria: 'Depósito' },
+  { destino: 'Harina en silos', mcal: 3600, categoria: 'Depósito' },
+  { destino: 'Heno en gavillas', mcal: 250, categoria: 'Depósito' },
+  { destino: 'Hilos uso textil', mcal: 400, categoria: 'Depósito' },
+  { destino: 'Huevos', mcal: 40, categoria: 'Depósito' },
+  { destino: 'Impresos en estanterías', mcal: 400, categoria: 'Depósito' },
+  { destino: 'Impresos en paletas', mcal: 2000, categoria: 'Depósito' },
+  { destino: 'Juguetes', mcal: 200, categoria: 'Depósito' },
+  { destino: 'Lanas', mcal: 450, categoria: 'Depósito' },
+  { destino: 'Leche en polvo', mcal: 2500, categoria: 'Depósito' },
+  { destino: 'Lino', mcal: 300, categoria: 'Depósito' },
+  { destino: 'Lencería, ropas', mcal: 150, categoria: 'Depósito' },
+  { destino: 'Libros', mcal: 500, categoria: 'Depósito' },
+  { destino: 'Madera aplacada', mcal: 1000, categoria: 'Depósito' },
+  { destino: 'Madera en bruto', mcal: 1500, categoria: 'Depósito' },
+  { destino: 'Madera, viruta en silos', mcal: 500, categoria: 'Depósito' },
+  { destino: 'Malta en silos', mcal: 3200, categoria: 'Depósito' },
+  { destino: 'Manteca', mcal: 1000, categoria: 'Depósito' },
+  { destino: 'Material de construcción', mcal: 200, categoria: 'Depósito' },
+  { destino: 'Material de equipos de oficina', mcal: 200, categoria: 'Depósito' },
+  { destino: 'Material eléctrico', mcal: 80, categoria: 'Depósito' },
+  { destino: 'Materias sintéticas en bruto', mcal: 1400, categoria: 'Depósito' },
+  { destino: 'Materias sintéticas en espuma', mcal: 300, categoria: 'Depósito' },
+  { destino: 'Materias sintéticas, objetos de', mcal: 200, categoria: 'Depósito' },
+  { destino: 'Medicamentos', mcal: 80, categoria: 'Depósito' },
+  { destino: 'Melaza en toneles', mcal: 1200, categoria: 'Depósito' },
+  { destino: 'Muebles', mcal: 200, categoria: 'Depósito' },
+  { destino: 'Nitratos', mcal: 20, categoria: 'Depósito' },
+  { destino: 'Nitrocelulosa en toneles', mcal: 250, categoria: 'Depósito' },
+  { destino: 'Negro de humo en bolsas', mcal: 3000, categoria: 'Depósito' },
+  { destino: 'Paja', mcal: 300, categoria: 'Depósito' },
+  { destino: 'Pieles', mcal: 300, categoria: 'Depósito' },
+  { destino: 'Piolines', mcal: 250, categoria: 'Depósito' },
+  { destino: 'Papel en hojas apiladas', mcal: 2000, categoria: 'Depósito' },
+  { destino: 'Papel, objetos de', mcal: 250, categoria: 'Depósito' },
+  { destino: 'Papel en bobinas apiladas', mcal: 2400, categoria: 'Depósito' },
+  { destino: 'Pastas alimenticias', mcal: 400, categoria: 'Depósito' },
+  { destino: 'Placas de madera aglomerada', mcal: 1600, categoria: 'Depósito' },
+  { destino: 'Puertas de madera', mcal: 420, categoria: 'Depósito' },
+  { destino: 'Puertas en materia sintética', mcal: 1000, categoria: 'Depósito' },
+  { destino: 'Productos químicos mezclados', mcal: 200, categoria: 'Depósito' },
+  { destino: 'Productos de legías', mcal: 120, categoria: 'Depósito' },
+  { destino: 'Radios, aparatos de', mcal: 50, categoria: 'Depósito' },
+  { destino: 'Recipientes de materiales plásticos', mcal: 170, categoria: 'Depósito' },
+  { destino: 'Resinas sintéticas en barriles', mcal: 1000, categoria: 'Depósito' },
+  { destino: 'Resinas sintéticas en placas', mcal: 800, categoria: 'Depósito' },
+  { destino: 'Revestimientos orgánicos de suelos', mcal: 1600, categoria: 'Depósito' },
+  { destino: 'Refrigeradores', mcal: 80, categoria: 'Depósito' },
+  { destino: 'Solventes', mcal: 800, categoria: 'Depósito' },
+  { destino: 'Tabaco en bruto', mcal: 400, categoria: 'Depósito' },
+  { destino: 'Tabaco manufacturado', mcal: 500, categoria: 'Depósito' },
+  { destino: 'Tapices', mcal: 500, categoria: 'Depósito' },
+  { destino: 'Televisores', mcal: 50, categoria: 'Depósito' },
+  { destino: 'Telas y tejidos', mcal: 250, categoria: 'Depósito' },
+  { destino: 'Telas de lino', mcal: 200, categoria: 'Depósito' },
+  { destino: 'Vestimentas', mcal: 100, categoria: 'Depósito' },
+  { destino: 'Ventanas de madera', mcal: 80, categoria: 'Depósito' },
+  { destino: 'Ventanas de material plástico', mcal: 80, categoria: 'Depósito' },
+  // 2) Establecimientos Comerciales o Públicos
+  { destino: 'Agencia de viajes', mcal: 100, categoria: 'Comercial' },
+  { destino: 'Alimentación, comercio de', mcal: 160, categoria: 'Comercial' },
+  { destino: 'Almacén de calzado', mcal: 120, categoria: 'Comercial' },
+  { destino: 'Alfombras, venta de', mcal: 200, categoria: 'Comercial' },
+  { destino: 'Antigüedades, comercios', mcal: 160, categoria: 'Comercial' },
+  { destino: 'Artículos para el hogar, venta de', mcal: 80, categoria: 'Comercial' },
+  { destino: 'Artículos para deportes, venta de', mcal: 180, categoria: 'Comercial' },
+  { destino: 'Armerías', mcal: 80, categoria: 'Comercial' },
+  { destino: 'Asilos', mcal: 80, categoria: 'Comercial' },
+  { destino: 'Bancos', mcal: 80, categoria: 'Comercial' },
+  { destino: 'Bibliotecas', mcal: 400, categoria: 'Comercial' },
+  { destino: 'Carnicerías, venta', mcal: 10, categoria: 'Comercial' },
+  { destino: 'Cantinas', mcal: 60, categoria: 'Comercial' },
+  { destino: 'Caucho, comercios de', mcal: 200, categoria: 'Comercial' },
+  { destino: 'Cigarrerías', mcal: 120, categoria: 'Comercial' },
+  { destino: 'Cines', mcal: 80, categoria: 'Comercial' },
+  { destino: 'Cocheras', mcal: 50, categoria: 'Comercial' },
+  { destino: 'Comercios de animales', mcal: 40, categoria: 'Comercial' },
+  { destino: 'Comercios de granos', mcal: 150, categoria: 'Comercial' },
+  { destino: 'Confiterías, venta', mcal: 100, categoria: 'Comercial' },
+  { destino: 'Consultorio odontológico', mcal: 40, categoria: 'Comercial' },
+  { destino: 'Cordelería, venta', mcal: 120, categoria: 'Comercial' },
+  { destino: 'Correo', mcal: 100, categoria: 'Comercial' },
+  { destino: 'Cuero, venta de artículos', mcal: 160, categoria: 'Comercial' },
+  { destino: 'Droguerías (comercial)', mcal: 250, categoria: 'Comercial' },
+  { destino: 'Electricidad, venta de artículos de', mcal: 300, categoria: 'Comercial' },
+  { destino: 'Escuela', mcal: 60, categoria: 'Comercial' },
+  { destino: 'Exposición de autos', mcal: 60, categoria: 'Comercial' },
+  { destino: 'Exposición de máquinas', mcal: 20, categoria: 'Comercial' },
+  { destino: 'Exposición de muebles', mcal: 120, categoria: 'Comercial' },
+  { destino: 'Exposición de cuadros', mcal: 40, categoria: 'Comercial' },
+  { destino: 'Flores, comercios de', mcal: 20, categoria: 'Comercial' },
+  { destino: 'Farmacias', mcal: 200, categoria: 'Comercial' },
+  { destino: 'Fotografía', mcal: 80, categoria: 'Comercial' },
+  { destino: 'Gran tienda', mcal: 100, categoria: 'Comercial' },
+  { destino: 'Guardería infantil', mcal: 100, categoria: 'Comercial' },
+  { destino: 'Hospital', mcal: 80, categoria: 'Comercial' },
+  { destino: 'Hotel', mcal: 80, categoria: 'Comercial' },
+  { destino: 'Iglesias', mcal: 40, categoria: 'Comercial' },
+  { destino: 'Instrumentos musicales', mcal: 60, categoria: 'Comercial' },
+  { destino: 'Jardín de infantes', mcal: 60, categoria: 'Comercial' },
+  { destino: 'Joyería', mcal: 80, categoria: 'Comercial' },
+  { destino: 'Jugueterías', mcal: 120, categoria: 'Comercial' },
+  { destino: 'Kioscos de diarios y revistas', mcal: 300, categoria: 'Comercial' },
+  { destino: 'Librerías', mcal: 280, categoria: 'Comercial' },
+  { destino: 'Máquinas de oficina, venta de', mcal: 80, categoria: 'Comercial' },
+  { destino: 'Máquinas de coser, venta de', mcal: 60, categoria: 'Comercial' },
+  { destino: 'Metales, comercios de', mcal: 80, categoria: 'Comercial' },
+  { destino: 'Muebles, exposición y venta de', mcal: 120, categoria: 'Comercial' },
+  { destino: 'Museos', mcal: 60, categoria: 'Comercial' },
+  { destino: 'Papelería, negocio de', mcal: 160, categoria: 'Comercial' },
+  { destino: 'Paraguas, venta de', mcal: 80, categoria: 'Comercial' },
+  { destino: 'Pensionado', mcal: 80, categoria: 'Comercial' },
+  { destino: 'Panadería, venta', mcal: 80, categoria: 'Comercial' },
+  { destino: 'Pisos y revestimiento, venta de', mcal: 160, categoria: 'Comercial' },
+  { destino: 'Quesería, comercios', mcal: 20, categoria: 'Comercial' },
+  { destino: 'Radios y TV, negocios de', mcal: 100, categoria: 'Comercial' },
+  { destino: 'Restaurantes', mcal: 80, categoria: 'Comercial' },
+  { destino: 'Relojería', mcal: 80, categoria: 'Comercial' },
+  { destino: 'Ropa, venta de', mcal: 140, categoria: 'Comercial' },
+  { destino: 'Salón de peinados', mcal: 60, categoria: 'Comercial' },
+  { destino: 'Salón de té', mcal: 80, categoria: 'Comercial' },
+  { destino: 'Sombrererías', mcal: 120, categoria: 'Comercial' },
+  { destino: 'Teatros', mcal: 80, categoria: 'Comercial' },
+  { destino: 'Tintas y barnices, venta de', mcal: 320, categoria: 'Comercial' },
+  { destino: 'Venta de bebidas alcohólicas', mcal: 160, categoria: 'Comercial' },
+  { destino: 'Vinería', mcal: 40, categoria: 'Comercial' },
+  { destino: 'Verdulería y frutería', mcal: 40, categoria: 'Comercial' },
+  // 3) Oficinas
+  { destino: 'Archivos (oficina)', mcal: 1000, categoria: 'Oficinas' },
+  { destino: 'Bancos, oficinas', mcal: 180, categoria: 'Oficinas' },
+  { destino: 'Oficinas comerciales', mcal: 180, categoria: 'Oficinas' },
+  { destino: 'Oficinas técnicas', mcal: 140, categoria: 'Oficinas' },
+  { destino: 'Oficinas de transporte', mcal: 80, categoria: 'Oficinas' },
+  // 4) Vivienda
+  { destino: 'Altillos', mcal: 140, categoria: 'Vivienda' },
+  { destino: 'Departamentos particulares', mcal: 80, categoria: 'Vivienda' },
+  { destino: 'Estacionamiento de autos (playa)', mcal: 70, categoria: 'Vivienda' },
+  { destino: 'Garajes (vivienda)', mcal: 40, categoria: 'Vivienda' },
+  { destino: 'Sótanos', mcal: 220, categoria: 'Vivienda' },
+];
+
+// ── TABLA 3: Cargas de fuego unitarias típicas ────────────────────────────────
+const tabla3: { actividad: string; fabricacion: number | null; almacenamiento: number | null }[] = [
+  { actividad: 'Abonos químicos',            fabricacion: 200,  almacenamiento: 200 },
+  { actividad: 'Aceites comestibles',         fabricacion: 1000, almacenamiento: 18900 },
+  { actividad: 'Aceites (mineral/vegetal/animal)', fabricacion: null, almacenamiento: 18900 },
+  { actividad: 'Asfalto, manipulación de',    fabricacion: 800,  almacenamiento: 3400 },
+  { actividad: 'Barnices',                    fabricacion: 5000, almacenamiento: 2500 },
+  { actividad: 'Disolventes',                 fabricacion: null, almacenamiento: 3400 },
+  { actividad: 'Laboratorios químicos',       fabricacion: 500,  almacenamiento: null },
+  { actividad: 'Limpieza química',            fabricacion: 300,  almacenamiento: null },
+  { actividad: 'Plásticos',                   fabricacion: 2000, almacenamiento: 5900 },
+  { actividad: 'Artículos de plásticos',      fabricacion: 600,  almacenamiento: 800 },
+  { actividad: 'Nitrocelulosa',               fabricacion: null, almacenamiento: 1100 },
+  { actividad: 'Oficinas comerciales',        fabricacion: 800,  almacenamiento: null },
+  { actividad: 'Oficinas técnicas',           fabricacion: 600,  almacenamiento: null },
+  { actividad: 'Papel',                       fabricacion: 200,  almacenamiento: 10000 },
+  { actividad: 'Papel, tratamiento – fabricación', fabricacion: 700, almacenamiento: null },
+  { actividad: 'Artículos de perfumería',     fabricacion: 300,  almacenamiento: 500 },
+  { actividad: 'Productos farmacéuticos',     fabricacion: 200,  almacenamiento: null },
+  { actividad: 'Productos químicos combustibles', fabricacion: 300, almacenamiento: 1000 },
+  { actividad: 'Resinas naturales',           fabricacion: 3000, almacenamiento: null },
+  { actividad: 'Resinas sintéticas',          fabricacion: 3400, almacenamiento: 4200 },
+  { actividad: 'Talleres de pintura',         fabricacion: 500,  almacenamiento: null },
+  { actividad: 'Tintas',                      fabricacion: 200,  almacenamiento: 3000 },
+  { actividad: 'Tintas de imprenta',          fabricacion: 700,  almacenamiento: 3000 },
+  { actividad: 'Tintorerías',                 fabricacion: 500,  almacenamiento: null },
+];
+
 function getClasificacion(qf: number): { label: string; bg: string; text: string } {
   if (qf < 60)  return { label: 'LEVE',   bg: 'bg-yellow-400', text: 'text-yellow-900' };
   if (qf < 120) return { label: 'COMÚN',  bg: 'bg-orange-500', text: 'text-white' };
@@ -126,6 +382,10 @@ function getRiesgoCol(riesgo: number): keyof typeof claseA[0] {
 }
 
 export const FireLoadCalcForm: React.FC<Props> = ({ onCancel }) => {
+  const [refOpen, setRefOpen] = useState(false);
+  const [refTab, setRefTab] = useState<'tabla1' | 'tabla2' | 'tabla3'>('tabla1');
+  const [refSearch, setRefSearch] = useState('');
+
   const [s, setS] = useState<FireLoadState>({
     superficieM2: 100,
     tipoRiesgo: 2,
@@ -613,6 +873,146 @@ export const FireLoadCalcForm: React.FC<Props> = ({ onCancel }) => {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* ══ TABLAS DE REFERENCIA (colapsable) ══════════════════════ */}
+      <div className="border-b border-black no-print">
+        <button
+          title="Tablas de Referencia Dec. 351/79"
+          aria-label="Tablas de Referencia Dec. 351/79"
+          onClick={() => setRefOpen(o => !o)}
+          className="w-full flex items-center justify-between bg-amber-600 hover:bg-amber-700 text-white text-[10px] font-bold uppercase px-4 py-2 tracking-wide transition-colors">
+          <span>📚 Tablas de Referencia — Dec. 351/79 (Ing. Mario E. Rosato)</span>
+          <span className="text-sm">{refOpen ? '▲' : '▼'}</span>
+        </button>
+
+        {refOpen && (
+          <div className="p-4 bg-amber-50">
+            {/* Tabs */}
+            <div className="flex gap-1 mb-3">
+              {(['tabla1', 'tabla2', 'tabla3'] as const).map(t => (
+                <button key={t} title={t} aria-label={t}
+                  onClick={() => { setRefTab(t); setRefSearch(''); }}
+                  className={`px-3 py-1 rounded text-[10px] font-bold uppercase border transition-colors ${
+                    refTab === t ? 'bg-amber-700 text-white border-amber-700' : 'bg-white text-amber-700 border-amber-400 hover:bg-amber-100'
+                  }`}>
+                  {t === 'tabla1' ? 'TABLA 1 — kg madera/m²' : t === 'tabla2' ? 'TABLA 2 — Mcal/m²' : 'TABLA 3 — MJ/m²'}
+                </button>
+              ))}
+            </div>
+
+            {/* Descripción */}
+            <div className="text-[10px] text-amber-800 mb-3 bg-amber-100 px-3 py-2 rounded border border-amber-300">
+              {refTab === 'tabla1' && 'Carga de fuego estimada en base a estadísticas de locales semejantes con el mismo destino (kg de madera/m²).'}
+              {refTab === 'tabla2' && 'Datos válidos para almacenajes de material con 1 metro de altura, depósitos, establecimientos comerciales, oficinas y vivienda (Mcal/m²).'}
+              {refTab === 'tabla3' && 'Cargas de fuego unitarias típicas por actividad — Fabricación (MJ/m²) y Almacenamiento (MJ/m³). Ref: "Fundamentos de Protección Estructural Contra Incendios" — Ing. Mario E. Rosato.'}
+            </div>
+
+            {/* Buscador */}
+            <div className="mb-2">
+              <input
+                title="Buscar en tabla"
+                aria-label="Buscar en tabla"
+                placeholder={refTab === 'tabla3' ? 'Buscar actividad…' : 'Buscar destino / material…'}
+                value={refSearch}
+                onChange={e => setRefSearch(e.target.value)}
+                className="border border-amber-400 rounded px-3 py-1 text-xs outline-none focus:border-amber-600 bg-white w-full sm:w-80"
+              />
+            </div>
+
+            {/* TABLA 1 */}
+            {refTab === 'tabla1' && (() => {
+              const rows = tabla1.filter(r => r.destino.toLowerCase().includes(refSearch.toLowerCase()));
+              return (
+                <div className="overflow-x-auto max-h-64 overflow-y-auto border border-amber-200 rounded">
+                  <table className="w-full border-collapse text-xs">
+                    <thead className="sticky top-0 bg-amber-700 text-white">
+                      <tr>
+                        <th className="px-3 py-2 text-left font-bold border border-amber-600">Destino / Local</th>
+                        <th className="px-3 py-2 text-center font-bold border border-amber-600 whitespace-nowrap">Carga de Fuego (kg madera/m²)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {rows.map((r, idx) => (
+                        <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-amber-50'}>
+                          <td className="px-3 py-1.5 border border-amber-100 text-gray-700">{r.destino}</td>
+                          <td className="px-3 py-1.5 border border-amber-100 text-center font-bold text-amber-700">{r.carga}</td>
+                        </tr>
+                      ))}
+                      {rows.length === 0 && <tr><td colSpan={2} className="text-center py-4 text-gray-400">Sin resultados</td></tr>}
+                    </tbody>
+                  </table>
+                </div>
+              );
+            })()}
+
+            {/* TABLA 2 */}
+            {refTab === 'tabla2' && (() => {
+              const cats = ['Depósito', 'Comercial', 'Oficinas', 'Vivienda'];
+              const q = refSearch.toLowerCase();
+              const rows = tabla2.filter(r => r.destino.toLowerCase().includes(q) || r.categoria.toLowerCase().includes(q));
+              const catColors: Record<string, string> = { 'Depósito': 'bg-blue-100 text-blue-800', 'Comercial': 'bg-green-100 text-green-800', 'Oficinas': 'bg-purple-100 text-purple-800', 'Vivienda': 'bg-orange-100 text-orange-800' };
+              return (
+                <div>
+                  {!refSearch && (
+                    <div className="flex gap-1 mb-2 flex-wrap">
+                      {cats.map(c => <span key={c} className={`px-2 py-0.5 rounded text-[10px] font-bold ${catColors[c]}`}>{c}</span>)}
+                    </div>
+                  )}
+                  <div className="overflow-x-auto max-h-64 overflow-y-auto border border-amber-200 rounded">
+                    <table className="w-full border-collapse text-xs">
+                      <thead className="sticky top-0 bg-amber-700 text-white">
+                        <tr>
+                          <th className="px-3 py-2 text-left font-bold border border-amber-600">Destino / Material</th>
+                          <th className="px-2 py-2 text-center font-bold border border-amber-600">Categoría</th>
+                          <th className="px-3 py-2 text-center font-bold border border-amber-600 whitespace-nowrap">Mcal/m²</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {rows.map((r, idx) => (
+                          <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-amber-50'}>
+                            <td className="px-3 py-1.5 border border-amber-100 text-gray-700">{r.destino}</td>
+                            <td className="px-2 py-1.5 border border-amber-100 text-center"><span className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${catColors[r.categoria] ?? ''}`}>{r.categoria}</span></td>
+                            <td className="px-3 py-1.5 border border-amber-100 text-center font-bold text-amber-700">{r.mcal.toLocaleString('es-AR')}</td>
+                          </tr>
+                        ))}
+                        {rows.length === 0 && <tr><td colSpan={3} className="text-center py-4 text-gray-400">Sin resultados</td></tr>}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* TABLA 3 */}
+            {refTab === 'tabla3' && (() => {
+              const rows = tabla3.filter(r => r.actividad.toLowerCase().includes(refSearch.toLowerCase()));
+              return (
+                <div className="overflow-x-auto max-h-64 overflow-y-auto border border-amber-200 rounded">
+                  <table className="w-full border-collapse text-xs">
+                    <thead className="sticky top-0 bg-amber-700 text-white">
+                      <tr>
+                        <th className="px-3 py-2 text-left font-bold border border-amber-600">Actividad</th>
+                        <th className="px-3 py-2 text-center font-bold border border-amber-600 whitespace-nowrap">Fabricación (MJ/m²)</th>
+                        <th className="px-3 py-2 text-center font-bold border border-amber-600 whitespace-nowrap">Almacenamiento (MJ/m³)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {rows.map((r, idx) => (
+                        <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-amber-50'}>
+                          <td className="px-3 py-1.5 border border-amber-100 text-gray-700">{r.actividad}</td>
+                          <td className="px-3 py-1.5 border border-amber-100 text-center font-bold text-amber-700">{r.fabricacion !== null ? r.fabricacion.toLocaleString('es-AR') : '—'}</td>
+                          <td className="px-3 py-1.5 border border-amber-100 text-center font-bold text-amber-700">{r.almacenamiento !== null ? r.almacenamiento.toLocaleString('es-AR') : '—'}</td>
+                        </tr>
+                      ))}
+                      {rows.length === 0 && <tr><td colSpan={3} className="text-center py-4 text-gray-400">Sin resultados</td></tr>}
+                    </tbody>
+                  </table>
+                </div>
+              );
+            })()}
+          </div>
+        )}
       </div>
 
       {/* ══ LEYENDA RIESGOS ═════════════════════════════════════ */}
