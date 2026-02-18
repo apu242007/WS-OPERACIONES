@@ -68,6 +68,7 @@ import { EmergencyDrillForm } from './components/EmergencyDrillForm';
 import { DailyInspectionCatIForm } from './components/DailyInspectionCatIForm';
 import { DroppedObjectsForm } from './components/DroppedObjectsForm';
 import { TubingMeasurementForm } from './components/TubingMeasurementForm';
+import { ATSForm } from './components/ATSForm';
 import { LocationHandoverForm } from './components/LocationHandoverForm';
 
 import { 
@@ -468,7 +469,8 @@ const AppContent = () => {
       case ViewState.FORM_DAILY_INSPECTION_CAT_I: return <DailyInspectionCatIForm initialData={state.activeDailyInspectionCatIReport || undefined} onSave={(d) => handleSave(dailyInspectionCatIService, d)} onCancel={goToList} />;
       case ViewState.FORM_DROPPED_OBJECTS: return <DroppedObjectsForm initialData={state.activeDroppedObjectsReport || undefined} onSave={(d) => handleSave(droppedObjectsService, d)} onCancel={goToList} />;
       case ViewState.FORM_TUBING_MEASUREMENT: return <TubingMeasurementForm initialData={state.activeTubingMeasurementReport || undefined} onSave={(d) => handleSave(tubingMeasurementService, d)} onCancel={goToList} />;
-      case ViewState.FORM_LOCATION_HANDOVER: return <LocationHandoverForm initialData={state.activeLocationHandoverReport || undefined} onSave={(d) => handleSave(locationHandoverService, d)} onCancel={goToList} />;
+      case ViewState.FORM_LOCATION_HANDOVER: return <LocationHandoverForm initialData={state.activeLocationHandoverReport || undefined} onSave={(d) => handleSave(locationHandoverService,
+  atsService, d)} onCancel={goToList} />;
       default:
         return <div className="p-8 text-gray-500">Seleccione una opción del menú.</div>;
     }

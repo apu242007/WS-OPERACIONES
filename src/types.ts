@@ -679,3 +679,8 @@ export interface AppState {
   tubingMeasurementReports: TubingMeasurementReport[];
   locationHandoverReports: LocationHandoverReport[];
 }
+
+export interface ATSRow { id: string; descripcion: string; peligros: string; riesgos: string; recomendaciones: string; }
+export interface ATSMetadata { numero: string; revision: string; fecha: string; sector: string; tarea: string; elaboradoPor: string; funcionElab: string; revisadoPor: string; funcionRev: string; aprobadoPor: string; funcionApro: string; }
+export interface ATSEpp { casco: boolean; guantesPVC: boolean; barbijos: boolean; otrosEpp1: string; bloqueoRotulado: boolean; zapatoSeguridad: boolean; arnesSeguridad: boolean; proteccionRespiratoria: boolean; otrosEpp2: string; anteojos: boolean; proteccionFacial: boolean; proteccionAuditiva: boolean; otrosEpp3: string; guantessCuero: boolean; detectorGases: boolean; caretaSoldador: boolean; guantesDielectricos: boolean; permisoTrabajo: boolean; extintores: string; }
+export interface ATSReport { id: string; metadata: ATSMetadata; epp: ATSEpp; rows: ATSRow[]; }

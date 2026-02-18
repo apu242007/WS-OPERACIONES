@@ -13,6 +13,7 @@ import {
   MastAssemblyRolesReport, PreAssemblyChecklistReport, WasteSignData, WellFillingReport, OilChangeReport,
   MechanicalChecklistReport, FlareChecklistReport, EmergencyDrillReport, DailyInspectionCatIReport,
   DroppedObjectsReport, TubingMeasurementReport, LocationHandoverReport
+  ATSReport,
 } from '../types';
 
 import { supabase } from './supabaseClient';
@@ -187,3 +188,5 @@ export const dailyInspectionCatIService = createService<DailyInspectionCatIRepor
 export const droppedObjectsService = createService<DroppedObjectsReport>(TABLE_MAP.dropped_objects_reports);
 export const tubingMeasurementService = createService<TubingMeasurementReport>(TABLE_MAP.tubing_measurement_reports);
 export const locationHandoverService = createService<LocationHandoverReport>(TABLE_MAP.location_handover_reports);
+
+export const atsService = createService<ATSReport>('ats_reports');
