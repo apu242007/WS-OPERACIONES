@@ -66,8 +66,8 @@ export const InertiaCalcForm: React.FC<Props> = ({ initialData, onSave, onCancel
       {/* Metadata */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 border-b border-black text-sm bg-gray-50 print:bg-transparent">
         <div className="flex items-center border-b border-black border-dashed pb-1">
-           <label className="font-bold w-24 uppercase text-xs text-gray-500">Equipo:</label>
-           <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase">
+           <label htmlFor="equipment" className="font-bold w-24 uppercase text-xs text-gray-500">Equipo:</label>
+           <select id="equipment" name="equipment" title="Equipo" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase">
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
                   <option value="tacker06">TACKER06</option>
@@ -82,28 +82,36 @@ export const InertiaCalcForm: React.FC<Props> = ({ initialData, onSave, onCancel
                 </select>
         </div>
         <div className="flex items-center border-b border-black border-dashed pb-1">
-           <label className="font-bold w-24 uppercase text-xs text-gray-500">Fecha:</label>
+           <label htmlFor="date" className="font-bold w-24 uppercase text-xs text-gray-500">Fecha:</label>
            <input 
+             id="date"
              type="date"
              name="date" 
+             title="Fecha"
              value={metadata.date} 
              onChange={handleMetadataChange}
              className="flex-1 outline-none bg-transparent"
            />
         </div>
         <div className="flex items-center border-b border-black border-dashed pb-1">
-           <label className="font-bold w-24 uppercase text-xs text-gray-500">Yacimiento:</label>
+           <label htmlFor="field" className="font-bold w-24 uppercase text-xs text-gray-500">Yacimiento:</label>
            <input 
+             id="field"
              name="field" 
+             title="Yacimiento"
+             placeholder="Yacimiento"
              value={metadata.field} 
              onChange={handleMetadataChange}
              className="flex-1 outline-none bg-transparent uppercase"
            />
         </div>
         <div className="flex items-center border-b border-black border-dashed pb-1">
-           <label className="font-bold w-24 uppercase text-xs text-gray-500">Pozo:</label>
+           <label htmlFor="well" className="font-bold w-24 uppercase text-xs text-gray-500">Pozo:</label>
            <input 
+             id="well"
              name="well" 
+             title="Pozo"
+             placeholder="Pozo"
              value={metadata.well} 
              onChange={handleMetadataChange}
              className="flex-1 outline-none bg-transparent uppercase"
@@ -124,8 +132,7 @@ export const InertiaCalcForm: React.FC<Props> = ({ initialData, onSave, onCancel
            <img
              src="https://raw.githubusercontent.com/apu242007/WS-OPERACIONES/main/src/inercia.png"
              alt="Diagrama de cálculo de inercia"
-             className="w-full h-auto object-contain rounded"
-             style={{ maxHeight: '560px' }}
+             className="w-full h-auto object-contain rounded max-h-[560px]"
            />
         </div>
 
