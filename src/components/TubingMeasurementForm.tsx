@@ -171,7 +171,19 @@ export const TubingMeasurementForm: React.FC<Props> = ({ initialData, onSave, on
            </div>
            <div>
               <label className="block font-bold mb-1 uppercase text-gray-600">Equipo / Tacker</label>
-              <input name="equipo" value={metadata.equipo} onChange={handleMetadataChange} className="w-full border border-gray-300 rounded px-2 py-1.5 outline-none bg-white uppercase" />
+              <select name="equipo" value={metadata.equipo} onChange={handleMetadataChange} className="w-full border border-gray-300 rounded px-2 py-1.5 outline-none bg-white uppercase">
+<option value="tacker01">TACKER01</option>
+<option value="tacker05">TACKER05</option>
+<option value="tacker06">TACKER06</option>
+<option value="tacker07">TACKER07</option>
+<option value="tacker08">TACKER08</option>
+<option value="tacker10">TACKER10</option>
+<option value="tacker11">TACKER11</option>
+<option value="mase01">MASE01</option>
+<option value="mase02">MASE02</option>
+<option value="mase03">MASE03</option>
+<option value="mase04">MASE04</option>
+</select>
            </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">

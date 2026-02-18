@@ -52,7 +52,19 @@ export const WelcomeSignForm: React.FC<Props> = ({ initialData, onSave, onCancel
                </div>
                <div>
                   <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Equipo N°</label>
-                  <input name="rigNumber" value={data.rigNumber} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Ej: 105" />
+                  <select name="rigNumber" value={data.rigNumber} onChange={handleChange} className="w-full p-2 border rounded">
+<option value="tacker01">TACKER01</option>
+<option value="tacker05">TACKER05</option>
+<option value="tacker06">TACKER06</option>
+<option value="tacker07">TACKER07</option>
+<option value="tacker08">TACKER08</option>
+<option value="tacker10">TACKER10</option>
+<option value="tacker11">TACKER11</option>
+<option value="mase01">MASE01</option>
+<option value="mase02">MASE02</option>
+<option value="mase03">MASE03</option>
+<option value="mase04">MASE04</option>
+</select>
                </div>
                <div>
                   <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Fecha (Control)</label>

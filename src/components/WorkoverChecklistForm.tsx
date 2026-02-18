@@ -361,7 +361,19 @@ export const WorkoverChecklistForm: React.FC<Props> = ({ initialData, onSave, on
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold w-24">Nº EQUIPO:</span>
-               <input name="equipmentNumber" value={metadata.equipmentNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <select name="equipmentNumber" value={metadata.equipmentNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent">
+<option value="tacker01">TACKER01</option>
+<option value="tacker05">TACKER05</option>
+<option value="tacker06">TACKER06</option>
+<option value="tacker07">TACKER07</option>
+<option value="tacker08">TACKER08</option>
+<option value="tacker10">TACKER10</option>
+<option value="tacker11">TACKER11</option>
+<option value="mase01">MASE01</option>
+<option value="mase02">MASE02</option>
+<option value="mase03">MASE03</option>
+<option value="mase04">MASE04</option>
+</select>
                <span className="font-bold w-24 pl-2">YACIMIENTO:</span>
                <input name="field" value={metadata.field} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
