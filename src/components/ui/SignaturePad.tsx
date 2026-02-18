@@ -223,3 +223,4 @@ export const SignaturePad: React.FC<Props> = ({ label, value, onChange, disabled
     </div>
   );
 };
+
