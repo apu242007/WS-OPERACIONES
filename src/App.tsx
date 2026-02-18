@@ -389,8 +389,7 @@ const AppContent = () => {
   const handleStartNewDroppedObjects = () => { setState(s => ({ ...s, currentView: ViewState.FORM_DROPPED_OBJECTS, activeDroppedObjectsReport: null })); closeSidebar(); };
   const handleStartNewTubingMeasurement = () => { setState(s => ({ ...s, currentView: ViewState.FORM_TUBING_MEASUREMENT, activeTubingMeasurementReport: null })); closeSidebar(); };
   const handleStartNewATS = () => { setState(s => ({ ...s, currentView: ViewState.FORM_ATS, activeATSReport: null })); closeSidebar(); };
-  const handleStartNewLocationHandover = () => { setState(s => ({ ...s, currentView: ViewState.FORM_ATS,
-  FORM_LOCATION_HANDOVER, activeLocationHandoverReport: null })); closeSidebar(); };
+  const handleStartNewLocationHandover = () => { setState(s => ({ ...s, currentView: ViewState.FORM_LOCATION_HANDOVER, activeLocationHandoverReport: null })); closeSidebar(); };
   const handleStartNewQHSE = () => { setState(s => ({ ...s, currentView: ViewState.FORM_QHSE, activeQHSEReport: null })); closeSidebar(); };
   const handleStartNewSwabbing = () => { setState(s => ({ ...s, currentView: ViewState.FORM_SWABBING, activeSwabbingReport: null })); closeSidebar(); };
   const handleStartNewFirstAid = () => { setState(s => ({ ...s, currentView: ViewState.FORM_FIRST_AID, activeFirstAidReport: null })); closeSidebar(); };
