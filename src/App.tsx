@@ -68,7 +68,7 @@ import { EmergencyDrillForm } from './components/EmergencyDrillForm';
 import { DailyInspectionCatIForm } from './components/DailyInspectionCatIForm';
 import { DroppedObjectsForm } from './components/DroppedObjectsForm';
 import { TubingMeasurementForm } from './components/TubingMeasurementForm';
-import { ATSForm } from './components/ATSForm';
+import { ATSForm2 as ATSForm } from './components/ATSForm2';
 import { LocationHandoverForm } from './components/LocationHandoverForm';
 
 import { 
