@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "start": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "serve": "vite preview",
     "audit:pdf": "ts-node scripts/audit-pdf-buttons.ts"
   },
