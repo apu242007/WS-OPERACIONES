@@ -388,7 +388,9 @@ const AppContent = () => {
   const handleStartNewDailyInspectionCatI = () => { setState(s => ({ ...s, currentView: ViewState.FORM_DAILY_INSPECTION_CAT_I, activeDailyInspectionCatIReport: null })); closeSidebar(); };
   const handleStartNewDroppedObjects = () => { setState(s => ({ ...s, currentView: ViewState.FORM_DROPPED_OBJECTS, activeDroppedObjectsReport: null })); closeSidebar(); };
   const handleStartNewTubingMeasurement = () => { setState(s => ({ ...s, currentView: ViewState.FORM_TUBING_MEASUREMENT, activeTubingMeasurementReport: null })); closeSidebar(); };
-  const handleStartNewLocationHandover = () => { setState(s => ({ ...s, currentView: ViewState.FORM_LOCATION_HANDOVER, activeLocationHandoverReport: null })); closeSidebar(); };
+  const handleStartNewATS = () => { setState(s => ({ ...s, currentView: ViewState.FORM_ATS, activeATSReport: null })); closeSidebar(); };
+  const handleStartNewLocationHandover = () => { setState(s => ({ ...s, currentView: ViewState.FORM_ATS,
+  FORM_LOCATION_HANDOVER, activeLocationHandoverReport: null })); closeSidebar(); };
   const handleStartNewQHSE = () => { setState(s => ({ ...s, currentView: ViewState.FORM_QHSE, activeQHSEReport: null })); closeSidebar(); };
   const handleStartNewSwabbing = () => { setState(s => ({ ...s, currentView: ViewState.FORM_SWABBING, activeSwabbingReport: null })); closeSidebar(); };
   const handleStartNewFirstAid = () => { setState(s => ({ ...s, currentView: ViewState.FORM_FIRST_AID, activeFirstAidReport: null })); closeSidebar(); };
@@ -469,8 +471,8 @@ const AppContent = () => {
       case ViewState.FORM_DAILY_INSPECTION_CAT_I: return <DailyInspectionCatIForm initialData={state.activeDailyInspectionCatIReport || undefined} onSave={(d) => handleSave(dailyInspectionCatIService, d)} onCancel={goToList} />;
       case ViewState.FORM_DROPPED_OBJECTS: return <DroppedObjectsForm initialData={state.activeDroppedObjectsReport || undefined} onSave={(d) => handleSave(droppedObjectsService, d)} onCancel={goToList} />;
       case ViewState.FORM_TUBING_MEASUREMENT: return <TubingMeasurementForm initialData={state.activeTubingMeasurementReport || undefined} onSave={(d) => handleSave(tubingMeasurementService, d)} onCancel={goToList} />;
-      case ViewState.FORM_LOCATION_HANDOVER: return <LocationHandoverForm initialData={state.activeLocationHandoverReport || undefined} onSave={(d) => handleSave(locationHandoverService,
-  atsService, d)} onCancel={goToList} />;
+      case ViewState.FORM_ATS: return <ATSForm initialData={state.activeATSReport || undefined} onSave={(d) => handleSave(atsService, d)} onCancel={goToList} />;
+      case ViewState.FORM_LOCATION_HANDOVER: return <LocationHandoverForm initialData={state.activeLocationHandoverReport || undefined} onSave={(d) => handleSave(locationHandoverService, d)} onCancel={goToList} />;
       default:
         return <div className="p-8 text-gray-500">Seleccione una opción del menú.</div>;
     }
@@ -604,7 +606,8 @@ const AppContent = () => {
           <button onClick={handleStartNewCircuitBreaker} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Prueba Disyuntores</button>
           <button onClick={handleStartNewFoamTest} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Prueba Espumígeno</button>
           <button onClick={handleStartNewAccumulatorTest} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Prueba de Acumulador</button>
-          <button onClick={handleStartNewLocationHandover} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Recibo y Entrega Locación</button>
+          <button onClick={handleStartNewATS}>ATS - Análisis de Trabajo Seguro</button>
+              <button onClick={handleStartNewLocationHandover} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Recibo y Entrega Locación</button>
           <button onClick={handleStartNewTowerPressure} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Reg. Presiones Torre</button>
           <button onClick={handleStartNewTorque} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Registro de Torque</button>
           <button onClick={handleStartNewShiftChange} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Reunion C. Turno</button>
