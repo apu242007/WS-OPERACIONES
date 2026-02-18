@@ -15,7 +15,7 @@ import {
   DroppedObjectsReport, TubingMeasurementReport, LocationHandoverReport
 } from '../types';
 
-import { supabase } from '../lib/supabase';
+import { supabase } from './supabaseClient';
 
 // Helper to create a generic service for a report type
 function createService<T extends { id: string }>(tableName: string) {
