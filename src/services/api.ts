@@ -15,24 +15,14 @@ import {
   DroppedObjectsReport, TubingMeasurementReport, LocationHandoverReport
 } from '../types';
 
-import { supabase } from './supabaseClient';
+import { supabase } from '../lib/supabase';
 
 // Helper to create a generic service for a report type
 function createService<T extends { id: string }>(tableName: string) {
   return {
-    getAll: async (userId?: string, isAdmin: boolean = false): Promise<T[]> => {
+    getAll: async (): Promise<T[]> => {
       try {
-        let query = supabase.from(tableName).select('*').order('created_at', { ascending: false });
-        
-        // Filter by user_id if not admin and userId is provided
-        // Note: RLS policies in Supabase should strictly enforce this, but adding it here
-        // reduces payload size and clarifies intent.
-        if (!isAdmin && userId) {
-          query = query.eq('user_id', userId);
-        }
-
-        const { data, error } = await query;
-        
+        const { data, error } = await supabase.from(tableName).select('*');
         if (error) {
           if (error.code === 'PGRST205' || error.message?.includes('does not exist')) {
              console.error(`CRITICAL: Table '${tableName}' does not exist. Please run migration.sql in Supabase SQL Editor.`);
@@ -91,7 +81,7 @@ export const checkConnection = async (): Promise<boolean> => {
   }
 };
 
-// Identity map for tables
+// Identity map for tables - ensures we are using the correct table names as defined in migration.sql
 export const TABLE_MAP = {
   daily_reports: 'daily_reports',
   outsourced_reports: 'outsourced_reports',
