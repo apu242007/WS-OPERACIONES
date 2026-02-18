@@ -22,7 +22,9 @@ const EmptyRow: FoamSystemRow = {
   dischargeTime: '',
   observations: '',
   systemState: '',
-  nextRevision: ''
+  nextRevision: '',
+  manometerStatus: '',
+  calibrationDate: ''
 };
 
 export const FoamSystemForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => {
@@ -183,7 +185,7 @@ export const FoamSystemForm: React.FC<Props> = ({ initialData, onSave, onCancel 
                 </tr>
               ))}
               <tr className="no-print">
-                <td colSpan={11} className="p-2 text-center bg-gray-50 border-t border-gray-300 border-dashed">
+                <td colSpan={13} className="p-2 text-center bg-gray-50 border-t border-gray-300 border-dashed">
                   <button onClick={addRow} className="text-brand-red font-medium text-xs uppercase hover:underline">
                       + Agregar Registro
                   </button>

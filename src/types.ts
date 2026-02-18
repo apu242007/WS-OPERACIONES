@@ -75,7 +75,7 @@ export interface OutsourcedReport { id: string; metadata: OutsourcedMetadata; ro
 
 // Foam System
 export type FoamStatus = 'B' | 'R' | 'M' | 'N/C' | '';
-export interface FoamSystemRow { id: string; equipment: string; date: string; well: string; pneumaticValve: string; fluidLevel: string; reliefValve: string; dischargeTime: string; observations: string; systemState: string; nextRevision: string; }
+export interface FoamSystemRow { id: string; equipment: string; date: string; well: string; pneumaticValve: string; fluidLevel: string; reliefValve: string; dischargeTime: string; observations: string; systemState: string; nextRevision: string; manometerStatus?: string; calibrationDate?: string; }
 export interface FoamSystemReport { id: string; rows: FoamSystemRow[]; signature?: SignatureData; }
 
 // Inertia
