@@ -12,7 +12,7 @@ import {
   PerformanceEvaluationReport, BOPConnectionReport, ManagerialVisitReport, TowerPressureReport,
   MastAssemblyRolesReport, PreAssemblyChecklistReport, WasteSignData, WellFillingReport, OilChangeReport,
   MechanicalChecklistReport, FlareChecklistReport, EmergencyDrillReport, DailyInspectionCatIReport,
-  DroppedObjectsReport, TubingMeasurementReport, LocationHandoverReport
+  DroppedObjectsReport, TubingMeasurementReport, LocationHandoverReport,
   ATSReport,
 } from '../types';
 
