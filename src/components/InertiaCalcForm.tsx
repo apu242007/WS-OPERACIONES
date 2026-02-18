@@ -114,90 +114,19 @@ export const InertiaCalcForm: React.FC<Props> = ({ initialData, onSave, onCancel
       {/* Main Content */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
         
-        {/* Diagram Column - SVG Recreation of the provided image */}
-        <div className="relative h-[600px] border border-gray-100 rounded bg-white flex items-center justify-center overflow-hidden">
-           <div className="absolute top-4 left-4 text-xs text-gray-500 space-y-1 z-10 bg-white/80 p-2 rounded shadow-sm border border-gray-200">
+        {/* Diagram Column - Reference Image */}
+        <div className="relative border border-gray-100 rounded bg-white flex flex-col items-center justify-center overflow-hidden p-2">
+           <div className="text-xs text-gray-500 space-y-1 z-10 bg-white/80 p-2 rounded shadow-sm border border-gray-200 w-full mb-2">
               <p className="font-bold text-gray-700 mb-1">INSTRUCCIONES:</p>
               <p>1- Para el calculo de "Inercia", seguir referencias.</p>
               <p>2- Completar los casilleros en la tabla.</p>
            </div>
-           
-           <svg viewBox="0 0 400 800" className="h-full w-auto select-none" style={{maxHeight: '100%'}}>
-              <defs>
-                  <marker id="arrow-start" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto">
-                    <path d="M6,0 L6,6 L0,3 z" fill="#000" />
-                  </marker>
-                  <marker id="arrow-end" markerWidth="6" markerHeight="6" refX="0" refY="3" orient="auto">
-                    <path d="M0,0 L0,6 L6,3 z" fill="#000" />
-                  </marker>
-              </defs>
-
-              {/* TRUCK BASE */}
-              <g transform="translate(10, 700) scale(0.9)">
-                 {/* Wheels */}
-                 <circle cx="40" cy="40" r="18" fill="white" stroke="black" strokeWidth="1.5"/>
-                 <circle cx="110" cy="40" r="18" fill="white" stroke="black" strokeWidth="1.5"/>
-                 <circle cx="160" cy="40" r="18" fill="white" stroke="black" strokeWidth="1.5"/>
-                 <circle cx="280" cy="40" r="18" fill="white" stroke="black" strokeWidth="1.5"/>
-                 <circle cx="330" cy="40" r="18" fill="white" stroke="black" strokeWidth="1.5"/>
-                 
-                 {/* Cabin */}
-                 <path d="M5 20 L5 -30 L15 -40 L40 -45 L50 -45 L50 20 Z" fill="none" stroke="black" strokeWidth="1.5"/>
-                 <path d="M50 -45 L50 -20 L70 -20 L70 20" fill="none" stroke="black" strokeWidth="1.5"/>
-                 {/* Chassis */}
-                 <rect x="50" y="0" width="300" height="20" fill="none" stroke="black" strokeWidth="1.5"/>
-                 
-                 {/* Equipment on bed */}
-                 <rect x="180" y="-30" width="40" height="30" fill="none" stroke="black" strokeWidth="1"/>
-                 <circle cx="240" cy="-15" r="15" fill="none" stroke="black" strokeWidth="1"/>
-                 <rect x="280" y="-35" width="60" height="35" fill="none" stroke="black" strokeWidth="1"/>
-                 <circle cx="300" cy="-17" r="5" fill="black"/>
-                 <circle cx="320" cy="-17" r="5" fill="black"/>
-                 
-                 {/* Support leg */}
-                 <line x1="380" y1="10" x2="380" y2="40" stroke="black" strokeWidth="2"/>
-                 <line x1="370" y1="40" x2="390" y2="40" stroke="black" strokeWidth="2"/>
-              </g>
-
-              {/* TOWER */}
-              {/* Main structure: Tapered Lattice */}
-              <g transform="translate(250, 700)">
-                 {/* Base Pivot */}
-                 <path d="M0 0 L20 -50 L-20 -50 Z" fill="none" stroke="black" strokeWidth="1.5"/>
-                 
-                 {/* Tower Body - Angled slightly right */}
-                 <path d="M-20 -50 L40 -650" fill="none" stroke="black" strokeWidth="2"/>
-                 <path d="M20 -50 L60 -650" fill="none" stroke="black" strokeWidth="2"/>
-                 
-                 {/* Lattice Zig Zags */}
-                 <path d="M-20 -50 L60 -100 L-10 -150 L58 -200 L-5 -250 L55 -300 L0 -350 L52 -400 L5 -450 L50 -500 L10 -550 L48 -600 L15 -650" 
-                       fill="none" stroke="black" strokeWidth="1"/>
-                 
-                 {/* Top Sheave */}
-                 <circle cx="50" cy="-660" r="12" fill="none" stroke="black" strokeWidth="2"/>
-                 <circle cx="50" cy="-660" r="5" fill="black"/>
-              </g>
-
-              {/* DIMENSIONS */}
-              {/* Reference Lines */}
-              <line x1="310" y1="40" x2="395" y2="40" stroke="black" strokeWidth="1"/> {/* Top Ref */}
-              <line x1="305" y1="150" x2="355" y2="150" stroke="black" strokeWidth="1"/> {/* DL Bottom Ref */}
-              <line x1="300" y1="240" x2="355" y2="240" stroke="black" strokeWidth="1"/> {/* DF Bottom Ref */}
-              <line x1="10" y1="780" x2="395" y2="780" stroke="black" strokeWidth="1"/> {/* Ground Ref */}
-
-              {/* AC: Total Height */}
-              <line x1="390" y1="40" x2="390" y2="780" stroke="black" strokeWidth="1" markerStart="url(#arrow-start)" markerEnd="url(#arrow-end)"/>
-              <text x="375" y="410" className="text-xl font-bold" style={{writingMode: 'vertical-rl', textAnchor: 'middle'}}>AC</text>
-
-              {/* DL: Safety Margin */}
-              <line x1="350" y1="40" x2="350" y2="150" stroke="black" strokeWidth="1" markerStart="url(#arrow-start)" markerEnd="url(#arrow-end)"/>
-              <text x="335" y="100" className="text-xl font-bold" style={{writingMode: 'vertical-rl', textAnchor: 'middle'}}>DL</text>
-
-              {/* DF: Inertia */}
-              <line x1="350" y1="150" x2="350" y2="240" stroke="black" strokeWidth="1" markerStart="url(#arrow-start)" markerEnd="url(#arrow-end)"/>
-              <text x="335" y="200" className="text-xl font-bold" style={{writingMode: 'vertical-rl', textAnchor: 'middle'}}>DF</text>
-
-           </svg>
+           <img
+             src="https://raw.githubusercontent.com/apu242007/WS-OPERACIONES/main/src/inercia.png"
+             alt="Diagrama de cálculo de inercia"
+             className="w-full h-auto object-contain rounded"
+             style={{ maxHeight: '560px' }}
+           />
         </div>
 
         {/* Calculation Table Column */}
