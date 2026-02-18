@@ -109,7 +109,19 @@ export const ShiftChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel
       <div className="flex flex-col sm:grid sm:grid-cols-12 text-sm border-b border-black">
          <div className="col-span-4 flex flex-col sm:flex-row border-b sm:border-b-0 sm:border-r border-black">
             <div className="font-bold p-1 pl-2 bg-gray-50 print:bg-transparent uppercase w-full sm:w-auto">EQUIPO:</div>
-            <input name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 p-2 sm:p-1 outline-none font-medium sm:text-center uppercase w-full" />
+            <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 p-2 sm:p-1 outline-none font-medium sm:text-center uppercase w-full">
+                  <option value="tacker01">TACKER01</option>
+                  <option value="tacker05">TACKER05</option>
+                  <option value="tacker06">TACKER06</option>
+                  <option value="tacker07">TACKER07</option>
+                  <option value="tacker08">TACKER08</option>
+                  <option value="tacker10">TACKER10</option>
+                  <option value="tacker11">TACKER11</option>
+                  <option value="mase01">MASE01</option>
+                  <option value="mase02">MASE02</option>
+                  <option value="mase03">MASE03</option>
+                  <option value="mase04">MASE04</option>
+                </select>
          </div>
          <div className="col-span-4 flex flex-col sm:flex-row border-b sm:border-b-0 sm:border-r border-black">
             <div className="font-bold p-1 pl-2 bg-gray-50 print:bg-transparent uppercase w-full sm:w-auto">POZO:</div>

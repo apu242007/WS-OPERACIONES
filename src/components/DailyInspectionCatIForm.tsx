@@ -194,12 +194,19 @@ export const DailyInspectionCatIForm: React.FC<Props> = ({ initialData, onSave, 
             </div>
             <div className="flex flex-col sm:flex-row sm:items-end gap-1">
                 <span className="font-bold text-gray-500 uppercase text-xs">Equipo</span>
-                <input 
-                    name="equipment" 
-                    value={metadata.equipment} 
-                    onChange={handleMetadataChange}
-                    className="border-b border-black outline-none bg-transparent w-full sm:w-40 text-center uppercase"
-                />
+                <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="border-b border-black outline-none bg-transparent w-full sm:w-40 text-center uppercase">
+                  <option value="tacker01">TACKER01</option>
+                  <option value="tacker05">TACKER05</option>
+                  <option value="tacker06">TACKER06</option>
+                  <option value="tacker07">TACKER07</option>
+                  <option value="tacker08">TACKER08</option>
+                  <option value="tacker10">TACKER10</option>
+                  <option value="tacker11">TACKER11</option>
+                  <option value="mase01">MASE01</option>
+                  <option value="mase02">MASE02</option>
+                  <option value="mase03">MASE03</option>
+                  <option value="mase04">MASE04</option>
+                </select>
             </div>
          </div>
       </div>

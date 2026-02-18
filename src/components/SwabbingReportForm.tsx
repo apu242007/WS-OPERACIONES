@@ -116,12 +116,19 @@ export const SwabbingReportForm: React.FC<Props> = ({ initialData, onSave, onCan
         
         <div className="flex flex-col gap-1 sm:w-1/3">
             <span className="font-bold uppercase text-xs text-gray-500">Equipo</span>
-            <input 
-                name="equipment"
-                value={metadata.equipment}
-                onChange={handleMetadataChange}
-                className="border border-gray-300 rounded p-1.5 outline-none bg-white"
-            />
+            <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white">
+                  <option value="tacker01">TACKER01</option>
+                  <option value="tacker05">TACKER05</option>
+                  <option value="tacker06">TACKER06</option>
+                  <option value="tacker07">TACKER07</option>
+                  <option value="tacker08">TACKER08</option>
+                  <option value="tacker10">TACKER10</option>
+                  <option value="tacker11">TACKER11</option>
+                  <option value="mase01">MASE01</option>
+                  <option value="mase02">MASE02</option>
+                  <option value="mase03">MASE03</option>
+                  <option value="mase04">MASE04</option>
+                </select>
         </div>
       </div>
 

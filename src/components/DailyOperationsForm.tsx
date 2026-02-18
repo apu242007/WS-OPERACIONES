@@ -162,12 +162,19 @@ export const DailyOperationsForm: React.FC<Props> = ({ initialData, onSave, onCa
            </div>
            <div className="col-span-6 flex flex-col sm:flex-row">
               <div className="w-full sm:w-24 p-2 bg-gray-50 font-bold text-xs uppercase sm:border-r border-gray-300 sm:border-l border-gray-300 flex items-center print:bg-transparent">Equipo N°:</div>
-              <input 
-                name="rigNumber"
-                value={metadata.rigNumber}
-                onChange={handleMetadataChange}
-                className="flex-1 p-2 outline-none w-full"
-              />
+              <select name="rigNumber" value={metadata.rigNumber} onChange={handleMetadataChange} className="flex-1 p-2 outline-none w-full">
+                  <option value="tacker01">TACKER01</option>
+                  <option value="tacker05">TACKER05</option>
+                  <option value="tacker06">TACKER06</option>
+                  <option value="tacker07">TACKER07</option>
+                  <option value="tacker08">TACKER08</option>
+                  <option value="tacker10">TACKER10</option>
+                  <option value="tacker11">TACKER11</option>
+                  <option value="mase01">MASE01</option>
+                  <option value="mase02">MASE02</option>
+                  <option value="mase03">MASE03</option>
+                  <option value="mase04">MASE04</option>
+                </select>
            </div>
            
              {/* Row 3 */}

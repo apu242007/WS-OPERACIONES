@@ -142,12 +142,19 @@ export const INDControlForm: React.FC<Props> = ({ initialData, onSave, onCancel 
          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
             <div className="flex flex-col sm:flex-row sm:items-end gap-1 sm:gap-2">
                 <span className="font-bold text-sm uppercase">Equipo:</span>
-                <input 
-                    name="equipment" 
-                    value={metadata.equipment} 
-                    onChange={handleMetadataChange}
-                    className="border-b border-black outline-none bg-transparent w-full sm:w-48 uppercase"
-                />
+                <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="border-b border-black outline-none bg-transparent w-full sm:w-48 uppercase">
+                  <option value="tacker01">TACKER01</option>
+                  <option value="tacker05">TACKER05</option>
+                  <option value="tacker06">TACKER06</option>
+                  <option value="tacker07">TACKER07</option>
+                  <option value="tacker08">TACKER08</option>
+                  <option value="tacker10">TACKER10</option>
+                  <option value="tacker11">TACKER11</option>
+                  <option value="mase01">MASE01</option>
+                  <option value="mase02">MASE02</option>
+                  <option value="mase03">MASE03</option>
+                  <option value="mase04">MASE04</option>
+                </select>
             </div>
             <div className="flex flex-col sm:flex-row sm:items-end gap-1 sm:gap-2">
                 <span className="font-bold text-sm uppercase">Fecha:</span>

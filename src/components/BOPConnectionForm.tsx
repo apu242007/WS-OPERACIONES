@@ -177,7 +177,19 @@ export const BOPConnectionForm: React.FC<Props> = ({ initialData, onSave, onCanc
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-24 text-gray-500 uppercase">Equipo N°:</span>
-               <input name="rigNumber" value={metadata.rigNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent font-medium" />
+               <select name="rigNumber" value={metadata.rigNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent font-medium">
+                  <option value="tacker01">TACKER01</option>
+                  <option value="tacker05">TACKER05</option>
+                  <option value="tacker06">TACKER06</option>
+                  <option value="tacker07">TACKER07</option>
+                  <option value="tacker08">TACKER08</option>
+                  <option value="tacker10">TACKER10</option>
+                  <option value="tacker11">TACKER11</option>
+                  <option value="mase01">MASE01</option>
+                  <option value="mase02">MASE02</option>
+                  <option value="mase03">MASE03</option>
+                  <option value="mase04">MASE04</option>
+                </select>
             </div>
          </div>
          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">

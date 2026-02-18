@@ -93,7 +93,19 @@ export const AccumulatorTestForm: React.FC<Props> = ({ initialData, onSave, onCa
             </div>
             <div className="w-full sm:w-48 flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold text-xs uppercase">Equipo TKR N°:</span>
-               <input name="rigNumber" value={metadata.rigNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <select name="rigNumber" value={metadata.rigNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent">
+                  <option value="tacker01">TACKER01</option>
+                  <option value="tacker05">TACKER05</option>
+                  <option value="tacker06">TACKER06</option>
+                  <option value="tacker07">TACKER07</option>
+                  <option value="tacker08">TACKER08</option>
+                  <option value="tacker10">TACKER10</option>
+                  <option value="tacker11">TACKER11</option>
+                  <option value="mase01">MASE01</option>
+                  <option value="mase02">MASE02</option>
+                  <option value="mase03">MASE03</option>
+                  <option value="mase04">MASE04</option>
+                </select>
             </div>
          </div>
 

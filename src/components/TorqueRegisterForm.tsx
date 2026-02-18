@@ -100,7 +100,19 @@ export const TorqueRegisterForm: React.FC<Props> = ({ initialData, onSave, onCan
             </div>
             <div className="flex-1 flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-24 text-xs uppercase">EQUIPO:</span>
-               <input name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
+               <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase">
+                  <option value="tacker01">TACKER01</option>
+                  <option value="tacker05">TACKER05</option>
+                  <option value="tacker06">TACKER06</option>
+                  <option value="tacker07">TACKER07</option>
+                  <option value="tacker08">TACKER08</option>
+                  <option value="tacker10">TACKER10</option>
+                  <option value="tacker11">TACKER11</option>
+                  <option value="mase01">MASE01</option>
+                  <option value="mase02">MASE02</option>
+                  <option value="mase03">MASE03</option>
+                  <option value="mase04">MASE04</option>
+                </select>
             </div>
          </div>
          {/* Row 2 */}

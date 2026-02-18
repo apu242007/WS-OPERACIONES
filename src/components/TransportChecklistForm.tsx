@@ -211,12 +211,19 @@ export const TransportChecklistForm: React.FC<Props> = ({ initialData, onSave, o
             </div>
             <div className="flex border-b border-gray-300 pb-1 items-end">
                 <span className="font-bold w-16 italic">Equipo:</span>
-                <input 
-                  name="equipment"
-                  value={metadata.equipment}
-                  onChange={handleMetadataChange}
-                  className="flex-1 outline-none bg-transparent"
-                />
+                <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent">
+                  <option value="tacker01">TACKER01</option>
+                  <option value="tacker05">TACKER05</option>
+                  <option value="tacker06">TACKER06</option>
+                  <option value="tacker07">TACKER07</option>
+                  <option value="tacker08">TACKER08</option>
+                  <option value="tacker10">TACKER10</option>
+                  <option value="tacker11">TACKER11</option>
+                  <option value="mase01">MASE01</option>
+                  <option value="mase02">MASE02</option>
+                  <option value="mase03">MASE03</option>
+                  <option value="mase04">MASE04</option>
+                </select>
             </div>
             <div className="flex border-b border-gray-300 pb-1 items-end">
                 <span className="font-bold w-16 italic">Pozo:</span>
