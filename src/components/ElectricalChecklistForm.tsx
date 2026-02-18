@@ -110,16 +110,21 @@ export const ElectricalChecklistForm: React.FC<Props> = ({ initialData, onSave, 
       {section.items.map(item => {
         const row = getRow(section.title, item);
         return (
-          <div key={item} className="flex border-b border-gray-300 text-[10px] items-center min-h-[32px] sm:min-h-[24px] hover:bg-gray-50">
-            <div className="flex-1 px-1 leading-tight">{item}</div>
-            <div className={`w-8 sm:w-6 border-l border-gray-300 h-full flex items-center justify-center cursor-pointer ${row.status === 'BIEN' ? 'bg-black text-white font-bold' : ''}`} onClick={() => handleRowChange(section.title, item, 'BIEN')}>
-              {row.status === 'BIEN' && 'X'}
-            </div>
-            <div className={`w-8 sm:w-6 border-l border-gray-300 h-full flex items-center justify-center cursor-pointer ${row.status === 'REG' ? 'bg-black text-white font-bold' : ''}`} onClick={() => handleRowChange(section.title, item, 'REG')}>
-              {row.status === 'REG' && 'X'}
-            </div>
-            <div className={`w-8 sm:w-6 border-l border-gray-300 h-full flex items-center justify-center cursor-pointer ${row.status === 'MAL' ? 'bg-black text-white font-bold' : ''}`} onClick={() => handleRowChange(section.title, item, 'MAL')}>
-              {row.status === 'MAL' && 'X'}
+          <div key={item} className="flex flex-col sm:flex-row border-b border-gray-300 text-[10px] hover:bg-gray-50">
+            <div className="flex-1 px-2 py-2 leading-tight font-medium bg-gray-50 sm:bg-transparent">{item}</div>
+            <div className="flex border-t sm:border-t-0 border-gray-200 sm:border-l sm:border-gray-300">
+              <div className={`flex-1 sm:w-10 flex flex-col items-center justify-center cursor-pointer p-1 sm:p-0 border-r border-gray-200 ${row.status === 'BIEN' ? 'bg-green-600 text-white font-bold' : 'hover:bg-green-50'}`} onClick={() => handleRowChange(section.title, item, 'BIEN')}>
+                <span className="text-[9px] font-bold text-gray-400 sm:hidden">BIEN</span>
+                <span>{row.status === 'BIEN' ? '✓' : ''}</span>
+              </div>
+              <div className={`flex-1 sm:w-10 flex flex-col items-center justify-center cursor-pointer p-1 sm:p-0 border-r border-gray-200 ${row.status === 'REG' ? 'bg-yellow-500 text-white font-bold' : 'hover:bg-yellow-50'}`} onClick={() => handleRowChange(section.title, item, 'REG')}>
+                <span className="text-[9px] font-bold text-gray-400 sm:hidden">REG</span>
+                <span>{row.status === 'REG' ? '~' : ''}</span>
+              </div>
+              <div className={`flex-1 sm:w-10 flex flex-col items-center justify-center cursor-pointer p-1 sm:p-0 ${row.status === 'MAL' ? 'bg-red-600 text-white font-bold' : 'hover:bg-red-50'}`} onClick={() => handleRowChange(section.title, item, 'MAL')}>
+                <span className="text-[9px] font-bold text-gray-400 sm:hidden">MAL</span>
+                <span>{row.status === 'MAL' ? '✕' : ''}</span>
+              </div>
             </div>
           </div>
         );
