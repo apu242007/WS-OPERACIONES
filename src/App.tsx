@@ -70,6 +70,7 @@ import { DroppedObjectsForm } from './components/DroppedObjectsForm';
 import { TubingMeasurementForm } from './components/TubingMeasurementForm';
 import { ATSForm } from './components/ATSForm';
 import { LocationHandoverForm } from './components/LocationHandoverForm';
+import { AdminDashboard } from './components/AdminDashboard';
 
 import { 
   dailyReportService, outsourcedService, foamService, inertiaService, shiftChangeService, 
@@ -413,6 +414,7 @@ const AppContent = () => {
 
   const renderContent = () => {
     switch (state.currentView) {
+      case ViewState.DASHBOARD: return <AdminDashboard state={state} />;
       case ViewState.LIST:
         return (
           <div className="p-8 max-w-7xl mx-auto">
@@ -559,6 +561,14 @@ const AppContent = () => {
           >
             📋 Mis Reportes
           </button>
+          {isAdmin && (
+            <button
+              onClick={() => { setState(s => ({ ...s, currentView: ViewState.DASHBOARD })); closeSidebar(); }}
+              className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors ${state.currentView === ViewState.DASHBOARD ? 'bg-red-50 text-brand-red' : 'text-gray-700 hover:bg-gray-50'}`}
+            >
+              📊 Dashboard Admin
+            </button>
+          )}
 
           <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-6 mb-2 px-2">Cartelería</div>
           <button onClick={handleStartNewWelcomeSign} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">🎨 Cartel de Bienvenidos</button>
