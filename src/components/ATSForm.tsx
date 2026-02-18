@@ -57,85 +57,114 @@ export const ATSForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => {
   };
 
   const CheckItem = ({ label, field }: { label: string; field: keyof ATSEpp }) => (
-    <label className="flex items-center gap-1 cursor-pointer text-xs">
-      <input type="checkbox" checked={!!epp[field]} onChange={() => handleEppCheck(field)} className="w-3 h-3" />
+    <label className="flex items-center gap-1.5 cursor-pointer text-xs">
+      <input type="checkbox" checked={!!epp[field]} onChange={() => handleEppCheck(field)} className="w-3.5 h-3.5 accent-red-600" />
       <span>{label}</span>
     </label>
   );
 
   return (
-    <div className="bg-white max-w-5xl mx-auto p-2 text-xs print:p-0" id="print-area">
-      {/* Header */}
-      <div className="flex items-center border border-black mb-0">
-        <div className="w-24 h-16 border-r border-black flex items-center justify-center font-bold text-red-700 text-lg">WS</div>
-        <div className="flex-1 text-center border-r border-black py-2">
-          <div className="font-bold text-sm uppercase">Análisis de Trabajo Seguro (ATS)</div>
-          <div className="text-xs text-gray-600">POSGI006-A1-0</div>
+    <div className="bg-white max-w-5xl mx-auto p-4 print:p-0 text-xs" id="print-area">
+
+      {/* HEADER - igual al resto de formularios */}
+      <div className="flex flex-col sm:grid sm:grid-cols-12 border-b-2 border-black">
+        <div className="col-span-3 p-4 border-b sm:border-b-0 sm:border-r-2 border-black flex flex-col items-center justify-center select-none">
+          <div className="text-3xl font-black text-brand-red italic tracking-tighter">TACKER</div>
+          <div className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-[-4px]">solutions</div>
         </div>
-        <div className="w-48 p-1 text-xs">
-          <div className="flex gap-1"><span className="font-bold">N°:</span><input name="numero" value={metadata.numero} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300" /></div>
-          <div className="flex gap-1"><span className="font-bold">Revisión:</span><input name="revision" value={metadata.revision} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300" /></div>
-          <div className="flex gap-1"><span className="font-bold">Fecha:</span><input type="date" name="fecha" value={metadata.fecha} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300" /></div>
+        <div className="col-span-6 p-4 flex flex-col items-center justify-center text-center border-b sm:border-b-0 sm:border-r-2 border-black bg-gray-50 sm:bg-white">
+          <h1 className="font-black text-xl sm:text-2xl uppercase leading-tight">ANÁLISIS DE TRABAJO SEGURO (ATS)</h1>
+          <div className="text-xs text-gray-500 mt-1">POSGI006-A1-0</div>
+        </div>
+        <div className="col-span-3 p-3 flex flex-col justify-center gap-1 text-xs">
+          <div className="flex items-center gap-1">
+            <span className="font-bold w-16">N°:</span>
+            <input name="numero" value={metadata.numero} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" />
+          </div>
+          <div className="flex items-center gap-1">
+            <span className="font-bold w-16">Revisión:</span>
+            <input name="revision" value={metadata.revision} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" />
+          </div>
+          <div className="flex items-center gap-1">
+            <span className="font-bold w-16">Fecha:</span>
+            <input type="date" name="fecha" value={metadata.fecha} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" />
+          </div>
         </div>
       </div>
 
-      {/* Sector / Fecha / Equipo */}
-      <div className="grid grid-cols-3 border border-t-0 border-black">
-        <div className="flex border-r border-black p-1"><span className="font-bold mr-1">Sector:</span><input name="sector" value={metadata.sector} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300" /></div>
-        <div className="flex border-r border-black p-1"><span className="font-bold mr-1">Equipo:</span>
-          <select name="equipo" value={(metadata as any).equipo || ''} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300">
+      {/* Sector / Equipo / Fecha */}
+      <div className="grid grid-cols-3 border-b border-black">
+        <div className="flex items-center border-r border-black p-2 gap-1">
+          <span className="font-bold whitespace-nowrap">Sector:</span>
+          <input name="sector" value={metadata.sector} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" />
+        </div>
+        <div className="flex items-center border-r border-black p-2 gap-1">
+          <span className="font-bold whitespace-nowrap">Equipo:</span>
+          <select name="equipo" value={(metadata as any).equipo || ''} onChange={handleMeta} className="flex-1 outline-none bg-transparent border-b border-gray-300">
             <option value="">-</option>
             {EQUIPOS.map(e => <option key={e} value={e}>{e.toUpperCase()}</option>)}
           </select>
         </div>
-        <div className="flex p-1"><span className="font-bold mr-1">Fecha:</span><input type="date" name="fecha" value={metadata.fecha} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300" /></div>
+        <div className="flex items-center p-2 gap-1">
+          <span className="font-bold whitespace-nowrap">Fecha:</span>
+          <input type="date" name="fecha" value={metadata.fecha} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" />
+        </div>
       </div>
 
       {/* Tarea */}
-      <div className="border border-t-0 border-black p-1 flex">
-        <span className="font-bold mr-1 whitespace-nowrap">Tarea u operación:</span>
-        <input name="tarea" value={metadata.tarea} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300" />
+      <div className="flex items-center border-b border-black p-2 gap-1">
+        <span className="font-bold whitespace-nowrap">Tarea u operación:</span>
+        <input name="tarea" value={metadata.tarea} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" />
       </div>
 
       {/* Elaborado / Revisado / Aprobado */}
-      <div className="grid grid-cols-3 border border-t-0 border-black text-xs">
-        <div className="border-r border-black p-1">
-          <div className="flex"><span className="font-bold mr-1 whitespace-nowrap">Elaborado por:</span><input name="elaboradoPor" value={metadata.elaboradoPor} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300" /></div>
-          <div className="flex mt-1"><span className="font-bold mr-1">Función:</span><input name="funcionElab" value={metadata.funcionElab} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300" /></div>
+      <div className="grid grid-cols-3 border-b border-black">
+        <div className="border-r border-black p-2">
+          <div className="flex gap-1 mb-1"><span className="font-bold whitespace-nowrap">Elaborado por:</span><input name="elaboradoPor" value={metadata.elaboradoPor} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" /></div>
+          <div className="flex gap-1"><span className="font-bold">Función:</span><input name="funcionElab" value={metadata.funcionElab} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" /></div>
         </div>
-        <div className="border-r border-black p-1">
-          <div className="flex"><span className="font-bold mr-1 whitespace-nowrap">Revisado por:</span><input name="revisadoPor" value={metadata.revisadoPor} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300" /></div>
-          <div className="flex mt-1"><span className="font-bold mr-1">Función:</span><input name="funcionRev" value={metadata.funcionRev} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300" /></div>
+        <div className="border-r border-black p-2">
+          <div className="flex gap-1 mb-1"><span className="font-bold whitespace-nowrap">Revisado por:</span><input name="revisadoPor" value={metadata.revisadoPor} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" /></div>
+          <div className="flex gap-1"><span className="font-bold">Función:</span><input name="funcionRev" value={metadata.funcionRev} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" /></div>
         </div>
-        <div className="p-1">
-          <div className="flex"><span className="font-bold mr-1 whitespace-nowrap">Aprobado por:</span><input name="aprobadoPor" value={metadata.aprobadoPor} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300" /></div>
-          <div className="flex mt-1"><span className="font-bold mr-1">Función:</span><input name="funcionApro" value={metadata.funcionApro} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300" /></div>
+        <div className="p-2">
+          <div className="flex gap-1 mb-1"><span className="font-bold whitespace-nowrap">Aprobado por:</span><input name="aprobadoPor" value={metadata.aprobadoPor} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" /></div>
+          <div className="flex gap-1"><span className="font-bold">Función:</span><input name="funcionApro" value={metadata.funcionApro} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" /></div>
         </div>
       </div>
 
       {/* EPP Header */}
-      <div className="border border-t-0 border-black p-1 bg-gray-100 font-bold text-xs uppercase">
+      <div className="border-b border-black p-2 bg-gray-100 font-bold text-xs uppercase print:bg-transparent">
         Equipos de protección personal y protección industrial específicamente recomendado o requerido por la tarea:
       </div>
 
       {/* EPP Grid */}
-      <div className="border border-t-0 border-black p-2 grid grid-cols-4 gap-x-4 gap-y-1">
+      <div className="border-b border-black p-3 grid grid-cols-4 gap-x-6 gap-y-2">
         <CheckItem label="Casco" field="casco" />
         <CheckItem label="Guantes de PVC" field="guantesPVC" />
         <CheckItem label="Barbijos" field="barbijos" />
-        <div className="flex items-center gap-1 text-xs"><span className="font-bold">Otros:</span><input name="otrosEpp1" value={epp.otrosEpp1} onChange={handleEppText} className="flex-1 outline-none border-b border-gray-300" /></div>
+        <div className="flex items-center gap-1 text-xs col-span-1">
+          <span className="font-bold whitespace-nowrap">Otros:</span>
+          <input name="otrosEpp1" value={epp.otrosEpp1} onChange={handleEppText} className="flex-1 outline-none border-b border-gray-300 bg-transparent min-w-0" />
+        </div>
 
         <CheckItem label="Bloqueo/rotulado" field="bloqueoRotulado" />
         <CheckItem label="Zapato de Seguridad" field="zapatoSeguridad" />
         <CheckItem label="Arnés de Seguridad" field="arnesSeguridad" />
         <CheckItem label="Protección respiratoria" field="proteccionRespiratoria" />
 
-        <div className="col-span-4 flex items-center gap-1 text-xs"><span className="font-bold">Otros:</span><input name="otrosEpp2" value={epp.otrosEpp2} onChange={handleEppText} className="flex-1 outline-none border-b border-gray-300" /></div>
+        <div className="col-span-4 flex items-center gap-1 text-xs">
+          <span className="font-bold whitespace-nowrap">Otros:</span>
+          <input name="otrosEpp2" value={epp.otrosEpp2} onChange={handleEppText} className="flex-1 outline-none border-b border-gray-300 bg-transparent" />
+        </div>
 
         <CheckItem label="Anteojos de Seguridad" field="anteojos" />
         <CheckItem label="Protección facial" field="proteccionFacial" />
         <CheckItem label="Protección auditiva" field="proteccionAuditiva" />
-        <div className="flex items-center gap-1 text-xs"><span className="font-bold">Otros:</span><input name="otrosEpp3" value={epp.otrosEpp3} onChange={handleEppText} className="flex-1 outline-none border-b border-gray-300" /></div>
+        <div className="flex items-center gap-1 text-xs">
+          <span className="font-bold whitespace-nowrap">Otros:</span>
+          <input name="otrosEpp3" value={epp.otrosEpp3} onChange={handleEppText} className="flex-1 outline-none border-b border-gray-300 bg-transparent min-w-0" />
+        </div>
 
         <CheckItem label="Guantes de Cuero" field="guantessCuero" />
         <CheckItem label="Detector de gases" field="detectorGases" />
@@ -143,29 +172,38 @@ export const ATSForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => {
         <CheckItem label="Guantes dieléctricos" field="guantesDielectricos" />
 
         <CheckItem label="Permiso de Trabajo Requerido" field="permisoTrabajo" />
-        <div className="flex items-center gap-1 text-xs col-span-3"><span className="font-bold whitespace-nowrap">Extintores Kg:</span><input name="extintores" value={epp.extintores} onChange={handleEppText} className="flex-1 outline-none border-b border-gray-300" /></div>
+        <div className="flex items-center gap-1 text-xs col-span-3">
+          <span className="font-bold whitespace-nowrap">Extintores Kg:</span>
+          <input name="extintores" value={epp.extintores} onChange={handleEppText} className="w-24 outline-none border-b border-gray-300 bg-transparent" />
+        </div>
       </div>
 
-      {/* Table */}
-      <table className="w-full border-collapse border border-t-0 border-black text-xs">
+      {/* Tabla */}
+      <table className="w-full border-collapse text-xs">
         <thead>
-          <tr className="bg-gray-200">
-            <th className="border border-black p-1 w-1/4">Descripción de la tarea</th>
-            <th className="border border-black p-1 w-1/4">Peligros/Aspectos potenciales</th>
-            <th className="border border-black p-1 w-1/4">Riesgos/Impactos</th>
-            <th className="border border-black p-1 w-1/4">Recomendaciones y pasos para eliminar o reducir los Peligros</th>
+          <tr className="bg-gray-200 print:bg-gray-200">
+            <th className="border border-black p-2 w-1/4 text-left">Descripción de la tarea</th>
+            <th className="border border-black p-2 w-1/4 text-left">Peligros/Aspectos potenciales</th>
+            <th className="border border-black p-2 w-1/4 text-left">Riesgos/Impactos</th>
+            <th className="border border-black p-2 w-1/4 text-left">Recomendaciones y pasos para eliminar o reducir los Peligros</th>
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, i) => (
+          {rows.map((row) => (
             <tr key={row.id}>
-              <td className="border border-black p-0"><textarea value={row.descripcion} onChange={e => handleRow(row.id, 'descripcion', e.target.value)} className="w-full p-1 outline-none resize-none h-16" /></td>
-              <td className="border border-black p-0"><textarea value={row.peligros} onChange={e => handleRow(row.id, 'peligros', e.target.value)} className="w-full p-1 outline-none resize-none h-16" /></td>
-              <td className="border border-black p-0"><textarea value={row.riesgos} onChange={e => handleRow(row.id, 'riesgos', e.target.value)} className="w-full p-1 outline-none resize-none h-16" /></td>
-              <td className="border border-black p-0 relative">
-                <textarea value={row.recomendaciones} onChange={e => handleRow(row.id, 'recomendaciones', e.target.value)} className="w-full p-1 outline-none resize-none h-16" />
+              <td className="border border-black p-0 align-top">
+                <textarea value={row.descripcion} onChange={e => handleRow(row.id, 'descripcion', e.target.value)} className="w-full p-2 outline-none resize-none h-20 bg-transparent" />
+              </td>
+              <td className="border border-black p-0 align-top">
+                <textarea value={row.peligros} onChange={e => handleRow(row.id, 'peligros', e.target.value)} className="w-full p-2 outline-none resize-none h-20 bg-transparent" />
+              </td>
+              <td className="border border-black p-0 align-top">
+                <textarea value={row.riesgos} onChange={e => handleRow(row.id, 'riesgos', e.target.value)} className="w-full p-2 outline-none resize-none h-20 bg-transparent" />
+              </td>
+              <td className="border border-black p-0 align-top relative">
+                <textarea value={row.recomendaciones} onChange={e => handleRow(row.id, 'recomendaciones', e.target.value)} className="w-full p-2 outline-none resize-none h-20 bg-transparent" />
                 {rows.length > 1 && (
-                  <button onClick={() => removeRow(row.id)} className="absolute top-0 right-0 text-red-400 hover:text-red-600 p-0.5 no-print" title="Eliminar fila">×</button>
+                  <button onClick={() => removeRow(row.id)} className="absolute top-1 right-1 text-red-400 hover:text-red-600 text-lg leading-none no-print" title="Eliminar fila">×</button>
                 )}
               </td>
             </tr>
@@ -174,7 +212,7 @@ export const ATSForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => {
       </table>
 
       {/* Add row */}
-      <div className="no-print mt-2">
+      <div className="no-print mt-3">
         <Button variant="secondary" onClick={addRow}>+ Agregar fila</Button>
       </div>
 
