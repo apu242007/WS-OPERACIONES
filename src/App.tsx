@@ -72,6 +72,7 @@ import { ATSForm } from './components/ATSForm';
 import { LocationHandoverForm } from './components/LocationHandoverForm';
 import { InspectionFrequencyForm } from './components/InspectionFrequencyForm';
 import { FireLoadCalcForm } from './components/FireLoadCalcForm';
+import { NFPAGuideForm } from './components/NFPAGuideForm';
 import { AdminDashboard } from './components/AdminDashboard';
 
 import { 
@@ -395,6 +396,7 @@ const AppContent = () => {
   const handleStartNewLocationHandover = () => { setState(s => ({ ...s, currentView: ViewState.FORM_LOCATION_HANDOVER, activeLocationHandoverReport: null })); closeSidebar(); };
   const handleOpenInspectionFrequency = () => { setState(s => ({ ...s, currentView: ViewState.FORM_INSPECTION_FREQUENCY })); closeSidebar(); };
   const handleOpenFireLoadCalc = () => { setState(s => ({ ...s, currentView: ViewState.FORM_FIRE_LOAD_CALC })); closeSidebar(); };
+  const handleOpenNFPAGuide = () => { setState(s => ({ ...s, currentView: ViewState.FORM_NFPA_GUIDE })); closeSidebar(); };
   const handleStartNewQHSE = () => { setState(s => ({ ...s, currentView: ViewState.FORM_QHSE, activeQHSEReport: null })); closeSidebar(); };
   const handleStartNewSwabbing = () => { setState(s => ({ ...s, currentView: ViewState.FORM_SWABBING, activeSwabbingReport: null })); closeSidebar(); };
   const handleStartNewFirstAid = () => { setState(s => ({ ...s, currentView: ViewState.FORM_FIRST_AID, activeFirstAidReport: null })); closeSidebar(); };
@@ -480,6 +482,7 @@ const AppContent = () => {
       case ViewState.FORM_LOCATION_HANDOVER: return <LocationHandoverForm initialData={state.activeLocationHandoverReport || undefined} onSave={(d) => handleSave(locationHandoverService, d)} onCancel={goToList} />;
       case ViewState.FORM_INSPECTION_FREQUENCY: return <InspectionFrequencyForm onCancel={goToList} />;
       case ViewState.FORM_FIRE_LOAD_CALC: return <FireLoadCalcForm onCancel={goToList} />;
+      case ViewState.FORM_NFPA_GUIDE: return <NFPAGuideForm onCancel={goToList} />;
       default:
         return <div className="p-8 text-gray-500">Seleccione una opción del menú.</div>;
     }
@@ -652,6 +655,7 @@ const AppContent = () => {
 
           <button onClick={handleOpenInspectionFrequency} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">📋 Frec. Mínima de Inspección</button>
           <button onClick={handleOpenFireLoadCalc} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">🔥 Carga de Fuego</button>
+          <button onClick={handleOpenNFPAGuide} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">🔷 Guía NFPA 704</button>
 
           <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-6 mb-2 px-2">Sistema</div>
           <button onClick={signOut} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-red-600 hover:bg-red-50">🚪 Cerrar Sesión</button>
