@@ -526,6 +526,8 @@ const AppContent = () => {
           {/* Botón cerrar — solo en mobile */}
           <button
             onClick={closeSidebar}
+            title="Cerrar menú"
+            aria-label="Cerrar menú"
             className="md:hidden p-1 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100"
           >
             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -659,6 +661,8 @@ const AppContent = () => {
         <div className="md:hidden sticky top-0 z-20 bg-white border-b border-gray-200 px-4 py-3 flex items-center gap-3 no-print">
           <button
             onClick={() => setSidebarOpen(true)}
+            title="Abrir menú"
+            aria-label="Abrir menú"
             className="p-2 rounded-md text-gray-600 hover:bg-gray-100 transition-colors"
           >
             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
