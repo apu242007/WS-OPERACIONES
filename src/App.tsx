@@ -606,7 +606,7 @@ const AppContent = () => {
           <button onClick={handleStartNewCircuitBreaker} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Prueba Disyuntores</button>
           <button onClick={handleStartNewFoamTest} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Prueba Espumígeno</button>
           <button onClick={handleStartNewAccumulatorTest} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Prueba de Acumulador</button>
-          <button onClick={handleStartNewATS}>ATS - Análisis de Trabajo Seguro</button>
+          <button onClick={handleStartNewATS}>ATS</button>
               <button onClick={handleStartNewLocationHandover} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Recibo y Entrega Locación</button>
           <button onClick={handleStartNewTowerPressure} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Reg. Presiones Torre</button>
           <button onClick={handleStartNewTorque} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Registro de Torque</button>
