@@ -416,7 +416,7 @@ export interface FlareChecklistReport {
 
 // Emergency Drill (Simulacros de Emergencia)
 export interface EmergencyDrillMetadata {
-  date: string;
+  date: string; equipment?: string;
   performedBy: string;
   location: string;
   type: string;
