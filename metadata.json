@@ -1,0 +1,7 @@
+{
+  "name": "OPERACIONES WS",
+  "description": "Plataforma de gestión de partes diarios y checklist de operaciones.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

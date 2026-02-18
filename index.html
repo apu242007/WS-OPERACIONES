@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OPERACIONES WS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                red: '#d32f2f',
+                dark: '#b71c1c',
+                gray: '#f5f5f5'
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+          },
+        },
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      body { font-family: 'Inter', sans-serif; }
+      
+      /* Custom Scrollbar for tables */
+      .overflow-x-auto::-webkit-scrollbar {
+        height: 8px;
+      }
+      .overflow-x-auto::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+      }
+      .overflow-x-auto::-webkit-scrollbar-thumb {
+        background: #ccc; 
+        border-radius: 4px;
+      }
+      .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+        background: #999; 
+      }
+
+      /* PDF Export Styles */
+      #print-area {
+        background-color: #ffffff;
+      }
+      #print-area * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      @media print {
+        @page {
+          size: landscape;
+          margin: 0.5cm;
+        }
+        .no-print { display: none !important; }
+        .print-only { display: block !important; }
+        .page-break { page-break-before: always; }
+        body { background-color: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .shadow-lg, .shadow-md { box-shadow: none !important; }
+        .border-gray-200 { border-color: #000 !important; }
+        
+        /* Force background graphics */
+        * {
+           -webkit-print-color-adjust: exact !important;   /* Chrome, Safari, Edge */
+           print-color-adjust: exact !important;           /* Firefox */
+        }
+
+        input, textarea, select {
+             background: transparent !important;
+             border: none !important;
+             resize: none;
+             padding: 0;
+             font-family: inherit;
+        }
+        
+        /* Remove overflow in print to avoid cutting off content, allow scaling */
+        .overflow-x-auto {
+          overflow: visible !important;
+        }
+        
+        /* Ensure tables fit nicely */
+        table {
+          width: 100% !important;
+          table-layout: fixed;
+        }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "jspdf": "https://esm.sh/jspdf@^4.1.0",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "path": "https://esm.sh/path@^0.12.7",
+    "fs": "https://esm.sh/fs@^0.0.1-security",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.4",
+    "@google/genai": "https://esm.sh/@google/genai@^1.41.0",
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@^2.96.0",
+    "html2canvas": "https://esm.sh/html2canvas@^1.4.1"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-gray-100 text-gray-800">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
