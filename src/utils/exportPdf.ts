@@ -303,8 +303,10 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<Expor
       return Math.max(mx, cols);
     }, 0);
 
-    const autoOrientation: 'p' | 'l' =
-      maxCols >= 7 || contentW > contentH ? 'l' : 'p';
+    // Only switch to landscape when the table is genuinely wide (≥10 cols).
+    // Never use contentW/contentH to infer orientation — web pages are almost
+    // always wider than tall so that check always fires falsely.
+    const autoOrientation: 'p' | 'l' = maxCols >= 10 ? 'l' : 'p';
     const orientation: 'p' | 'l' = orientationProp ?? autoOrientation;
 
     const MARGIN = 10; // mm
@@ -338,7 +340,7 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<Expor
 
         } else {
           // Table segment – render with autoTable
-          const { head, body, colCount } = extractTableData(seg.table);
+          const { head, body } = extractTableData(seg.table);
           if (!head.length && !body.length) continue;
 
           // Add section caption as a bold label above the table
@@ -355,18 +357,13 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<Expor
             currentY += 7;
           }
 
-          // Distribute columns evenly; very narrow for boolean/date columns
-          const usableW = pageW - 2 * MARGIN;
-          const colW = usableW / colCount;
-          const columnStyles: Record<number, { cellWidth: number }> = {};
-          for (let i = 0; i < colCount; i++) columnStyles[i] = { cellWidth: colW };
-
           autoTable(pdf, {
             head,
             body,
             startY: currentY,
             margin: { left: MARGIN, right: MARGIN, top: MARGIN, bottom: MARGIN },
-            tableWidth: 'wrap',
+            // 'auto' stretches the table to fill the printable width
+            tableWidth: 'auto',
             styles: {
               fontSize: 8,
               cellPadding: 1.5,
@@ -380,16 +377,8 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<Expor
               fontSize: 8,
             },
             alternateRowStyles: { fillColor: [249, 250, 251] }, // gray-50
-            columnStyles,
-            // Trigger a new page if the table doesn't fit
+            // Repeat header on every page so multi-page tables stay readable
             showHead: 'everyPage',
-            didParseCell: (data) => {
-              // Mark the last column as smaller if it looks like a control col
-              if (data.column.index === colCount - 1) {
-                const txt = String(data.cell.raw ?? '').trim();
-                if (txt.length < 4) data.cell.styles.cellWidth = 'wrap';
-              }
-            },
           });
 
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
