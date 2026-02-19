@@ -11,10 +11,18 @@ interface ExportPdfOptions {
 }
 
 
-function extractSummaryFromDOM(elementId) {
+interface FormSummary {
+  fecha?: string;
+  pozo?: string;
+  equipo?: string;
+  operador?: string;
+  [key: string]: string | undefined;
+}
+
+function extractSummaryFromDOM(elementId: string): FormSummary {
   const element = document.getElementById(elementId);
   if (!element) return {};
-  const summary = {};
+  const summary: FormSummary = {};
   const labels = ['Fecha', 'Pozo', 'Equipo', 'Operador', 'Cliente', 'Ubicacion', 'Turno'];
   labels.forEach(label => {
     const spans = Array.from(element.querySelectorAll('span'));
