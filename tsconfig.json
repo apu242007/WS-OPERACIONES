@@ -20,5 +20,6 @@
     "forceConsistentCasingInFileNames": true
   },
   "include": ["src"],
+  "exclude": ["supabase", "node_modules", "dist"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
