@@ -2,16 +2,14 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { autoTable, applyPlugin } from 'jspdf-autotable';
 
-// Apply the jsPDF-AutoTable plugin once at module load so that
-// jsPDF instances expose `.lastAutoTable` / `.getLastAutoTable()` correctly.
 applyPlugin(jsPDF);
 
-// ─── Public interfaces ───────────────────────────────────────────────────────
+// ─── Public interfaces ────────────────────────────────────────────────────────
 
 export interface ExportPdfOptions {
   filename?: string;
   elementId?: string;
-  /** 'p' | 'l' – if omitted, auto-detected */
+  /** 'p' | 'l' – if omitted, auto-detected from table column count */
   orientation?: 'p' | 'l';
   to?: string;
   message?: string;
@@ -23,13 +21,7 @@ export interface ExportPdfResult {
   emailError?: string;
 }
 
-// ─── Internal segment types ──────────────────────────────────────────────────
-
-type ImageSegment = { kind: 'image'; nodes: HTMLElement[] };
-type TableSegment = { kind: 'table'; table: HTMLTableElement; caption?: string };
-type Segment = ImageSegment | TableSegment;
-
-// ─── DOM helpers ─────────────────────────────────────────────────────────────
+// ─── DOM helpers ──────────────────────────────────────────────────────────────
 
 interface FormSummary {
   fecha?: string;
@@ -57,114 +49,85 @@ function extractSummaryFromDOM(elementId: string): FormSummary {
 }
 
 /**
- * Walk `root`'s DOM tree and build an ordered list of segments to render.
- *
- * Rules (applied top-down, stopping at `.no-print` nodes):
- *  • A `<table>` element      → TableSegment
- *  • An element that CONTAINS a `<table>` → recurse into it so the table is
- *    extracted; any surrounding non-table children become ImageSegment nodes.
- *  • Everything else          → appended to the last ImageSegment (or a new one).
- *
- * We keep cloneNode(true) copies at push-time so the real DOM is never mutated.
+ * Capture `element` with html2canvas using its VISUAL (rendered) width,
+ * not scrollWidth. This ensures no phantom whitespace on the sides.
  */
-function buildSegments(root: HTMLElement): Segment[] {
-  const segments: Segment[] = [];
-
-  function pushImage(node: HTMLElement) {
-    const last = segments[segments.length - 1];
-    if (last?.kind === 'image') {
-      last.nodes.push(node.cloneNode(true) as HTMLElement);
-    } else {
-      segments.push({ kind: 'image', nodes: [node.cloneNode(true) as HTMLElement] });
-    }
-  }
-
-  function walk(parent: HTMLElement) {
-    for (const child of Array.from(parent.children) as HTMLElement[]) {
-      if (child.classList.contains('no-print')) continue;
-
-      if (child.tagName === 'TABLE') {
-        // Find the closest preceding text-only sibling as caption
-        let caption: string | undefined;
-        let prev = child.previousElementSibling as HTMLElement | null;
-        while (prev) {
-          const txt = prev.textContent?.trim();
-          if (txt && !prev.querySelector('table')) { caption = txt; break; }
-          prev = prev.previousElementSibling as HTMLElement | null;
-        }
-        segments.push({ kind: 'table', table: child as HTMLTableElement, caption });
-      } else if (child.querySelector('table')) {
-        // Recurse — this element contains tables somewhere inside it
-        walk(child);
-      } else {
-        pushImage(child);
-      }
-    }
-  }
-
-  walk(root);
-  return segments;
-}
-
-/**
- * Render a list of cloned DOM nodes into a temporary off-screen container and
- * capture it with html2canvas.  Returns the resulting canvas element.
- */
-async function captureNodes(
-  nodes: HTMLElement[],
-  containerWidth: number,
-  winW: number,
-  winH: number,
-): Promise<HTMLCanvasElement> {
-  // Off-screen wrapper that matches the form's content width
-  const wrapper = document.createElement('div');
-  wrapper.style.cssText = `
-    position: fixed;
-    left: -99999px;
-    top: 0;
-    width: ${containerWidth}px;
-    background: #fff;
-    z-index: -1;
-  `;
-  for (const node of nodes) wrapper.appendChild(node);
-  document.body.appendChild(wrapper);
-
+async function captureElement(element: HTMLElement): Promise<HTMLCanvasElement> {
+  const renderW = Math.round(element.getBoundingClientRect().width) || element.scrollWidth;
   await document.fonts.ready;
-
-  try {
-    return await html2canvas(wrapper, {
-      scale: 2,
-      useCORS: true,
-      logging: false,
-      backgroundColor: '#ffffff',
-      windowWidth: winW,
-      windowHeight: winH,
-      onclone: (_doc, el) => {
-        // Fix Tailwind bg-clip-text – html2canvas can't render it
-        el.querySelectorAll<HTMLElement>('.pdf-gradient-text, .text-transparent')
-          .forEach(n => {
-            n.style.setProperty('-webkit-background-clip', 'unset', 'important');
-            n.style.setProperty('background-clip', 'unset', 'important');
-            n.style.setProperty('-webkit-text-fill-color', 'unset', 'important');
-            n.style.setProperty('color', '#1e3a8a', 'important');
-            n.style.setProperty('background', 'none', 'important');
-          });
-      },
-    });
-  } finally {
-    document.body.removeChild(wrapper);
-  }
+  return html2canvas(element, {
+    scale: 2,
+    useCORS: true,
+    logging: false,
+    backgroundColor: '#ffffff',
+    windowWidth: renderW,
+    windowHeight: element.scrollHeight,
+    onclone: (_doc, el) => {
+      el.querySelectorAll<HTMLElement>('.pdf-gradient-text, .text-transparent')
+        .forEach(n => {
+          n.style.setProperty('-webkit-background-clip', 'unset', 'important');
+          n.style.setProperty('background-clip', 'unset', 'important');
+          n.style.setProperty('-webkit-text-fill-color', 'unset', 'important');
+          n.style.setProperty('color', '#1e3a8a', 'important');
+          n.style.setProperty('background', 'none', 'important');
+        });
+    },
+  });
 }
 
 /**
- * Extract header rows and body rows from a <table> element.
- * Cells with `.no-print` class are skipped (e.g. delete buttons).
+ * Add a canvas to `pdf`, filling the printable width and splitting across
+ * pages when the content is taller than one page. Returns final Y position.
  */
-function extractTableData(table: HTMLTableElement): {
-  head: string[][];
-  body: string[][];
-  colCount: number;
-} {
+function addCanvasToPdf(
+  pdf: jsPDF,
+  canvas: HTMLCanvasElement,
+  startY: number,
+  pageW: number,
+  pageH: number,
+  margin: number,
+): number {
+  const areaW    = pageW - 2 * margin;
+  const imgH     = (canvas.height * areaW) / canvas.width; // mm
+  const pxPerMm  = canvas.width / areaW;
+
+  let srcY     = 0;
+  let currentY = startY;
+
+  while (srcY < imgH - 0.5) {
+    const availH   = pageH - margin - currentY;
+    const sliceH   = Math.min(availH, imgH - srcY);
+    const srcPxY   = Math.round(srcY * pxPerMm);
+    const slicePxH = Math.round(sliceH * pxPerMm);
+
+    if (slicePxH > 0) {
+      const slice = document.createElement('canvas');
+      slice.width  = canvas.width;
+      slice.height = slicePxH;
+      slice.getContext('2d')!.drawImage(
+        canvas,
+        0, srcPxY, canvas.width, slicePxH,
+        0, 0,      canvas.width, slicePxH,
+      );
+      pdf.addImage(slice.toDataURL('image/png'), 'PNG', margin, currentY, areaW, sliceH);
+    }
+
+    srcY     += sliceH;
+    currentY += sliceH;
+
+    if (srcY < imgH - 0.5) {
+      pdf.addPage();
+      currentY = margin;
+    }
+  }
+
+  return currentY;
+}
+
+/**
+ * Extract text data from a <table> element for jspdf-autotable.
+ */
+function extractTableData(table: HTMLTableElement): { head: string[][]; body: string[][] } {
   const head: string[][] = [];
   const body: string[][] = [];
 
@@ -182,7 +145,6 @@ function extractTableData(table: HTMLTableElement): {
     if (cells.length && cells.some(c => c !== '')) body.push(cells);
   });
 
-  // Fallback: table has no thead/tbody, just rows
   if (!head.length && !body.length) {
     table.querySelectorAll('tr').forEach(row => {
       const cells = Array.from(row.querySelectorAll('td, th'))
@@ -192,73 +154,58 @@ function extractTableData(table: HTMLTableElement): {
     });
   }
 
-  const colCount = Math.max(
-    ...head.map(r => r.length),
-    ...body.map(r => r.length),
-    1,
-  );
-  return { head, body, colCount };
+  return { head, body };
 }
 
-/**
- * Add a canvas image to `pdf`, splitting across A4 pages automatically.
- * Returns the Y position (in mm) where the image ends on the last page.
- */
-function addCanvasToPdf(
-  pdf: jsPDF,
-  canvas: HTMLCanvasElement,
-  startY: number,
-  pageWidthMm: number,
-  pageHeightMm: number,
-  margin: number,
-): number {
-  const areaW = pageWidthMm - 2 * margin;
-  const imgH = (canvas.height * areaW) / canvas.width; // proportional height in mm
-  const imgData = canvas.toDataURL('image/png');
+// ─── Segment types ────────────────────────────────────────────────────────────
 
-  let currentY = startY;
-  let srcY = 0; // mm into the total image
-  const pxPerMm = canvas.width / areaW; // canvas pixels per mm
+type ImageSegment = { kind: 'image'; nodes: HTMLElement[] };
+type TableSegment = { kind: 'table'; table: HTMLTableElement; caption?: string };
+type Segment      = ImageSegment | TableSegment;
 
-  while (srcY < imgH) {
-    const availH = pageHeightMm - margin - currentY;
-    const sliceH = Math.min(availH, imgH - srcY);
+function buildSegments(root: HTMLElement): Segment[] {
+  const segments: Segment[] = [];
 
-    // Slice the canvas vertically
-    const srcPxY = Math.round(srcY * pxPerMm);
-    const slicePxH = Math.round(sliceH * pxPerMm);
-
-    if (slicePxH > 0) {
-      const sliceCanvas = document.createElement('canvas');
-      sliceCanvas.width = canvas.width;
-      sliceCanvas.height = slicePxH;
-      sliceCanvas.getContext('2d')!.drawImage(
-        canvas,
-        0, srcPxY, canvas.width, slicePxH,
-        0, 0, canvas.width, slicePxH,
-      );
-      pdf.addImage(sliceCanvas.toDataURL('image/png'), 'PNG', margin, currentY, areaW, sliceH);
-    }
-
-    srcY += sliceH;
-    currentY += sliceH;
-
-    if (srcY < imgH) {
-      pdf.addPage();
-      currentY = margin;
+  function pushImage(node: HTMLElement) {
+    const last = segments[segments.length - 1];
+    if (last?.kind === 'image') {
+      last.nodes.push(node.cloneNode(true) as HTMLElement);
+    } else {
+      segments.push({ kind: 'image', nodes: [node.cloneNode(true) as HTMLElement] });
     }
   }
 
-  return currentY;
+  function walk(parent: HTMLElement) {
+    for (const child of Array.from(parent.children) as HTMLElement[]) {
+      if (child.classList.contains('no-print')) continue;
+      if (child.tagName === 'TABLE') {
+        let caption: string | undefined;
+        let prev = child.previousElementSibling as HTMLElement | null;
+        while (prev) {
+          const txt = prev.textContent?.trim();
+          if (txt && !prev.querySelector('table')) { caption = txt; break; }
+          prev = prev.previousElementSibling as HTMLElement | null;
+        }
+        segments.push({ kind: 'table', table: child as HTMLTableElement, caption });
+      } else if (child.querySelector('table')) {
+        walk(child);
+      } else {
+        pushImage(child);
+      }
+    }
+  }
+
+  walk(root);
+  return segments;
 }
 
-// ─── Main export function ─────────────────────────────────────────────────────
+// ─── Main export ──────────────────────────────────────────────────────────────
 
 export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<ExportPdfResult> => {
   const {
-    filename  = 'reporte',
-    elementId = 'print-area',
-    orientation: orientationProp,
+    filename    = 'reporte',
+    elementId   = 'print-area',
+    orientation : orientationProp,
     to,
     message,
   } = options;
@@ -269,87 +216,105 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<Expor
     return { emailSuccess: false, emailError: 'No se encontró el área de impresión' };
   }
 
-  // Loading overlay
   const loadingDiv = document.createElement('div');
   loadingDiv.id = 'pdf-loading-overlay';
   loadingDiv.style.cssText = `
-    position: fixed; inset: 0; background: rgba(0,0,0,0.5);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 9999; color: white; font-size: 18px; font-family: sans-serif;
+    position:fixed;inset:0;background:rgba(0,0,0,.5);
+    display:flex;align-items:center;justify-content:center;
+    z-index:9999;color:#fff;font-size:18px;font-family:sans-serif;
   `;
-  loadingDiv.innerHTML = '<div style="background:#1f2937;padding:24px 40px;border-radius:12px;">📄 Generando PDF...</div>';
+  loadingDiv.innerHTML = '<div style="background:#1f2937;padding:24px 40px;border-radius:12px;">📄 Generando PDF…</div>';
   document.body.appendChild(loadingDiv);
 
   try {
-    // ── 1. Hide .no-print elements ──────────────────────────────────────────
+    // ── 1. Hide .no-print elements ────────────────────────────────────────────
     const noPrintEls = document.querySelectorAll<HTMLElement>('.no-print');
     noPrintEls.forEach(el => { el.dataset.prevDisplay = el.style.display; el.style.display = 'none'; });
-
     await document.fonts.ready;
 
-    // ── 2. Orientation ──────────────────────────────────────────────────────
-    const contentW = element.scrollWidth;
-    const contentH = element.scrollHeight;
-
-    // Count max columns across all tables to decide orientation
+    // ── 2. Determine orientation ──────────────────────────────────────────────
     const allTables = Array.from(element.querySelectorAll<HTMLTableElement>('table'));
-    const maxCols = allTables.reduce((mx, t) => {
+    const maxCols   = allTables.reduce((mx, t) => {
       const cols = Math.max(
-        ...Array.from(t.querySelectorAll('tr'))
-          .map(r => Array.from(r.querySelectorAll('td,th'))
-            .filter(c => !(c as HTMLElement).classList.contains('no-print')).length),
+        ...Array.from(t.querySelectorAll('tr')).map(r =>
+          Array.from(r.querySelectorAll('td,th'))
+            .filter(c => !(c as HTMLElement).classList.contains('no-print')).length,
+        ),
         0,
       );
       return Math.max(mx, cols);
     }, 0);
 
-    // Only switch to landscape when the table is genuinely wide (≥10 cols).
-    // Never use contentW/contentH to infer orientation — web pages are almost
-    // always wider than tall so that check always fires falsely.
+    // Landscape only for truly wide tables.
+    // NEVER derive orientation from scrollWidth vs scrollHeight – browsers are
+    // almost always wider than tall, so that comparison is always wrong.
     const autoOrientation: 'p' | 'l' = maxCols >= 10 ? 'l' : 'p';
-    const orientation: 'p' | 'l' = orientationProp ?? autoOrientation;
+    const orientation: 'p' | 'l'     = orientationProp ?? autoOrientation;
 
-    const MARGIN = 10; // mm
-    const pdf = new jsPDF({ orientation, unit: 'mm', format: 'a4' });
-    const pageW = pdf.internal.pageSize.getWidth();
-    const pageH = pdf.internal.pageSize.getHeight();
+    const MARGIN = 8;
+    const pdf    = new jsPDF({ orientation, unit: 'mm', format: 'a4' });
+    const pageW  = pdf.internal.pageSize.getWidth();
+    const pageH  = pdf.internal.pageSize.getHeight();
 
-    const winW = window.innerWidth;
-    const winH = window.innerHeight;
+    // ── 3. Render ─────────────────────────────────────────────────────────────
+    const segments  = buildSegments(element);
+    const hasTables = segments.some(s => s.kind === 'table');
 
-    // ── 3. Build segments ────────────────────────────────────────────────────
-    const segments = buildSegments(element);
+    if (!hasTables) {
+      // No tables: capture the whole element with its VISUAL width
+      const canvas = await captureElement(element);
+      addCanvasToPdf(pdf, canvas, MARGIN, pageW, pageH, MARGIN);
 
-    // If the form has NO tables at all, fall back to capturing the whole thing
-    if (segments.every(s => s.kind === 'image')) {
-      const fullCanvas = await captureNodes(
-        [element.cloneNode(true) as HTMLElement],
-        contentW, winW, winH,
-      );
-      addCanvasToPdf(pdf, fullCanvas, MARGIN, pageW, pageH, MARGIN);
     } else {
-      // ── 4. Render each segment ─────────────────────────────────────────────
       let currentY = MARGIN;
+      const renderW = Math.round(element.getBoundingClientRect().width) || element.scrollWidth;
 
       for (const seg of segments) {
 
         if (seg.kind === 'image') {
           if (!seg.nodes.length) continue;
-          const canvas = await captureNodes(seg.nodes, contentW, winW, winH);
+
+          const wrapper = document.createElement('div');
+          wrapper.style.cssText = `
+            position:fixed;left:-99999px;top:0;
+            width:${renderW}px;background:#fff;z-index:-1;
+          `;
+          seg.nodes.forEach(n => wrapper.appendChild(n));
+          document.body.appendChild(wrapper);
+          await document.fonts.ready;
+
+          let canvas: HTMLCanvasElement;
+          try {
+            canvas = await html2canvas(wrapper, {
+              scale: 2,
+              useCORS: true,
+              logging: false,
+              backgroundColor: '#ffffff',
+              windowWidth: renderW,
+              windowHeight: wrapper.scrollHeight,
+              onclone: (_doc, el) => {
+                el.querySelectorAll<HTMLElement>('.pdf-gradient-text, .text-transparent')
+                  .forEach(n => {
+                    n.style.setProperty('-webkit-background-clip', 'unset', 'important');
+                    n.style.setProperty('background-clip', 'unset', 'important');
+                    n.style.setProperty('-webkit-text-fill-color', 'unset', 'important');
+                    n.style.setProperty('color', '#1e3a8a', 'important');
+                    n.style.setProperty('background', 'none', 'important');
+                  });
+              },
+            });
+          } finally {
+            document.body.removeChild(wrapper);
+          }
+
           currentY = addCanvasToPdf(pdf, canvas, currentY, pageW, pageH, MARGIN);
 
         } else {
-          // Table segment – render with autoTable
           const { head, body } = extractTableData(seg.table);
           if (!head.length && !body.length) continue;
 
-          // Add section caption as a bold label above the table
           if (seg.caption) {
-            // Ensure enough room for caption + at least one row; otherwise new page
-            if (currentY + 12 > pageH - MARGIN) {
-              pdf.addPage();
-              currentY = MARGIN;
-            }
+            if (currentY + 12 > pageH - MARGIN) { pdf.addPage(); currentY = MARGIN; }
             pdf.setFontSize(9);
             pdf.setFont('helvetica', 'bold');
             pdf.setTextColor(30, 30, 30);
@@ -362,58 +327,45 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<Expor
             body,
             startY: currentY,
             margin: { left: MARGIN, right: MARGIN, top: MARGIN, bottom: MARGIN },
-            // 'auto' stretches the table to fill the printable width
             tableWidth: 'auto',
-            styles: {
-              fontSize: 8,
-              cellPadding: 1.5,
-              overflow: 'linebreak',
-              valign: 'middle',
-            },
-            headStyles: {
-              fillColor: [55, 65, 81],   // gray-700
-              textColor: 255,
-              fontStyle: 'bold',
-              fontSize: 8,
-            },
-            alternateRowStyles: { fillColor: [249, 250, 251] }, // gray-50
-            // Repeat header on every page so multi-page tables stay readable
+            styles:     { fontSize: 8, cellPadding: 1.5, overflow: 'linebreak', valign: 'middle' },
+            headStyles: { fillColor: [55, 65, 81], textColor: 255, fontStyle: 'bold', fontSize: 8 },
+            alternateRowStyles: { fillColor: [249, 250, 251] },
             showHead: 'everyPage',
           });
 
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const finalY = (pdf as any).lastAutoTable?.finalY ?? currentY;
-          currentY = finalY + 4; // 4 mm gap after each table
+          currentY = ((pdf as any).lastAutoTable?.finalY ?? currentY) + 4;
         }
       }
     }
 
-    // ── 5. Restore DOM ───────────────────────────────────────────────────────
+    // ── 4. Restore DOM ────────────────────────────────────────────────────────
     noPrintEls.forEach(el => { el.style.display = el.dataset.prevDisplay || ''; });
 
-    // ── 6. Save PDF ──────────────────────────────────────────────────────────
+    // ── 5. Save ───────────────────────────────────────────────────────────────
     pdf.save(`${filename}.pdf`);
 
-    // ── 7. Send email ─────────────────────────────────────────────────────────
+    // ── 6. Email ──────────────────────────────────────────────────────────────
     const recipient = to || 'jcastro@tackertools.com';
-    const overlay = document.getElementById('pdf-loading-overlay');
+    const overlay   = document.getElementById('pdf-loading-overlay');
     if (overlay) {
-      overlay.innerHTML = `<div style="background:#1f2937;padding:24px 40px;border-radius:12px;">✉️ Enviando email a ${recipient}...</div>`;
+      overlay.innerHTML = `<div style="background:#1f2937;padding:24px 40px;border-radius:12px;">✉️ Enviando email a ${recipient}…</div>`;
     }
 
     const SUPABASE_URL  = import.meta.env.VITE_SUPABASE_URL  || 'https://exgqsbvcyghrpmlawmaa.supabase.co';
     const SUPABASE_ANON = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV4Z3FzYnZjeWdocnBtbGF3bWFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3MDQzMjEsImV4cCI6MjA4NjI4MDMyMX0.KlwrEfx9X5zQChoX84vjDViS9icGjkjPu_3W1SGh22k';
 
-    const summary  = extractSummaryFromDOM(elementId);
+    const summary   = extractSummaryFromDOM(elementId);
     const pdfBase64 = pdf.output('datauristring').split(',')[1];
 
     try {
       const emailRes = await fetch(`${SUPABASE_URL}/functions/v1/send-report-email`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type':  'application/json',
           'Authorization': `Bearer ${SUPABASE_ANON}`,
-          'apikey': SUPABASE_ANON,
+          'apikey':        SUPABASE_ANON,
         },
         body: JSON.stringify({
           pdfBase64,
