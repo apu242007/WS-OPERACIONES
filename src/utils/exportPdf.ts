@@ -141,10 +141,12 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void>
         `${filename}_${new Date().toISOString().slice(0, 10)}.pdf`,
         { type: 'application/pdf' }
       );
-      await uploadFileToDrive(pdfFile);
-      console.log('PDF subido a Google Drive correctamente');
+      console.log('[exportPdf] Iniciando subida a Drive, tamaño blob:', pdfBlob.size, 'bytes');
+      const driveUrl = await uploadFileToDrive(pdfFile);
+      console.log('[exportPdf] ✅ PDF subido a Google Drive:', driveUrl);
     } catch (driveError) {
-      console.error('Error subiendo PDF a Drive:', driveError);
+      console.error('[exportPdf] ❌ Error subiendo PDF a Drive:', driveError);
+      // No bloqueamos la descarga local, pero informamos en consola
     }
 
     // Send email
