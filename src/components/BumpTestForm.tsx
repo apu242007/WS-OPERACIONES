@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { BumpTestReport, BumpTestRow } from '../types';
 import { Button } from './ui/Button';
 import { ExportPdfButton } from './ExportPdfButton';
+import { BumpTestPdf } from '../pdf/BumpTestPdf';
 
 interface Props {
   initialData?: BumpTestReport;
@@ -131,6 +132,7 @@ export const BumpTestForm: React.FC<Props> = ({ initialData, onSave, onCancel })
                filename={`bump_test_${rows[0]?.date || 'fecha'}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<BumpTestPdf report={{ id: initialData?.id || '', rows }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 
