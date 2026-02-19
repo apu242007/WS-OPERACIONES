@@ -28,3 +28,5 @@ supabase.exe
 *.py
 temp.txt
 AdminDashboard.tsx
+
+*.cjs
