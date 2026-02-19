@@ -8,8 +8,11 @@ export const useExportPdf = (filename: string, orientation: 'p' | 'l' = 'p', ele
     setExporting(true);
     // Allow UI to update before blocking main thread
     setTimeout(async () => {
+      try {
         await exportToPdf({ filename, orientation, elementId });
+      } finally {
         setExporting(false);
+      }
     }, 100);
   }, [filename, orientation, elementId]);
 

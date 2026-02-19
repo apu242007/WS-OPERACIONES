@@ -220,7 +220,7 @@ export const ATSForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => {
       <div className="flex justify-between mt-4 no-print">
         <Button variant="ghost" onClick={onCancel}>Cancelar</Button>
         <div className="flex gap-2">
-          <ExportPdfButton targetId="print-area" filename="ATS" />
+          <ExportPdfButton elementId="print-area" filename="ATS" />
           <Button variant="primary" onClick={handleSave}>Guardar</Button>
         </div>
       </div>

@@ -25,19 +25,19 @@ export const NFPAGuideForm: React.FC<Props> = ({ onCancel }) => {
       </div>
 
       {/* Guide image */}
-      <div className="flex justify-center">
-        <img
-          src={NFPA_IMAGE_URL}
-          alt="Guia de explicaciones de las clasificaciones de la NFPA 704"
-          title="Guia NFPA 704"
-          className="w-full max-w-3xl h-auto object-contain rounded shadow"
-        />
+      <div id="print-area" className="bg-white rounded shadow">
+        <div className="flex justify-center">
+          <img
+            src={NFPA_IMAGE_URL}
+            alt="Guia de explicaciones de las clasificaciones de la NFPA 704"
+            title="Guia NFPA 704"
+            className="w-full max-w-3xl h-auto object-contain rounded"
+          />
+        </div>
+        <p className="mt-3 text-center text-xs text-gray-500 pb-3">
+          Este cuadro es solamente para referencia. Para las especificaciones completas, consulta la norma 704 de la NFPA.
+        </p>
       </div>
-
-      {/* Footer note */}
-      <p className="mt-3 text-center text-xs text-gray-500">
-        Este cuadro es solamente para referencia. Para las especificaciones completas, consulta la norma 704 de la NFPA.
-      </p>
     </div>
   );
 };

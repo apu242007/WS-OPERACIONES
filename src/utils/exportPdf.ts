@@ -80,17 +80,15 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void>
     const imgWidth = pageWidth;
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-    let heightLeft = imgHeight;
-    let position = 0;
+    // First page
+    let yOffset = 0;
+    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
 
-    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-    heightLeft -= pageHeight;
-
-    while (heightLeft > 0) {
-      position = heightLeft - imgHeight;
+    // Additional pages: shift image up by one pageHeight each time
+    while (yOffset + pageHeight < imgHeight) {
+      yOffset += pageHeight;
       pdf.addPage();
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
+      pdf.addImage(imgData, 'PNG', 0, -yOffset, imgWidth, imgHeight);
     }
 
     pdf.save(`${filename}.pdf`);
