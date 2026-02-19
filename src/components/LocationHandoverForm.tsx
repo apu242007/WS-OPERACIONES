@@ -1,5 +1,4 @@
 
-import { uploadFileToDrive } from '../lib/uploadToDrive';
 import React, { useState, useRef } from 'react';
 import { LocationHandoverReport, LocationHandoverMetadata, LayoutElement } from '../types';
 import { Button } from './ui/Button';

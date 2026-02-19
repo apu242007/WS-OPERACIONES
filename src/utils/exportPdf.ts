@@ -122,6 +122,10 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void>
       );
       await uploadFileToDrive(pdfFile);
       console.log('PDF subido a Google Drive correctamente');
+    } catch (driveError) {
+      console.error('Error subiendo PDF a Drive:', driveError);
+    }
+
     // Enviar email
     try {
       const summary = extractSummaryFromDOM(elementId);
@@ -148,10 +152,6 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void>
       console.log('Email enviado correctamente');
     } catch (emailError) {
       console.error('Error enviando email:', emailError);
-    }
-
-    } catch (driveError) {
-      console.error('Error subiendo PDF a Drive:', driveError);
     }
   } catch (error) {
     console.error('Error generando PDF:', error);
