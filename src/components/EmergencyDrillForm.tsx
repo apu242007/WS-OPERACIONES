@@ -387,7 +387,7 @@ export const EmergencyDrillForm: React.FC<Props> = ({ initialData, onSave, onCan
             <div className="flex justify-between items-center mb-2">
                <div className="font-bold">EVIDENCIA FOTOGRÁFICA</div>
                <div className="no-print">
-                  <input type="file" className="hidden" ref={fileInputRef} onChange={handleImageUpload} multiple accept="image/*" />
+                  <input type="file" className="hidden" ref={fileInputRef} onChange={handleImageUpload} multiple accept="image/*" aria-label="Adjuntar fotos" />
                   <Button size="sm" variant="secondary" onClick={() => fileInputRef.current?.click()}>Adjuntar Fotos</Button>
                </div>
             </div>

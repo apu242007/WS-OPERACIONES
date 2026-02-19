@@ -293,8 +293,7 @@ export const ManagerialVisitForm: React.FC<Props> = ({ initialData, onSave, onCa
                   onChange={handleImageUpload} 
                   multiple 
                   accept="image/*"
-                  aria-label="Adjuntar fotos" 
-                  capture="environment"
+                  aria-label="Adjuntar fotos"
                   className="hidden" 
                />
                <Button size="sm" variant="secondary" onClick={() => fileInputRef.current?.click()} className="flex items-center gap-2">
