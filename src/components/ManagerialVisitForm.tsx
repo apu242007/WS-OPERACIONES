@@ -134,64 +134,64 @@ export const ManagerialVisitForm: React.FC<Props> = ({ initialData, onSave, onCa
          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2 text-gray-500 uppercase">Lugar:</span>
-               <input name="location" value={metadata.location} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent font-medium" />
+               <input name="location" aria-label="Lugar" value={metadata.location} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent font-medium" />
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2 text-gray-500 uppercase">Fecha:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input type="date" name="date" aria-label="Fecha" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2 text-gray-500 uppercase">Hora:</span>
-               <input type="time" name="time" value={metadata.time} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input type="time" name="time" aria-label="Hora" value={metadata.time} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
 
          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2 text-gray-500 uppercase">Apellido y Nombre:</span>
-               <input name="name" value={metadata.name} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent font-medium" />
+               <input name="name" aria-label="Apellido y Nombre" value={metadata.name} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent font-medium" />
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2 text-gray-500 uppercase">N°DNI:</span>
-               <input name="dni" value={metadata.dni} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="dni" aria-label="N° DNI" value={metadata.dni} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
 
          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2 text-gray-500 uppercase">Cargo:</span>
-               <input name="position" value={metadata.position} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="position" aria-label="Cargo" value={metadata.position} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2 text-gray-500 uppercase">Orden de Trabajo:</span>
-               <input name="workOrder" value={metadata.workOrder} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="workOrder" aria-label="Orden de Trabajo" value={metadata.workOrder} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
 
          <div className="flex border-b border-black border-dashed pb-1 items-end">
             <span className="font-bold mr-2 text-gray-500 uppercase w-48 sm:w-auto">Tipo Actividad / Operación:</span>
-            <input name="activityType" value={metadata.activityType} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+            <input name="activityType" aria-label="Tipo de Actividad / Operación" value={metadata.activityType} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
          </div>
 
          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white p-2 rounded border border-gray-200">
             <div className="space-y-2">
                 <div className="flex border-b border-gray-300 pb-1 items-end">
                    <span className="font-bold mr-2 w-32 text-gray-500 uppercase">Evaluador 1:</span>
-                   <input name="coordinator1" value={metadata.coordinator1} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+                   <input name="coordinator1" aria-label="Evaluador 1" value={metadata.coordinator1} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
                 </div>
                 <div className="flex border-b border-gray-300 pb-1 items-end">
                    <span className="font-bold mr-2 w-32 text-gray-500 uppercase">Cargo:</span>
-                   <input name="evaluatorPosition1" value={metadata.evaluatorPosition1} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+                   <input name="evaluatorPosition1" aria-label="Cargo Evaluador 1" value={metadata.evaluatorPosition1} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
                 </div>
             </div>
             <div className="space-y-2">
                 <div className="flex border-b border-gray-300 pb-1 items-end">
                    <span className="font-bold mr-2 w-32 text-gray-500 uppercase">Evaluador 2:</span>
-                   <input name="coordinator2" value={metadata.coordinator2} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+                   <input name="coordinator2" aria-label="Evaluador 2" value={metadata.coordinator2} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
                 </div>
                 <div className="flex border-b border-gray-300 pb-1 items-end">
                    <span className="font-bold mr-2 w-32 text-gray-500 uppercase">Cargo:</span>
-                   <input name="evaluatorPosition2" value={metadata.evaluatorPosition2} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+                   <input name="evaluatorPosition2" aria-label="Cargo Evaluador 2" value={metadata.evaluatorPosition2} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
                 </div>
             </div>
          </div>
@@ -274,8 +274,8 @@ export const ManagerialVisitForm: React.FC<Props> = ({ initialData, onSave, onCa
       <div className="p-4 border-b border-black">
          <div className="font-bold mb-2 uppercase text-xs text-gray-500">CONCLUSIONES Y RECOMENDACIONES:</div>
          <textarea 
-            className="w-full h-32 p-3 resize-none outline-none border border-gray-300 rounded text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6"
-            style={{ backgroundSize: '100% 24px' }}
+            aria-label="Conclusiones y recomendaciones"
+            className="w-full h-32 p-3 resize-none outline-none border border-gray-300 rounded text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] [background-size:100%_24px] leading-6"
             value={conclusions}
             onChange={(e) => setConclusions(e.target.value)}
             placeholder="Ingrese conclusiones..."
@@ -292,7 +292,8 @@ export const ManagerialVisitForm: React.FC<Props> = ({ initialData, onSave, onCa
                   ref={fileInputRef} 
                   onChange={handleImageUpload} 
                   multiple 
-                  accept="image/*" 
+                  accept="image/*"
+                  aria-label="Adjuntar fotos" 
                   capture="environment"
                   className="hidden" 
                />

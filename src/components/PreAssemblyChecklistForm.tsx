@@ -111,15 +111,15 @@ export const PreAssemblyChecklistForm: React.FC<Props> = ({ initialData, onSave,
          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-16">FECHA:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input type="date" name="date" aria-label="Fecha" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-16">POZO:</span>
-               <input name="well" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
+               <input name="well" aria-label="Pozo" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-16">EQUIPO:</span>
-               <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase">
+               <select name="equipment" aria-label="Equipo" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase">
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
                   <option value="tacker06">TACKER06</option>
@@ -195,8 +195,8 @@ export const PreAssemblyChecklistForm: React.FC<Props> = ({ initialData, onSave,
                   ref={fileInputRef} 
                   onChange={handleImageUpload} 
                   multiple 
-                  accept="image/*" 
-                  capture="environment"
+                  accept="image/*"
+                  aria-label="Adjuntar fotos"
                   className="hidden" 
                />
                <Button size="sm" variant="secondary" onClick={() => fileInputRef.current?.click()} className="flex items-center gap-2">

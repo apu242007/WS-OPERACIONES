@@ -96,18 +96,18 @@ export const FoamTestForm: React.FC<Props> = ({ initialData, onSave, onCancel })
             <div className="flex gap-4">
                 <div className="flex-1 flex flex-col sm:flex-row sm:items-end gap-1 border-b border-black border-dashed pb-1">
                    <span className="font-bold w-16 text-xs">FECHA:</span>
-                   <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+                   <input type="date" name="date" aria-label="Fecha" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
                 </div>
                 <div className="flex-1 flex flex-col sm:flex-row sm:items-end gap-1 border-b border-black border-dashed pb-1">
                    <span className="font-bold w-16 text-xs">HORA:</span>
-                   <input type="time" name="time" value={metadata.time} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+                   <input type="time" name="time" aria-label="Hora" value={metadata.time} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
                 </div>
             </div>
 
             <div className="flex gap-4">
                 <div className="flex-1 flex flex-col sm:flex-row sm:items-end gap-1 border-b border-black border-dashed pb-1">
                    <span className="font-bold w-20 text-xs">EQUIPO:</span>
-                   <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent">
+                   <select name="equipment" aria-label="Equipo" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent">
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
                   <option value="tacker06">TACKER06</option>
@@ -123,28 +123,28 @@ export const FoamTestForm: React.FC<Props> = ({ initialData, onSave, onCancel })
                 </div>
                 <div className="flex-1 flex flex-col sm:flex-row sm:items-end gap-1 border-b border-black border-dashed pb-1">
                    <span className="font-bold w-16 text-xs">POZO:</span>
-                   <input name="well" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+                   <input name="well" aria-label="Pozo" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
                 </div>
             </div>
 
             <div className="flex flex-col sm:flex-row sm:items-end gap-1 border-b border-black border-dashed pb-1">
                <span className="font-bold w-40 text-xs">SUPERVISOR HS&E:</span>
-               <input name="hseSupervisor" value={metadata.hseSupervisor} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="hseSupervisor" aria-label="Supervisor HSE" value={metadata.hseSupervisor} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             
             <div className="flex flex-col sm:flex-row sm:items-end gap-1 border-b border-black border-dashed pb-1">
                <span className="font-bold w-44 text-xs">SUPERVISOR DE CAMPO:</span>
-               <input name="fieldSupervisor" value={metadata.fieldSupervisor} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="fieldSupervisor" aria-label="Supervisor de Campo" value={metadata.fieldSupervisor} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
 
             <div className="flex flex-col sm:flex-row sm:items-end gap-1 border-b border-black border-dashed pb-1">
                <span className="font-bold w-40 text-xs">JEFE DE EQUIPO:</span>
-               <input name="rigManager" value={metadata.rigManager} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="rigManager" aria-label="Jefe de Equipo" value={metadata.rigManager} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
 
             <div className="flex flex-col sm:flex-row sm:items-end gap-1 border-b border-black border-dashed pb-1">
                <span className="font-bold w-44 text-xs">ENCARGADO DE TURNO:</span>
-               <input name="shiftLeader" value={metadata.shiftLeader} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="shiftLeader" aria-label="Encargado de Turno" value={metadata.shiftLeader} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
 
          </div>
@@ -156,8 +156,8 @@ export const FoamTestForm: React.FC<Props> = ({ initialData, onSave, onCancel })
       <div className="p-4 border-b border-black">
          <div className="font-bold mb-2">1. ACTIVIDAD DESARROLLADA</div>
          <textarea 
-            className="w-full h-32 p-2 resize-none outline-none border border-gray-300 bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6 text-sm"
-            style={{ backgroundSize: '100% 24px', lineHeight: '24px' }}
+            aria-label="Actividad desarrollada"
+            className="w-full h-32 p-2 resize-none outline-none border border-gray-300 bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] [background-size:100%_24px] leading-6 text-sm"
             value={activity}
             onChange={(e) => setActivity(e.target.value)}
          />
@@ -167,8 +167,8 @@ export const FoamTestForm: React.FC<Props> = ({ initialData, onSave, onCancel })
       <div className="p-4 border-b border-black">
          <div className="font-bold mb-2">2. ESPECIFICACIONES TÉCNICAS DEL EQUIPAMIENTO y RENDIMIENTO</div>
          <textarea 
-            className="w-full h-32 p-2 resize-none outline-none border border-gray-300 bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6 text-sm"
-            style={{ backgroundSize: '100% 24px', lineHeight: '24px' }}
+            aria-label="Especificaciones técnicas y rendimiento"
+            className="w-full h-32 p-2 resize-none outline-none border border-gray-300 bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] [background-size:100%_24px] leading-6 text-sm"
             value={specsAndPerformance}
             onChange={(e) => setSpecsAndPerformance(e.target.value)}
          />
@@ -178,8 +178,8 @@ export const FoamTestForm: React.FC<Props> = ({ initialData, onSave, onCancel })
       <div className="p-4 border-b border-black">
          <div className="font-bold mb-2">3. CONCLUSIÓN y OBSERVACIONES</div>
          <textarea 
-            className="w-full h-32 p-2 resize-none outline-none border border-gray-300 bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6 text-sm"
-            style={{ backgroundSize: '100% 24px', lineHeight: '24px' }}
+            aria-label="Conclusión y observaciones"
+            className="w-full h-32 p-2 resize-none outline-none border border-gray-300 bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] [background-size:100%_24px] leading-6 text-sm"
             value={conclusions}
             onChange={(e) => setConclusions(e.target.value)}
          />
@@ -189,8 +189,8 @@ export const FoamTestForm: React.FC<Props> = ({ initialData, onSave, onCancel })
       <div className="p-4 border-b border-black">
          <div className="font-bold mb-2">4. DESCRIPCIÓN DE ANEXO FOTOGRÁFICO</div>
          <textarea 
-            className="w-full h-24 p-2 resize-none outline-none border border-gray-300 bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6 text-sm"
-            style={{ backgroundSize: '100% 24px', lineHeight: '24px' }}
+            aria-label="Descripción de anexo fotográfico"
+            className="w-full h-24 p-2 resize-none outline-none border border-gray-300 bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] [background-size:100%_24px] leading-6 text-sm"
             value={photoAnnex}
             onChange={(e) => setPhotoAnnex(e.target.value)}
             placeholder="Ingrese descripción de las fotografías adjuntas o referencias..."
@@ -207,8 +207,8 @@ export const FoamTestForm: React.FC<Props> = ({ initialData, onSave, onCancel })
                   ref={fileInputRef} 
                   onChange={handleImageUpload} 
                   multiple 
-                  accept="image/*" 
-                  capture="environment"
+                  accept="image/*"
+                  aria-label="Adjuntar fotos"
                   className="hidden" 
                />
                <Button size="sm" variant="secondary" onClick={() => fileInputRef.current?.click()} className="w-full sm:w-auto">

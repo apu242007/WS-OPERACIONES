@@ -136,32 +136,32 @@ export const ForkliftLiftingPlanForm: React.FC<Props> = ({ initialData, onSave, 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                  <div className="flex border-b border-gray-400 border-dashed items-end">
                     <span className="font-bold w-24">Fecha:</span>
-                    <input type="date" value={general.date} onChange={e => setGeneral({...general, date: e.target.value})} className="flex-1 outline-none bg-transparent" />
+                    <input type="date" aria-label="Fecha" value={general.date} onChange={e => setGeneral({...general, date: e.target.value})} className="flex-1 outline-none bg-transparent" />
                  </div>
                  <div className="flex border-b border-gray-400 border-dashed items-end">
                     <span className="font-bold w-24">Locación:</span>
-                    <input value={general.location} onChange={e => setGeneral({...general, location: e.target.value})} className="flex-1 outline-none bg-transparent" />
+                    <input aria-label="Locación" value={general.location} onChange={e => setGeneral({...general, location: e.target.value})} className="flex-1 outline-none bg-transparent" />
                  </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                  <div className="flex border-b border-gray-400 border-dashed items-end">
                     <span className="font-bold w-24">Orden Trabajo:</span>
-                    <input value={general.workOrder} onChange={e => setGeneral({...general, workOrder: e.target.value})} className="flex-1 outline-none bg-transparent" />
+                    <input aria-label="Orden de Trabajo" value={general.workOrder} onChange={e => setGeneral({...general, workOrder: e.target.value})} className="flex-1 outline-none bg-transparent" />
                  </div>
                  <div className="flex gap-4">
                     <div className="flex border-b border-gray-400 border-dashed items-end flex-1">
                        <span className="font-bold w-16">Inicio:</span>
-                       <input type="time" value={general.startTime} onChange={e => setGeneral({...general, startTime: e.target.value})} className="flex-1 outline-none bg-transparent" />
+                       <input type="time" aria-label="Hora inicio" value={general.startTime} onChange={e => setGeneral({...general, startTime: e.target.value})} className="flex-1 outline-none bg-transparent" />
                     </div>
                     <div className="flex border-b border-gray-400 border-dashed items-end flex-1">
                        <span className="font-bold w-16">Fin:</span>
-                       <input type="time" value={general.endTime} onChange={e => setGeneral({...general, endTime: e.target.value})} className="flex-1 outline-none bg-transparent" />
+                       <input type="time" aria-label="Hora fin" value={general.endTime} onChange={e => setGeneral({...general, endTime: e.target.value})} className="flex-1 outline-none bg-transparent" />
                     </div>
                  </div>
               </div>
               <div className="flex border-b border-gray-400 border-dashed items-end">
                  <span className="font-bold w-32">Desc. Maniobra:</span>
-                 <input value={general.description} onChange={e => setGeneral({...general, description: e.target.value})} className="flex-1 outline-none bg-transparent" />
+                 <input aria-label="Descripción de maniobra" value={general.description} onChange={e => setGeneral({...general, description: e.target.value})} className="flex-1 outline-none bg-transparent" />
               </div>
            </div>
         ), 'general')}
@@ -172,25 +172,25 @@ export const ForkliftLiftingPlanForm: React.FC<Props> = ({ initialData, onSave, 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                  <div className="flex border-b border-gray-400 border-dashed items-end">
                     <span className="font-bold w-20">Tipo:</span>
-                    <input value={equipment.type} onChange={e => setEquipment({...equipment, type: e.target.value})} className="flex-1 outline-none bg-transparent" />
+                    <input aria-label="Tipo de equipo" value={equipment.type} onChange={e => setEquipment({...equipment, type: e.target.value})} className="flex-1 outline-none bg-transparent" />
                  </div>
                  <div className="flex border-b border-gray-400 border-dashed items-end">
                     <span className="font-bold w-20">Marca:</span>
-                    <input value={equipment.brand} onChange={e => setEquipment({...equipment, brand: e.target.value})} className="flex-1 outline-none bg-transparent" />
+                    <input aria-label="Marca" value={equipment.brand} onChange={e => setEquipment({...equipment, brand: e.target.value})} className="flex-1 outline-none bg-transparent" />
                  </div>
                  <div className="flex border-b border-gray-400 border-dashed items-end">
                     <span className="font-bold w-20">Modelo:</span>
-                    <input value={equipment.model} onChange={e => setEquipment({...equipment, model: e.target.value})} className="flex-1 outline-none bg-transparent" />
+                    <input aria-label="Modelo" value={equipment.model} onChange={e => setEquipment({...equipment, model: e.target.value})} className="flex-1 outline-none bg-transparent" />
                  </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                  <div className="flex border-b border-gray-400 border-dashed items-end">
                     <span className="font-bold w-24">Interno N°:</span>
-                    <input value={equipment.internalNumber} onChange={e => setEquipment({...equipment, internalNumber: e.target.value})} className="flex-1 outline-none bg-transparent" />
+                    <input aria-label="Número interno" value={equipment.internalNumber} onChange={e => setEquipment({...equipment, internalNumber: e.target.value})} className="flex-1 outline-none bg-transparent" />
                  </div>
                  <div className="flex border-b border-gray-400 border-dashed items-end">
                     <span className="font-bold w-32">Capacidad Max:</span>
-                    <input value={equipment.capacity} onChange={e => setEquipment({...equipment, capacity: e.target.value})} className="flex-1 outline-none bg-transparent" />
+                    <input aria-label="Capacidad máxima" value={equipment.capacity} onChange={e => setEquipment({...equipment, capacity: e.target.value})} className="flex-1 outline-none bg-transparent" />
                  </div>
                  
                  {/* Accessories */}
@@ -226,15 +226,15 @@ export const ForkliftLiftingPlanForm: React.FC<Props> = ({ initialData, onSave, 
            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="flex border-b border-gray-400 border-dashed items-end">
                  <span className="font-bold w-24">Supervisor:</span>
-                 <input value={personnel.supervisor} onChange={e => setPersonnel({...personnel, supervisor: e.target.value})} className="flex-1 outline-none bg-transparent" />
+                 <input aria-label="Supervisor" value={personnel.supervisor} onChange={e => setPersonnel({...personnel, supervisor: e.target.value})} className="flex-1 outline-none bg-transparent" />
               </div>
               <div className="flex border-b border-gray-400 border-dashed items-end">
                  <span className="font-bold w-24">Operador:</span>
-                 <input value={personnel.operator} onChange={e => setPersonnel({...personnel, operator: e.target.value})} className="flex-1 outline-none bg-transparent" />
+                 <input aria-label="Operador" value={personnel.operator} onChange={e => setPersonnel({...personnel, operator: e.target.value})} className="flex-1 outline-none bg-transparent" />
               </div>
               <div className="flex border-b border-gray-400 border-dashed items-end">
                  <span className="font-bold w-24">Señalero:</span>
-                 <input value={personnel.rigger} onChange={e => setPersonnel({...personnel, rigger: e.target.value})} className="flex-1 outline-none bg-transparent" />
+                 <input aria-label="Señalero" value={personnel.rigger} onChange={e => setPersonnel({...personnel, rigger: e.target.value})} className="flex-1 outline-none bg-transparent" />
               </div>
            </div>
         ), 'personnel')}
@@ -272,7 +272,7 @@ export const ForkliftLiftingPlanForm: React.FC<Props> = ({ initialData, onSave, 
          <div className="flex justify-between items-center mb-2">
             <div className="font-bold underline text-sm uppercase">5. Croquis / Esquema de Izaje</div>
             <div className="no-print">
-               <input type="file" accept="image/*" className="hidden" ref={fileInputRef} onChange={handleImageUpload} />
+               <input type="file" accept="image/*" className="hidden" ref={fileInputRef} onChange={handleImageUpload} aria-label="Adjuntar esquema o fotos" />
                <Button size="sm" variant="secondary" onClick={() => fileInputRef.current?.click()}>Adjuntar Esquema</Button>
             </div>
          </div>

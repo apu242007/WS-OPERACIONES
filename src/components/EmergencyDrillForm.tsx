@@ -160,15 +160,15 @@ export const EmergencyDrillForm: React.FC<Props> = ({ initialData, onSave, onCan
          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex border-b border-gray-400 border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-32">Fecha Realización:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input type="date" name="date" aria-label="Fecha Realización" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-32">Realizado por:</span>
-               <input name="performedBy" value={metadata.performedBy} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="performedBy" aria-label="Realizado por" value={metadata.performedBy} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-32">Equipo:</span>
-               <select name="equipment" value={metadata.equipment || ''} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent border-b border-gray-400 border-dashed">
+               <select name="equipment" aria-label="Equipo" value={metadata.equipment || ''} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent border-b border-gray-400 border-dashed">
                   <option value="">- Seleccionar -</option>
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
@@ -185,7 +185,7 @@ export const EmergencyDrillForm: React.FC<Props> = ({ initialData, onSave, onCan
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-32">Lugar:</span>
-               <input name="location" value={metadata.location} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="location" aria-label="Lugar" value={metadata.location} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-32">Tipo de Simulacro:</span>
@@ -214,11 +214,11 @@ export const EmergencyDrillForm: React.FC<Props> = ({ initialData, onSave, onCan
          <div className="grid grid-cols-2 gap-4 mt-4">
             <div className="flex border-b border-gray-400 border-dashed pb-1 items-end">
                <span className="font-bold mr-2">Participantes:</span>
-               <input name="participants" value={metadata.participants} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="participants" aria-label="Participantes" value={metadata.participants} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-1 items-end">
                <span className="font-bold mr-2">Observadores:</span>
-               <input name="observers" value={metadata.observers} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="observers" aria-label="Observadores" value={metadata.observers} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
       </div>
@@ -262,6 +262,7 @@ export const EmergencyDrillForm: React.FC<Props> = ({ initialData, onSave, onCan
          <div className="mb-4">
             <div className="font-bold underline mb-2">DESCRIPCION DEL ESCENARIO PLANTEADO</div>
             <textarea 
+               aria-label="Descripción del escenario"
                className="w-full h-20 p-2 border border-gray-300 rounded resize-none outline-none"
                value={data.scenarioDescription}
                onChange={(e) => handleDataChange('scenarioDescription', e.target.value)}
@@ -334,27 +335,27 @@ export const EmergencyDrillForm: React.FC<Props> = ({ initialData, onSave, onCan
          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             <div>
                <div className="font-bold text-xs mb-1">Hora inicio simulacro:</div>
-               <input type="time" value={metadata.startTime} onChange={handleMetadataChange} name="startTime" className="border border-gray-400 p-1 rounded w-full text-center" />
+               <input type="time" value={metadata.startTime} onChange={handleMetadataChange} name="startTime" aria-label="Hora inicio simulacro" className="border border-gray-400 p-1 rounded w-full text-center" />
             </div>
             <div>
                <div className="font-bold text-xs mb-1">Tiempo de aviso alarma:</div>
-               <input value={data.alarmTime} onChange={(e) => handleDataChange('alarmTime', e.target.value)} className="border border-gray-400 p-1 rounded w-full text-center" placeholder="min:seg" />
+               <input value={data.alarmTime} onChange={(e) => handleDataChange('alarmTime', e.target.value)} aria-label="Tiempo de aviso alarma" className="border border-gray-400 p-1 rounded w-full text-center" placeholder="min:seg" />
             </div>
             <div>
                <div className="font-bold text-xs mb-1">Tiempo comunicación:</div>
-               <input value={data.communicationTime} onChange={(e) => handleDataChange('communicationTime', e.target.value)} className="border border-gray-400 p-1 rounded w-full text-center" placeholder="min:seg" />
+               <input value={data.communicationTime} onChange={(e) => handleDataChange('communicationTime', e.target.value)} aria-label="Tiempo de comunicación" className="border border-gray-400 p-1 rounded w-full text-center" placeholder="min:seg" />
             </div>
             <div>
                <div className="font-bold text-xs mb-1">Tiempo llegada pto reunión:</div>
-               <input value={data.meetingTime} onChange={(e) => handleDataChange('meetingTime', e.target.value)} className="border border-gray-400 p-1 rounded w-full text-center" placeholder="min:seg" />
+               <input value={data.meetingTime} onChange={(e) => handleDataChange('meetingTime', e.target.value)} aria-label="Tiempo llegada punto de reunión" className="border border-gray-400 p-1 rounded w-full text-center" placeholder="min:seg" />
             </div>
             <div>
                <div className="font-bold text-xs mb-1">Hora inicio acciones:</div>
-               <input value={data.actionStartTime} onChange={(e) => handleDataChange('actionStartTime', e.target.value)} className="border border-gray-400 p-1 rounded w-full text-center" placeholder="HH:MM" />
+               <input value={data.actionStartTime} onChange={(e) => handleDataChange('actionStartTime', e.target.value)} aria-label="Hora inicio acciones" className="border border-gray-400 p-1 rounded w-full text-center" placeholder="HH:MM" />
             </div>
             <div>
                <div className="font-bold text-xs mb-1">Hora finalización:</div>
-               <input type="time" value={metadata.endTime} onChange={handleMetadataChange} name="endTime" className="border border-gray-400 p-1 rounded w-full text-center" />
+               <input type="time" value={metadata.endTime} onChange={handleMetadataChange} name="endTime" aria-label="Hora finalización" className="border border-gray-400 p-1 rounded w-full text-center" />
             </div>
          </div>
          
@@ -375,6 +376,7 @@ export const EmergencyDrillForm: React.FC<Props> = ({ initialData, onSave, onCan
          <div className="mb-4">
             <div className="font-bold mb-1">OBSERVACIONES:</div>
             <textarea 
+               aria-label="Observaciones"
                className="w-full h-20 p-2 resize-none outline-none border border-gray-300 text-xs"
                value={data.observations}
                onChange={(e) => handleDataChange('observations', e.target.value)}
@@ -402,6 +404,7 @@ export const EmergencyDrillForm: React.FC<Props> = ({ initialData, onSave, onCan
          <div>
             <div className="font-bold mb-1">MEJORAS IMPLEMENTADAS / PROPUESTAS:</div>
             <textarea 
+               aria-label="Mejoras implementadas"
                className="w-full h-16 p-2 resize-none outline-none border border-gray-300 text-xs"
                value={data.improvements}
                onChange={(e) => handleDataChange('improvements', e.target.value)}
@@ -420,7 +423,7 @@ export const EmergencyDrillForm: React.FC<Props> = ({ initialData, onSave, onCan
          <div className="mb-8">
             <div className="flex items-end gap-2">
                <span className="font-bold">SITIO:</span>
-               <input name="site" value={metadata.site} onChange={handleMetadataChange} className="flex-1 border-b border-black outline-none bg-transparent" />
+               <input name="site" aria-label="Sitio" value={metadata.site} onChange={handleMetadataChange} className="flex-1 border-b border-black outline-none bg-transparent" />
             </div>
          </div>
          
