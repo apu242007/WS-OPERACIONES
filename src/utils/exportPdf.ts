@@ -136,16 +136,19 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void>
     const overlay = document.getElementById('pdf-loading-overlay');
     if (overlay) overlay.innerHTML = '<div style="background:#1f2937;padding:24px 40px;border-radius:12px;">✉️ Enviando email...</div>';
 
+    const SUPABASE_URL  = import.meta.env.VITE_SUPABASE_URL  || 'https://exgqsbvcyghrpmlawmaa.supabase.co';
+    const SUPABASE_ANON = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV4Z3FzYnZjeWdocnBtbGF3bWFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3MDQzMjEsImV4cCI6MjA4NjI4MDMyMX0.KlwrEfx9X5zQChoX84vjDViS9icGjkjPu_3W1SGh22k';
+
     try {
       const summary = extractSummaryFromDOM(elementId);
       const pdfBase64 = pdf.output('datauristring').split(',')[1];
 
-      const emailRes = await fetch(import.meta.env.VITE_SUPABASE_URL + '/functions/v1/send-report-email', {
+      const emailRes = await fetch(SUPABASE_URL + '/functions/v1/send-report-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + import.meta.env.VITE_SUPABASE_ANON_KEY,
-          'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_ANON,
+          'apikey': SUPABASE_ANON,
         },
         body: JSON.stringify({
           pdfBase64,
