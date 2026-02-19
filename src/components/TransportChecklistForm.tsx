@@ -204,6 +204,7 @@ export const TransportChecklistForm: React.FC<Props> = ({ initialData, onSave, o
                 <input 
                   type="date"
                   name="date"
+                  aria-label="Fecha"
                   value={metadata.date}
                   onChange={handleMetadataChange}
                   className="flex-1 outline-none bg-transparent"
@@ -211,7 +212,7 @@ export const TransportChecklistForm: React.FC<Props> = ({ initialData, onSave, o
             </div>
             <div className="flex border-b border-gray-300 pb-1 items-end">
                 <span className="font-bold w-16 italic">Equipo:</span>
-                <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent">
+                <select name="equipment" aria-label="Equipo" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent">
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
                   <option value="tacker06">TACKER06</option>
@@ -229,6 +230,7 @@ export const TransportChecklistForm: React.FC<Props> = ({ initialData, onSave, o
                 <span className="font-bold w-16 italic">Pozo:</span>
                 <input 
                   name="well"
+                  aria-label="Pozo"
                   value={metadata.well}
                   onChange={handleMetadataChange}
                   className="flex-1 outline-none bg-transparent"

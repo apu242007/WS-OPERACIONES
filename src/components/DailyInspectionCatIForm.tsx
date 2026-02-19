@@ -185,7 +185,8 @@ export const DailyInspectionCatIForm: React.FC<Props> = ({ initialData, onSave, 
                 <span className="font-bold text-gray-500 uppercase text-xs">Fecha</span>
                 <input 
                     type="date"
-                    name="date" 
+                    name="date"
+                    aria-label="Fecha"
                     value={metadata.date} 
                     onChange={handleMetadataChange}
                     className="border-b border-black outline-none bg-transparent w-full sm:w-40 text-center"
@@ -194,7 +195,8 @@ export const DailyInspectionCatIForm: React.FC<Props> = ({ initialData, onSave, 
             <div className="flex flex-col sm:flex-row sm:items-end gap-1">
                 <span className="font-bold text-gray-500 uppercase text-xs">Pozo</span>
                 <input 
-                    name="well" 
+                    name="well"
+                    aria-label="Pozo"
                     value={metadata.well} 
                     onChange={handleMetadataChange}
                     className="border-b border-black outline-none bg-transparent w-full sm:w-40 text-center uppercase"
@@ -202,7 +204,7 @@ export const DailyInspectionCatIForm: React.FC<Props> = ({ initialData, onSave, 
             </div>
             <div className="flex flex-col sm:flex-row sm:items-end gap-1">
                 <span className="font-bold text-gray-500 uppercase text-xs">Equipo</span>
-                <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="border-b border-black outline-none bg-transparent w-full sm:w-40 text-center uppercase">
+                <select name="equipment" aria-label="Equipo" value={metadata.equipment} onChange={handleMetadataChange} className="border-b border-black outline-none bg-transparent w-full sm:w-40 text-center uppercase">
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
                   <option value="tacker06">TACKER06</option>
@@ -331,7 +333,8 @@ export const DailyInspectionCatIForm: React.FC<Props> = ({ initialData, onSave, 
                   onChange={handleImageUpload} 
                   multiple 
                   accept="image/*" 
-                  className="hidden" 
+                  className="hidden"
+                  aria-label="Agregar fotos de daños o reparaciones"
                />
                <Button size="sm" variant="secondary" onClick={() => fileInputRef.current?.click()}>
                   📷 Adjuntar Fotos

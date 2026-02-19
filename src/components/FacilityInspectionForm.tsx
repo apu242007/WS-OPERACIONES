@@ -177,6 +177,7 @@ export const FacilityInspectionForm: React.FC<Props> = ({ initialData, onSave, o
                 <label className="font-bold w-16 uppercase">BASE:</label>
                 <input 
                   name="base"
+                  aria-label="Base"
                   value={metadata.base}
                   onChange={handleMetadataChange}
                   className="flex-1 border-b border-black border-dotted outline-none bg-transparent py-1"
@@ -187,6 +188,7 @@ export const FacilityInspectionForm: React.FC<Props> = ({ initialData, onSave, o
                 <input 
                   type="date"
                   name="date"
+                  aria-label="Fecha"
                   value={metadata.date}
                   onChange={handleMetadataChange}
                   className="flex-1 border-b border-black border-dotted outline-none bg-transparent py-1"

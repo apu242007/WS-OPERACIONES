@@ -48,8 +48,9 @@ export const FoamSystemForm: React.FC<Props> = ({ initialData, onSave, onCancel 
     setRows(prev => prev.map(row => row.id === id ? { ...row, [field]: value } : row));
   };
 
-  const renderSelect = (id: string, field: keyof FoamSystemRow, value: string) => (
+  const renderSelect = (id: string, field: keyof FoamSystemRow, value: string, label: string) => (
     <select 
+      aria-label={label}
       value={value} 
       onChange={(e) => handleRowChange(id, field, e.target.value)}
       className="w-full h-full bg-transparent outline-none p-1 text-center appearance-none"
@@ -116,6 +117,7 @@ export const FoamSystemForm: React.FC<Props> = ({ initialData, onSave, onCancel 
                 <tr key={row.id} className="hover:bg-gray-50 group border-b border-black">
                   <td className="border-r border-black p-0 h-10">
                     <input 
+                      aria-label="Equipo"
                       className="w-full h-full p-1 outline-none bg-transparent text-center uppercase"
                       value={row.equipment}
                       onChange={(e) => handleRowChange(row.id, 'equipment', e.target.value)}
@@ -124,6 +126,7 @@ export const FoamSystemForm: React.FC<Props> = ({ initialData, onSave, onCancel 
                   <td className="border-r border-black p-0">
                     <input 
                       type="date"
+                      aria-label="Fecha"
                       className="w-full h-full p-1 outline-none bg-transparent text-center text-xs"
                       value={row.date}
                       onChange={(e) => handleRowChange(row.id, 'date', e.target.value)}
@@ -131,22 +134,24 @@ export const FoamSystemForm: React.FC<Props> = ({ initialData, onSave, onCancel 
                   </td>
                   <td className="border-r border-black p-0">
                     <input 
+                      aria-label="Pozo"
                       className="w-full h-full p-1 outline-none bg-transparent text-center uppercase"
                       value={row.well}
                       onChange={(e) => handleRowChange(row.id, 'well', e.target.value)}
                     />
                   </td>
                   <td className="border-r border-black p-0 text-center font-bold bg-gray-50/50 print:bg-transparent">
-                    {renderSelect(row.id, 'pneumaticValve', row.pneumaticValve)}
+                    {renderSelect(row.id, 'pneumaticValve', row.pneumaticValve, 'Válvula neumática')}
                   </td>
                   <td className="border-r border-black p-0 text-center font-bold bg-gray-50/50 print:bg-transparent">
-                    {renderSelect(row.id, 'fluidLevel', row.fluidLevel)}
+                    {renderSelect(row.id, 'fluidLevel', row.fluidLevel, 'Nivel de fluido')}
                   </td>
                   <td className="border-r border-black p-0 text-center font-bold bg-gray-50/50 print:bg-transparent">
-                    {renderSelect(row.id, 'reliefValve', row.reliefValve)}
+                    {renderSelect(row.id, 'reliefValve', row.reliefValve, 'Válvula de alivio')}
                   </td>
                   <td className="border-r border-black p-0">
                     <input 
+                      aria-label="Tiempo de descarga"
                       className="w-full h-full p-1 outline-none bg-transparent text-center"
                       value={row.dischargeTime}
                       onChange={(e) => handleRowChange(row.id, 'dischargeTime', e.target.value)}
@@ -154,6 +159,7 @@ export const FoamSystemForm: React.FC<Props> = ({ initialData, onSave, onCancel 
                   </td>
                   <td className="border-r border-black p-0">
                     <input 
+                      aria-label="Observaciones"
                       className="w-full h-full p-1 outline-none bg-transparent"
                       value={row.observations}
                       onChange={(e) => handleRowChange(row.id, 'observations', e.target.value)}
@@ -161,6 +167,7 @@ export const FoamSystemForm: React.FC<Props> = ({ initialData, onSave, onCancel 
                   </td>
                   <td className="border-r border-black p-0">
                      <input 
+                      aria-label="Estado de sistema"
                       className="w-full h-full p-1 outline-none bg-transparent text-center"
                       value={row.systemState}
                       onChange={(e) => handleRowChange(row.id, 'systemState', e.target.value)}
@@ -169,6 +176,7 @@ export const FoamSystemForm: React.FC<Props> = ({ initialData, onSave, onCancel 
                   <td className="border-r border-black p-0">
                      <input 
                       type="date"
+                      aria-label="Próxima revisión semestral"
                       className="w-full h-full p-1 outline-none bg-transparent text-center text-xs"
                       value={row.nextRevision}
                       onChange={(e) => handleRowChange(row.id, 'nextRevision', e.target.value)}
