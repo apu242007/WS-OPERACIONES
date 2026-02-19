@@ -156,7 +156,7 @@ export const SignaturePad: React.FC<Props> = ({ label, value, onChange, disabled
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"></path></svg>
               </button>
             </div>
-            <div className="p-4 bg-gray-100 flex-1 touch-none select-none relative" style={{minHeight: '300px'}}>
+            <div className="p-4 bg-gray-100 flex-1 touch-none select-none relative min-h-[300px]">
               <canvas
                 ref={canvasRef}
                 className="bg-white shadow-sm border border-gray-300 rounded touch-none cursor-crosshair"
