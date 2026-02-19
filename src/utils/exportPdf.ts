@@ -1,6 +1,7 @@
 
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { uploadFileToDrive } from '../lib/uploadToDrive';
 
 interface ExportPdfOptions {
   filename?: string;
@@ -92,6 +93,20 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void>
     }
 
     pdf.save(`${filename}.pdf`);
+
+    // Subir automaticamente a Google Drive
+    try {
+      const pdfBlob = pdf.output('blob');
+      const pdfFile = new File(
+        [pdfBlob],
+        `${filename}_${new Date().toISOString().slice(0,10)}.pdf`,
+        { type: 'application/pdf' }
+      );
+      await uploadFileToDrive(pdfFile);
+      console.log('PDF subido a Google Drive correctamente');
+    } catch (driveError) {
+      console.error('Error subiendo PDF a Drive:', driveError);
+    }
   } catch (error) {
     console.error('Error generando PDF:', error);
     alert('Error al generar el PDF. Intente nuevamente.');
