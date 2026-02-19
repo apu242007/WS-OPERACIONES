@@ -1,5 +1,5 @@
 
-import { uploadFileToDrive } from '../lib/uploadToDrive';
+import { uploadFile } from '../lib/uploadFile';
 import React, { useState, useRef } from 'react';
 import { EmergencyDrillReport, EmergencyDrillMetadata, EmergencyDrillData } from '../types';
 import { Button } from './ui/Button';
@@ -106,7 +106,7 @@ export const EmergencyDrillForm: React.FC<Props> = ({ initialData, onSave, onCan
       const files = Array.from(e.target.files);
       setUploadingImages(true);
       try {
-        const urls = await Promise.all(files.map((file) => uploadFileToDrive(file)));
+        const urls = await Promise.all(files.map((file) => uploadFile(file)));
         setImages(prev => [...prev, ...urls]);
       } catch (error) {
         console.error("Error subiendo imagen:", error);

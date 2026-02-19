@@ -53,7 +53,7 @@ async function compressImage(file: File): Promise<File> {
  * Sube un archivo a Supabase Storage (bucket "reports") y devuelve la URL pública.
  * Las imágenes se comprimen automáticamente antes de subir.
  */
-export async function uploadFileToDrive(
+export async function uploadFile(
   file: File,
   customFileName?: string
 ): Promise<string> {

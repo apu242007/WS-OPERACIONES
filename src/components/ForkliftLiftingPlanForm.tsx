@@ -1,5 +1,5 @@
 
-import { uploadFileToDrive } from '../lib/uploadToDrive';
+import { uploadFile } from '../lib/uploadFile';
 import React, { useState, useRef } from 'react';
 import { ForkliftLiftingPlanReport, LiftingPlanCheckItem } from '../types';
 import { Button } from './ui/Button';
@@ -86,7 +86,7 @@ export const ForkliftLiftingPlanForm: React.FC<Props> = ({ initialData, onSave, 
     const file = e.target.files?.[0];
     if (file) {
       try {
-        const url = await uploadFileToDrive(file);
+        const url = await uploadFile(file);
         setSketch(url);
       } catch (error) {
         console.error("Error subiendo imagen:", error);

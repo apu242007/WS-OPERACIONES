@@ -1,7 +1,7 @@
 
 import React, { useState, useRef } from 'react';
 import { LocationHandoverReport, LocationHandoverMetadata, LayoutElement } from '../types';
-import { uploadFileToDrive } from '../lib/uploadToDrive';
+import { uploadFile } from '../lib/uploadFile';
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
@@ -61,7 +61,7 @@ export const LocationHandoverForm: React.FC<Props> = ({ initialData, onSave, onC
     if (e.target.files && e.target.files[0]) {
       const files = Array.from(e.target.files);
       try {
-        const urls = await Promise.all(files.map((file) => uploadFileToDrive(file)));
+        const urls = await Promise.all(files.map((file) => uploadFile(file)));
         setPhotos(prev => [...prev, ...urls]);
       } catch (err) {
         console.error('Error subiendo foto a Drive:', err);
