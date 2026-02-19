@@ -44,10 +44,15 @@ export const LocationHandoverForm: React.FC<Props> = ({ initialData, onSave, onC
   };
 
   const handleSignatureChange = (role: 'rigManager' | 'companyRepresentative', dataUrl: string | undefined) => {
-    setSignatures(prev => ({
-      ...prev,
-      [role]: dataUrl ? { data: dataUrl, timestamp: new Date().toISOString() } : undefined
-    }));
+    setSignatures(prev => {
+      const next = { ...prev };
+      if (dataUrl) {
+        next[role] = { data: dataUrl, timestamp: new Date().toISOString() };
+      } else {
+        delete next[role];
+      }
+      return next;
+    });
   };
 
   // Generic Image Uploader
