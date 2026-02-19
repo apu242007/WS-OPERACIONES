@@ -6,10 +6,10 @@ import { uploadFileToDrive } from '../lib/uploadToDrive';
 interface ExportPdfOptions {
   filename?: string;
   elementId?: string;
+  /** 'p' | 'l' — if omitted, auto-detected from canvas dimensions */
   orientation?: 'p' | 'l';
   scale?: number;
 }
-
 
 interface FormSummary {
   fecha?: string;
@@ -40,7 +40,7 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void>
   const {
     filename = 'reporte',
     elementId = 'print-area',
-    orientation = 'p',
+    orientation: orientationProp,
     scale = 2,
   } = options;
 
@@ -64,9 +64,9 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void>
   try {
     // Hide non-printable elements temporarily
     const noPrintEls = document.querySelectorAll<HTMLElement>('.no-print');
-    noPrintEls.forEach(el => { 
-        el.dataset.prevDisplay = el.style.display; 
-        el.style.display = 'none'; 
+    noPrintEls.forEach(el => {
+      el.dataset.prevDisplay = el.style.display;
+      el.style.display = 'none';
     });
 
     // Force background color on element to ensure white background
@@ -81,51 +81,64 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void>
       windowWidth: element.scrollWidth,
       windowHeight: element.scrollHeight,
       onclone: (clonedDoc) => {
-          // Additional safety for cloned element
-          const clonedElement = clonedDoc.getElementById(elementId);
-          if (clonedElement) {
-              clonedElement.style.backgroundColor = '#ffffff';
-          }
+        const clonedElement = clonedDoc.getElementById(elementId);
+        if (clonedElement) {
+          clonedElement.style.backgroundColor = '#ffffff';
+        }
       }
     });
 
     // Restore elements
     element.style.backgroundColor = originalBg;
-    noPrintEls.forEach(el => { 
-        el.style.display = el.dataset.prevDisplay || ''; 
+    noPrintEls.forEach(el => {
+      el.style.display = el.dataset.prevDisplay || '';
     });
 
-    const imgData = canvas.toDataURL('image/png');
+    // Auto-detect orientation from canvas aspect ratio if not explicitly provided
+    // canvas.width > canvas.height means the content is wider than tall → landscape
+    const autoOrientation: 'p' | 'l' = canvas.width > canvas.height ? 'l' : 'p';
+    const orientation: 'p' | 'l' = orientationProp ?? autoOrientation;
+
     const pdf = new jsPDF({
       orientation,
       unit: 'mm',
       format: 'a4',
     });
 
-    const pageWidth = pdf.internal.pageSize.getWidth();
-    const pageHeight = pdf.internal.pageSize.getHeight();
-    const imgWidth = pageWidth;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    const pageWidthMm  = pdf.internal.pageSize.getWidth();
+    const pageHeightMm = pdf.internal.pageSize.getHeight();
 
-    // First page
-    let yOffset = 0;
-    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+    // Scale the image so its width fits exactly within the page width.
+    // imgHeight is the total rendered height in mm at this scale.
+    const imgWidthMm  = pageWidthMm;
+    const imgHeightMm = (canvas.height * imgWidthMm) / canvas.width;
 
-    // Additional pages: shift image up by one pageHeight each time
-    while (yOffset + pageHeight < imgHeight) {
-      yOffset += pageHeight;
+    // Render first page
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, imgWidthMm, imgHeightMm);
+
+    // Render additional pages by shifting the image upward
+    let pagesRendered = 1;
+    while (pagesRendered * pageHeightMm < imgHeightMm) {
       pdf.addPage();
-      pdf.addImage(imgData, 'PNG', 0, -yOffset, imgWidth, imgHeight);
+      pdf.addImage(
+        canvas.toDataURL('image/png'),
+        'PNG',
+        0,
+        -(pagesRendered * pageHeightMm),
+        imgWidthMm,
+        imgHeightMm
+      );
+      pagesRendered++;
     }
 
     pdf.save(`${filename}.pdf`);
 
-    // Subir automaticamente a Google Drive
+    // Upload to Google Drive
     try {
       const pdfBlob = pdf.output('blob');
       const pdfFile = new File(
         [pdfBlob],
-        `${filename}_${new Date().toISOString().slice(0,10)}.pdf`,
+        `${filename}_${new Date().toISOString().slice(0, 10)}.pdf`,
         { type: 'application/pdf' }
       );
       await uploadFileToDrive(pdfFile);
@@ -134,7 +147,7 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void>
       console.error('Error subiendo PDF a Drive:', driveError);
     }
 
-    // Enviar email
+    // Send email
     try {
       const summary = extractSummaryFromDOM(elementId);
       const pdfBase64 = pdf.output('datauristring').split(',')[1];
@@ -150,9 +163,9 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void>
           filename,
           formType: filename,
           summary: {
-            fecha: summary.fecha ?? new Date().toLocaleDateString('es-AR'),
-            pozo: summary.pozo ?? '',
-            equipo: summary.equipo ?? '',
+            fecha:    summary.fecha    ?? new Date().toLocaleDateString('es-AR'),
+            pozo:     summary.pozo     ?? '',
+            equipo:   summary.equipo   ?? '',
             operador: summary.operador ?? '',
           }
         }),
@@ -161,6 +174,7 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void>
     } catch (emailError) {
       console.error('Error enviando email:', emailError);
     }
+
   } catch (error) {
     console.error('Error generando PDF:', error);
     alert('Error al generar el PDF. Intente nuevamente.');
