@@ -92,9 +92,11 @@ async function uploadFileToDrive(
   fileName: string,
   fileContentBase64: string,
   mimeType: string,
-  folderId: string,
+  folderId?: string,
 ): Promise<string> {
-  const metadata = JSON.stringify({ name: fileName, parents: [folderId] });
+  const metadata = JSON.stringify(
+    folderId ? { name: fileName, parents: [folderId] } : { name: fileName }
+  );
   const boundary = 'foo_bar_baz_boundary_xyz';
 
   // Multipart body: metadata + binary (base64-decoded)
@@ -168,7 +170,7 @@ serve(async (req) => {
     if (!fileName) missing.push('fileName');
     if (!fileContent) missing.push('fileContent');
     if (!mimeType) missing.push('mimeType');
-    if (!folderId) missing.push('folderId');
+    // folderId is optional — if omitted, file goes to service account root
     if (missing.length > 0) {
       const msg = `Missing required fields: ${missing.join(', ')}`;
       console.error('[upload-to-drive]', msg);
@@ -219,7 +221,7 @@ serve(async (req) => {
       fileName!,
       fileContent!,
       mimeType!,
-      folderId!,
+      folderId || undefined,
     );
 
     const fileUrl = `https://drive.google.com/file/d/${fileId}/view`;
