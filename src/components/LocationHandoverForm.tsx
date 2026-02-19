@@ -179,7 +179,8 @@ export const LocationHandoverForm: React.FC<Props> = ({ initialData, onSave, onC
             <div className="font-bold uppercase text-sm">REGISTRO FOTOGRÁFICO ADICIONAL</div>
             <div className="no-print">
                <input 
-                  type="file" 
+                  type="file"
+                  aria-label="Agregar fotos"
                   ref={fileInputRef} 
                   onChange={(e) => handleImageUpload(e, 'photos')} 
                   multiple 
