@@ -1,14 +1,10 @@
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from './supabase';
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://exgqsbvcyghrpmlawmaa.supabase.co';
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV4Z3FzYnZjeWdocnBtbGF3bWFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3MDQzMjEsImV4cCI6MjA4NjI4MDMyMX0.KlwrEfx9X5zQChoX84vjDViS9icGjkjPu_3W1SGh22k';
 const BUCKET = 'reports';
 
 // Max dimensions and quality for image compression
 const MAX_IMAGE_PX = 1920;
 const IMAGE_QUALITY = 0.82; // JPEG quality — buen balance tamaño/calidad
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 /**
  * Comprime una imagen usando canvas antes de subirla.
@@ -61,9 +57,6 @@ export async function uploadFileToDrive(
   file: File,
   customFileName?: string
 ): Promise<string> {
-  if (!SUPABASE_URL)      console.error('[uploadFile] VITE_SUPABASE_URL no está definida');
-  if (!SUPABASE_ANON_KEY) console.error('[uploadFile] VITE_SUPABASE_ANON_KEY no está definida');
-
   // Comprimir imágenes antes de subir
   const fileToUpload = await compressImage(file);
 
