@@ -43,7 +43,7 @@ export const MastAssemblyRolesForm: React.FC<Props> = ({ initialData, onSave, on
   const [section2Observations, setSection2Observations] = useState(initialData?.section2Observations || '');
   const [signatures, setSignatures] = useState(initialData?.signatures || {});
 
-  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setMetadata(prev => ({ ...prev, [name]: value }));
   };

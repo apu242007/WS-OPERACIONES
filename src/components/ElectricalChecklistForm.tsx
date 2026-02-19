@@ -75,12 +75,12 @@ export const ElectricalChecklistForm: React.FC<Props> = ({ initialData, onSave, 
     return allRows;
   });
 
-  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setMetadata(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleAnalyzerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAnalyzerChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setAnalyzer(prev => ({ ...prev, [name]: value }));
   };
@@ -96,10 +96,15 @@ export const ElectricalChecklistForm: React.FC<Props> = ({ initialData, onSave, 
   };
 
   const handleSignatureChange = (role: 'electrician' | 'supervisor', dataUrl: string | undefined) => {
-    setSignatures(prev => ({
-      ...prev,
-      [role]: dataUrl ? { data: dataUrl, timestamp: new Date().toISOString() } : undefined
-    }));
+    setSignatures(prev => {
+      const next = { ...prev };
+      if (dataUrl) {
+        next[role] = { data: dataUrl, timestamp: new Date().toISOString() };
+      } else {
+        delete next[role];
+      }
+      return next;
+    });
   };
 
   const getRow = (category: string, item: string) => rows.find(r => r.category === category && r.item === item) || { status: null };

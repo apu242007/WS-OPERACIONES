@@ -86,7 +86,7 @@ export const OutsourcedOperationsForm: React.FC<Props> = ({ initialData, onSave,
 
   const [rows, setRows] = useState<ChecklistRowData[]>(initializeRows());
 
-  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setMetadata(prev => ({ ...prev, [name]: value }));
   };
@@ -96,10 +96,15 @@ export const OutsourcedOperationsForm: React.FC<Props> = ({ initialData, onSave,
   };
 
   const handleSignatureChange = (role: 'subContractor' | 'responsible', dataUrl: string | undefined) => {
-    setSignatures(prev => ({
-      ...prev,
-      [role]: dataUrl ? { data: dataUrl, timestamp: new Date().toISOString() } : undefined
-    }));
+    setSignatures(prev => {
+      const next = { ...prev };
+      if (dataUrl) {
+        next[role] = { data: dataUrl, timestamp: new Date().toISOString() };
+      } else {
+        delete next[role];
+      }
+      return next;
+    });
   };
 
   const getRow = (id: string) => rows.find(r => r.id === id) || { value: null, observation: '' };

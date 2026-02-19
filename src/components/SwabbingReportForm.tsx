@@ -54,7 +54,7 @@ export const SwabbingReportForm: React.FC<Props> = ({ initialData, onSave, onCan
     }
   };
 
-  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setMetadata(prev => ({ ...prev, [name]: value }));
   };

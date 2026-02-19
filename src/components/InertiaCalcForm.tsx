@@ -31,7 +31,7 @@ export const InertiaCalcForm: React.FC<Props> = ({ initialData, onSave, onCancel
 
   const [signature, setSignature] = useState(initialData?.signature);
 
-  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setMetadata(prev => ({ ...prev, [name]: value }));
   };

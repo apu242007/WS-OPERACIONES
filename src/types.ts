@@ -630,6 +630,7 @@ export interface AppState {
   activeDroppedObjectsReport: DroppedObjectsReport | null;
   activeTubingMeasurementReport: TubingMeasurementReport | null;
   activeLocationHandoverReport: LocationHandoverReport | null;
+  activeATSReport: ATSReport | null;
 
   // Lists
   reports: DailyReport[];

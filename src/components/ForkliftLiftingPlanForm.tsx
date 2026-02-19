@@ -71,10 +71,15 @@ export const ForkliftLiftingPlanForm: React.FC<Props> = ({ initialData, onSave, 
   };
 
   const handleSignatureChange = (role: 'supervisor' | 'executor', dataUrl: string | undefined) => {
-    setSignatures(prev => ({
-      ...prev,
-      [role]: dataUrl ? { data: dataUrl, timestamp: new Date().toISOString() } : undefined
-    }));
+    setSignatures(prev => {
+      const next = { ...prev };
+      if (dataUrl) {
+        next[role] = { data: dataUrl, timestamp: new Date().toISOString() };
+      } else {
+        delete next[role];
+      }
+      return next;
+    });
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {

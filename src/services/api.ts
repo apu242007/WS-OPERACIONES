@@ -21,7 +21,7 @@ import { supabase } from './supabaseClient';
 // Helper to create a generic service for a report type
 function createService<T extends { id: string }>(tableName: string) {
   return {
-    getAll: async (): Promise<T[]> => {
+    getAll: async (_userId?: string, _isAdmin?: boolean): Promise<T[]> => {
       try {
         const { data, error } = await supabase.from(tableName).select('*');
         if (error) {

@@ -86,7 +86,7 @@ import {
   customerCustodyService, ipcrService, accumulatorTestService, performanceEvaluationService, bopConnectionService,
   managerialVisitService, towerPressureService, mastAssemblyRolesService, preAssemblyChecklistService, wasteSignService,
   wellFillingService, oilChangeService, mechanicalChecklistService, flareChecklistService, emergencyDrillService, dailyInspectionCatIService,
-  droppedObjectsService, tubingMeasurementService, locationHandoverService
+  droppedObjectsService, tubingMeasurementService, locationHandoverService, atsService
 } from './services/api';
 
 const AppContent = () => {
@@ -148,6 +148,7 @@ const AppContent = () => {
     activeDroppedObjectsReport: null,
     activeTubingMeasurementReport: null,
     activeLocationHandoverReport: null,
+    activeATSReport: null,
 
     // Lists
     reports: [],

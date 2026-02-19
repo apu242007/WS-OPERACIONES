@@ -37,7 +37,7 @@ export const DailyOperationsForm: React.FC<Props> = ({ initialData, onSave, onCa
     { ...EmptyEntry, id: crypto.randomUUID() }
   ]);
 
-  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setMetadata(prev => ({ ...prev, [name]: value }));
   };

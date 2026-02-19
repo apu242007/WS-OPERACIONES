@@ -58,7 +58,7 @@ export const ManagerialVisitForm: React.FC<Props> = ({ initialData, onSave, onCa
   
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setMetadata(prev => ({ ...prev, [name]: value }));
   };
@@ -68,10 +68,15 @@ export const ManagerialVisitForm: React.FC<Props> = ({ initialData, onSave, onCa
   };
 
   const handleSignatureChange = (role: 'auditor1' | 'auditor2' | 'supervisor', dataUrl: string | undefined) => {
-    setSignatures(prev => ({
-      ...prev,
-      [role]: dataUrl ? { data: dataUrl, timestamp: new Date().toISOString() } : undefined
-    }));
+    setSignatures(prev => {
+      const next = { ...prev };
+      if (dataUrl) {
+        next[role] = { data: dataUrl, timestamp: new Date().toISOString() };
+      } else {
+        delete next[role];
+      }
+      return next;
+    });
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {

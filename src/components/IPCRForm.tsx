@@ -192,10 +192,15 @@ export const IPCRForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => 
   const toggleEpp = (id: string) => setEpp(prev => ({ ...prev, [id]: !prev[id] }));
 
   const handleSignatureDataChange = (role: 'receiver' | 'approver' | 'shi', dataUrl: string | undefined) => {
-    setSignatures(prev => ({
-        ...prev,
-        [role]: dataUrl ? { data: dataUrl, timestamp: new Date().toISOString() } : undefined
-    }));
+    setSignatures(prev => {
+      const next = { ...prev };
+      if (dataUrl) {
+        next[role] = { data: dataUrl, timestamp: new Date().toISOString() };
+      } else {
+        delete next[role];
+      }
+      return next;
+    });
   };
 
   const handleSignatureNameChange = (role: 'receiverName' | 'approverName' | 'shiName', name: string) => {

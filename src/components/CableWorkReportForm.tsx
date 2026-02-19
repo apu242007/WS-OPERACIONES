@@ -61,7 +61,7 @@ export const CableWorkReportForm: React.FC<Props> = ({ initialData, onSave, onCa
     { ...EmptyRow, id: crypto.randomUUID() }
   ]);
 
-  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setMetadata(prev => ({ ...prev, [name]: value }));
   };

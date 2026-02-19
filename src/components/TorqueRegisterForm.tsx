@@ -42,7 +42,7 @@ export const TorqueRegisterForm: React.FC<Props> = ({ initialData, onSave, onCan
 
   const [signatures, setSignatures] = useState(initialData?.signatures || {});
 
-  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setMetadata(prev => ({ ...prev, [name]: value }));
   };
@@ -62,10 +62,15 @@ export const TorqueRegisterForm: React.FC<Props> = ({ initialData, onSave, onCan
   };
 
   const handleSignatureChange = (role: 'responsible1' | 'responsible2', dataUrl: string | undefined) => {
-    setSignatures(prev => ({
-      ...prev,
-      [role]: dataUrl ? { data: dataUrl, timestamp: new Date().toISOString() } : undefined
-    }));
+    setSignatures(prev => {
+      const next = { ...prev };
+      if (dataUrl) {
+        next[role] = { data: dataUrl, timestamp: new Date().toISOString() };
+      } else {
+        delete next[role];
+      }
+      return next;
+    });
   };
 
   return (

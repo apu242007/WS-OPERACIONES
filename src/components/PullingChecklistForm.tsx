@@ -203,7 +203,7 @@ export const PullingChecklistForm: React.FC<Props> = ({ initialData, onSave, onC
 
   const [signature, setSignature] = useState(initialData?.signature);
 
-  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setMetadata(prev => ({ ...prev, [name]: value }));
   };

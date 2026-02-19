@@ -39,7 +39,7 @@ export const StilsonControlForm: React.FC<Props> = ({ initialData, onSave, onCan
     { ...EmptyRow, id: crypto.randomUUID() }
   ]);
 
-  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setMetadata(prev => ({ ...prev, [name]: value }));
   };

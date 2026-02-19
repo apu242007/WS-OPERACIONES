@@ -85,7 +85,7 @@ export const PlatformInspectionForm: React.FC<Props> = ({ initialData, onSave, o
   const [observations, setObservations] = useState(initialData?.observations || '');
   const [signatures, setSignatures] = useState(initialData?.signatures || {});
 
-  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setMetadata(prev => ({ ...prev, [name]: value }));
   };
@@ -95,10 +95,15 @@ export const PlatformInspectionForm: React.FC<Props> = ({ initialData, onSave, o
   };
 
   const handleSignatureChange = (role: 'operator' | 'sectorResponsible', dataUrl: string | undefined) => {
-    setSignatures(prev => ({
-      ...prev,
-      [role]: dataUrl ? { data: dataUrl, timestamp: new Date().toISOString() } : undefined
-    }));
+    setSignatures(prev => {
+      const next = { ...prev };
+      if (dataUrl) {
+        next[role] = { data: dataUrl, timestamp: new Date().toISOString() };
+      } else {
+        delete next[role];
+      }
+      return next;
+    });
   };
 
   const renderSection = (section: { title: string, items: string[] }) => (

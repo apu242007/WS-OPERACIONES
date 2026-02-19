@@ -39,7 +39,7 @@ export const ATSForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => {
     setEpp(prev => ({ ...prev, [name]: !prev[name] }));
   };
 
-  const handleEppText = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEppText = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setEpp(prev => ({ ...prev, [name]: value }));
   };
