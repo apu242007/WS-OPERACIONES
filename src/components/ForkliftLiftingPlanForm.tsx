@@ -89,9 +89,7 @@ export const ForkliftLiftingPlanForm: React.FC<Props> = ({ initialData, onSave, 
       }
     }
   };
-      reader.readAsDataURL(file);
-    }
-  };
+
 
   const renderSection = (title: string, content: React.ReactNode, id: string) => (
     <details className="border border-gray-200 rounded-lg overflow-hidden mb-3 break-inside-avoid bg-white" open>
