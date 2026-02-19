@@ -52,7 +52,7 @@ export const WelcomeSignForm: React.FC<Props> = ({ initialData, onSave, onCancel
                </div>
                <div>
                   <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Equipo N°</label>
-                  <select name="rigNumber" value={data.rigNumber} onChange={handleChange} className="w-full p-2 border rounded">
+                  <select name="rigNumber" aria-label="Equipo N°" value={data.rigNumber} onChange={handleChange} className="w-full p-2 border rounded">
 <option value="tacker01">TACKER01</option>
 <option value="tacker05">TACKER05</option>
 <option value="tacker06">TACKER06</option>
@@ -68,7 +68,7 @@ export const WelcomeSignForm: React.FC<Props> = ({ initialData, onSave, onCancel
                </div>
                <div>
                   <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Fecha (Control)</label>
-                  <input type="date" name="date" value={data.date} onChange={handleChange} className="w-full p-2 border rounded" />
+                  <input type="date" name="date" aria-label="Fecha de Control" value={data.date} onChange={handleChange} className="w-full p-2 border rounded" />
                </div>
             </div>
             <div className="space-y-4">
@@ -117,7 +117,7 @@ export const WelcomeSignForm: React.FC<Props> = ({ initialData, onSave, onCancel
                    <div className="flex-1 flex flex-col items-center justify-center py-4">
                        
                        {/* Giant BIENVENIDOS */}
-                       <div className="text-[7rem] leading-none font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-green-600 to-red-600 drop-shadow-sm select-none" style={{ textShadow: '2px 2px 0px rgba(0,0,0,0.1)' }}>
+                       <div className="text-[7rem] leading-none font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-green-600 to-red-600 drop-shadow-sm select-none [text-shadow:2px_2px_0px_rgba(0,0,0,0.1)]">
                           BIENVENIDOS
                        </div>
 

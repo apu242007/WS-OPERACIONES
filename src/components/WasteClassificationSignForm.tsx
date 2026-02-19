@@ -142,7 +142,7 @@ export const WasteClassificationSignForm: React.FC<Props> = ({ initialData, onSa
             <div className="space-y-4">
                <div>
                   <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Color / Tipo</label>
-                  <select name="type" value={data.type} onChange={handleChange} className="w-full p-2 border rounded font-bold">
+                  <select name="type" aria-label="Color / Tipo" value={data.type} onChange={handleChange} className="w-full p-2 border rounded font-bold">
                      <option value="AMARILLO">Amarillo (Plásticos)</option>
                      <option value="AZUL">Azul (Metálicos)</option>
                      <option value="ROJO">Rojo (Peligrosos)</option>
