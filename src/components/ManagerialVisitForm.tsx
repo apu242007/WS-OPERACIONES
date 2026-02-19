@@ -1,4 +1,5 @@
 
+import { uploadFileToDrive } from '../lib/uploadToDrive';
 import React, { useState, useRef } from 'react';
 import { ManagerialVisitReport, ManagerialVisitMetadata, ManagerialVisitItem } from '../types';
 import { Button } from './ui/Button';
@@ -52,6 +53,7 @@ export const ManagerialVisitForm: React.FC<Props> = ({ initialData, onSave, onCa
 
   const [conclusions, setConclusions] = useState(initialData?.conclusions || '');
   const [images, setImages] = useState<string[]>(initialData?.images || []);
+  const [uploadingImages, setUploadingImages] = useState(false);
   const [signatures, setSignatures] = useState(initialData?.signatures || {});
   
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -72,16 +74,21 @@ export const ManagerialVisitForm: React.FC<Props> = ({ initialData, onSave, onCa
     }));
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const files = Array.from(e.target.files);
-      files.forEach((file: any) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          if (reader.result) {
-            setImages(prev => [...prev, reader.result as string]);
-          }
-        };
+      setUploadingImages(true);
+      try {
+        const urls = await Promise.all(files.map((file) => uploadFileToDrive(file)));
+        setImages(prev => [...prev, ...urls]);
+      } catch (error) {
+        console.error("Error subiendo imagen:", error);
+        alert("Error al subir la imagen. Intenta de nuevo.");
+      } finally {
+        setUploadingImages(false);
+      }
+    }
+  };
         reader.readAsDataURL(file);
       });
     }

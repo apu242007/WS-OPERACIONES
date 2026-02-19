@@ -1,4 +1,5 @@
 
+import { uploadFileToDrive } from '../lib/uploadToDrive';
 import React, { useState, useRef } from 'react';
 import { ForkliftLiftingPlanReport, LiftingPlanCheckItem } from '../types';
 import { Button } from './ui/Button';
@@ -76,13 +77,18 @@ export const ForkliftLiftingPlanForm: React.FC<Props> = ({ initialData, onSave, 
     }));
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (reader.result) setSketch(reader.result as string);
-      };
+      try {
+        const url = await uploadFileToDrive(file);
+        setSketch(url);
+      } catch (error) {
+        console.error("Error subiendo imagen:", error);
+        alert("Error al subir la imagen. Intenta de nuevo.");
+      }
+    }
+  };
       reader.readAsDataURL(file);
     }
   };

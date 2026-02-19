@@ -1,4 +1,5 @@
 
+import { uploadFileToDrive } from '../lib/uploadToDrive';
 import React, { useState, useRef } from 'react';
 import { EmergencyDrillReport, EmergencyDrillMetadata, EmergencyDrillData } from '../types';
 import { Button } from './ui/Button';
@@ -76,6 +77,7 @@ export const EmergencyDrillForm: React.FC<Props> = ({ initialData, onSave, onCan
   });
 
   const [images, setImages] = useState<string[]>(initialData?.images || []);
+  const [uploadingImages, setUploadingImages] = useState(false);
   const [signature, setSignature] = useState(initialData?.signature);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -99,16 +101,21 @@ export const EmergencyDrillForm: React.FC<Props> = ({ initialData, onSave, onCan
     });
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const files = Array.from(e.target.files);
-      files.forEach((file: any) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          if (reader.result) {
-            setImages(prev => [...prev, reader.result as string]);
-          }
-        };
+      setUploadingImages(true);
+      try {
+        const urls = await Promise.all(files.map((file) => uploadFileToDrive(file)));
+        setImages(prev => [...prev, ...urls]);
+      } catch (error) {
+        console.error("Error subiendo imagen:", error);
+        alert("Error al subir la imagen. Intenta de nuevo.");
+      } finally {
+        setUploadingImages(false);
+      }
+    }
+  };
         reader.readAsDataURL(file);
       });
     }

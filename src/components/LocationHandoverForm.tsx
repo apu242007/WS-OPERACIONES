@@ -1,4 +1,5 @@
 
+import { uploadFileToDrive } from '../lib/uploadToDrive';
 import React, { useState, useRef } from 'react';
 import { LocationHandoverReport, LocationHandoverMetadata, LayoutElement } from '../types';
 import { Button } from './ui/Button';
@@ -29,6 +30,7 @@ export const LocationHandoverForm: React.FC<Props> = ({ initialData, onSave, onC
   ]);
   const [observations, setObservations] = useState(initialData?.observations || '');
   const [photos, setPhotos] = useState<string[]>(initialData?.photos || []);
+  const [uploadingImages, setUploadingImages] = useState(false);
   const [signatures, setSignatures] = useState(initialData?.signatures || {});
   
   const fileInputRef = useRef<HTMLInputElement>(null);
