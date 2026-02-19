@@ -1,5 +1,6 @@
 
 import React, { useState, useRef } from 'react';
+import { uploadFileToDrive } from '../lib/uploadToDrive';
 import { DailyInspectionCatIReport, DailyInspectionCatIMetadata, DailyInspectionCatIRow, DailyInspectionCatIAdditionalRow } from '../types';
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
@@ -95,6 +96,7 @@ export const DailyInspectionCatIForm: React.FC<Props> = ({ initialData, onSave, 
 
   const [signatures, setSignatures] = useState(initialData?.signatures || {});
   const [images, setImages] = useState<string[]>(initialData?.images || []);
+  const [uploadingImages, setUploadingImages] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleMetadataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -117,18 +119,19 @@ export const DailyInspectionCatIForm: React.FC<Props> = ({ initialData, onSave, 
     }));
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const files = Array.from(e.target.files);
-      files.forEach((file: any) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          if (reader.result) {
-            setImages(prev => [...prev, reader.result as string]);
-          }
-        };
-        reader.readAsDataURL(file);
-      });
+      setUploadingImages(true);
+      try {
+        const urls = await Promise.all(files.map((file) => uploadFileToDrive(file)));
+        setImages(prev => [...prev, ...urls]);
+      } catch (error) {
+        console.error('Error subiendo imagen:', error);
+        alert('Error al subir la imagen. Intentá de nuevo.');
+      } finally {
+        setUploadingImages(false);
+      }
     }
   };
 
