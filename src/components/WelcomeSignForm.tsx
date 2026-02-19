@@ -117,7 +117,7 @@ export const WelcomeSignForm: React.FC<Props> = ({ initialData, onSave, onCancel
                    <div className="flex-1 flex flex-col items-center justify-center py-4">
                        
                        {/* Giant BIENVENIDOS */}
-                       <div className="text-[7rem] leading-none font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-green-600 to-red-600 drop-shadow-sm select-none [text-shadow:2px_2px_0px_rgba(0,0,0,0.1)]">
+                       <div className="pdf-gradient-text text-[7rem] leading-none font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-green-600 to-red-600 drop-shadow-sm select-none [text-shadow:2px_2px_0px_rgba(0,0,0,0.1)]">
                           BIENVENIDOS
                        </div>
 

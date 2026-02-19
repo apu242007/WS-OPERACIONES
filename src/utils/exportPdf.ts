@@ -79,6 +79,9 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<Expor
       el.style.display = 'none';
     });
 
+    // Wait for fonts to be fully loaded before capture
+    await document.fonts.ready;
+
     // --- Decide orientation BEFORE capture, based on real scroll dimensions ---
     const contentW = element.scrollWidth;
     const contentH = element.scrollHeight;
@@ -101,19 +104,39 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<Expor
     element.style.overflow = 'visible';
     element.style.backgroundColor = '#ffffff';
 
+    // Use actual window dimensions — NOT the element size — so all Tailwind
+    // responsive classes, viewport units, and CSS layout stay correct.
+    const winW = window.innerWidth;
+    const winH = window.innerHeight;
+
     const canvas = await html2canvas(element, {
       scale,
       useCORS: true,
       logging: false,
       backgroundColor: '#ffffff',
-      windowWidth: contentW,
-      windowHeight: contentH,
+      windowWidth: winW,
+      windowHeight: winH,
       onclone: (clonedDoc) => {
         const clonedElement = clonedDoc.getElementById(elementId);
         if (clonedElement) {
           clonedElement.style.width = contentW + 'px';
           clonedElement.style.overflow = 'visible';
           clonedElement.style.backgroundColor = '#ffffff';
+
+          // html2canvas cannot render CSS background-clip:text (Tailwind
+          // text-transparent + bg-clip-text). Replace transparent fill with a
+          // solid colour so text remains visible instead of disappearing.
+          //
+          // Target both: dedicated .pdf-gradient-text class AND any element
+          // that Tailwind marks as text-transparent (color:transparent).
+          clonedElement.querySelectorAll<HTMLElement>('.pdf-gradient-text, .text-transparent')
+            .forEach(el => {
+              el.style.setProperty('-webkit-background-clip', 'unset', 'important');
+              el.style.setProperty('background-clip', 'unset', 'important');
+              el.style.setProperty('-webkit-text-fill-color', 'unset', 'important');
+              el.style.setProperty('color', '#1e3a8a', 'important');
+              el.style.setProperty('background', 'none', 'important');
+            });
         }
       },
     });
