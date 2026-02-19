@@ -115,15 +115,15 @@ export const LocationHandoverForm: React.FC<Props> = ({ initialData, onSave, onC
          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="flex border-b border-gray-400 border-dashed pb-1 items-end">
                <span className="font-bold w-32 uppercase text-gray-600">Fecha:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input type="date" name="date" aria-label="Fecha" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-1 items-end">
                <span className="font-bold w-32 uppercase text-gray-600">Pozo:</span>
-               <input name="well" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
+               <input name="well" aria-label="Pozo" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-1 items-end">
                <span className="font-bold w-32 uppercase text-gray-600">Equipo:</span>
-               <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase">
+               <select name="equipment" aria-label="Equipo" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase">
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
                   <option value="tacker06">TACKER06</option>
@@ -139,15 +139,15 @@ export const LocationHandoverForm: React.FC<Props> = ({ initialData, onSave, onC
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-1 items-end">
                <span className="font-bold w-48 uppercase text-gray-600">Company Representative/Sup.:</span>
-               <input name="companyRepresentative" value={metadata.companyRepresentative} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="companyRepresentative" aria-label="Company Representative" value={metadata.companyRepresentative} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-1 items-end">
                <span className="font-bold w-32 uppercase text-gray-600">Jefe de Equipo:</span>
-               <input name="rigManager" value={metadata.rigManager} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="rigManager" aria-label="Jefe de Equipo" value={metadata.rigManager} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-1 items-end">
                <span className="font-bold w-48 uppercase text-gray-600">Resp. Serv. Al Pozo:</span>
-               <input name="serviceResponsible" value={metadata.serviceResponsible} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="serviceResponsible" aria-label="Responsable Servicio Al Pozo" value={metadata.serviceResponsible} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
       </div>
@@ -166,8 +166,7 @@ export const LocationHandoverForm: React.FC<Props> = ({ initialData, onSave, onC
       <div className="p-4 border-b border-black">
          <div className="font-bold mb-1 uppercase text-sm">Observaciones:</div>
          <textarea 
-            className="w-full h-32 p-2 resize-none outline-none border border-gray-300 rounded text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6"
-            style={{ backgroundSize: '100% 24px' }}
+            className="w-full h-32 p-2 resize-none outline-none border border-gray-300 rounded text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] bg-[size:100%_24px] leading-6"
             value={observations}
             onChange={(e) => setObservations(e.target.value)}
             placeholder="Ingrese observaciones generales sobre el estado de la locación..."
@@ -185,7 +184,6 @@ export const LocationHandoverForm: React.FC<Props> = ({ initialData, onSave, onC
                   onChange={(e) => handleImageUpload(e, 'photos')} 
                   multiple 
                   accept="image/*" 
-                  capture="environment"
                   className="hidden" 
                />
                <Button size="sm" variant="secondary" onClick={() => fileInputRef.current?.click()} className="flex items-center gap-2">
