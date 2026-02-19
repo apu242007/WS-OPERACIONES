@@ -8,6 +8,16 @@ interface ExportPdfOptions {
   /** 'p' | 'l' — if omitted, auto-detected from canvas dimensions */
   orientation?: 'p' | 'l';
   scale?: number;
+  /** Recipient email address */
+  to?: string;
+  /** Optional additional message included in the email */
+  message?: string;
+}
+
+export interface ExportPdfResult {
+  emailSuccess: boolean;
+  emailId?: string;
+  emailError?: string;
 }
 
 interface FormSummary {
@@ -35,17 +45,19 @@ function extractSummaryFromDOM(elementId: string): FormSummary {
   return summary;
 }
 
-export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void> => {
+export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<ExportPdfResult> => {
   const {
     filename = 'reporte',
     elementId = 'print-area',
     orientation: orientationProp,
+    to,
+    message,
   } = options;
 
   const element = document.getElementById(elementId);
   if (!element) {
     alert('No se encontró el área de impresión');
-    return;
+    return { emailSuccess: false, emailError: 'No se encontró el área de impresión' };
   }
 
   // Create loading overlay
@@ -143,16 +155,17 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void>
     pdf.save(`${filename}.pdf`);
 
     // Send email with PDF attached
+    const recipient = to || 'jcastro@tackertools.com';
     const overlay = document.getElementById('pdf-loading-overlay');
-    if (overlay) overlay.innerHTML = '<div style="background:#1f2937;padding:24px 40px;border-radius:12px;">✉️ Enviando email...</div>';
+    if (overlay) overlay.innerHTML = `<div style="background:#1f2937;padding:24px 40px;border-radius:12px;">✉️ Enviando email a ${recipient}...</div>`;
 
     const SUPABASE_URL  = import.meta.env.VITE_SUPABASE_URL  || 'https://exgqsbvcyghrpmlawmaa.supabase.co';
     const SUPABASE_ANON = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV4Z3FzYnZjeWdocnBtbGF3bWFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3MDQzMjEsImV4cCI6MjA4NjI4MDMyMX0.KlwrEfx9X5zQChoX84vjDViS9icGjkjPu_3W1SGh22k';
 
-    try {
-      const summary = extractSummaryFromDOM(elementId);
-      const pdfBase64 = pdf.output('datauristring').split(',')[1];
+    const summary = extractSummaryFromDOM(elementId);
+    const pdfBase64 = pdf.output('datauristring').split(',')[1];
 
+    try {
       const emailRes = await fetch(SUPABASE_URL + '/functions/v1/send-report-email', {
         method: 'POST',
         headers: {
@@ -164,7 +177,8 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void>
           pdfBase64,
           filename,
           formType: filename,
-          to: 'jcastro@tackertools.com',
+          to: recipient,
+          ...(message ? { additionalMessage: message } : {}),
           summary: {
             fecha:    summary.fecha    ?? new Date().toLocaleDateString('es-AR'),
             pozo:     summary.pozo     ?? '',
@@ -176,17 +190,19 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void>
 
       const emailData = await emailRes.json().catch(() => ({}));
       if (!emailRes.ok) {
-        console.error('[exportPdf] ❌ Error enviando email:', emailData);
-      } else {
-        console.log('[exportPdf] ✅ Email enviado. ID:', emailData.emailId);
+        const errMsg = emailData?.error ?? emailData?.message ?? `HTTP ${emailRes.status}`;
+        return { emailSuccess: false, emailError: errMsg };
       }
+      return { emailSuccess: true, emailId: emailData.emailId };
     } catch (emailError) {
-      console.error('[exportPdf] ❌ Error enviando email:', emailError);
+      const errMsg = emailError instanceof Error ? emailError.message : 'Error de red';
+      return { emailSuccess: false, emailError: errMsg };
     }
 
   } catch (error) {
     console.error('Error generando PDF:', error);
     alert('Error al generar el PDF. Intente nuevamente.');
+    return { emailSuccess: false, emailError: error instanceof Error ? error.message : 'Error generando PDF' };
   } finally {
     document.getElementById('pdf-loading-overlay')?.remove();
   }
