@@ -41,7 +41,7 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void>
     filename = 'reporte',
     elementId = 'print-area',
     orientation: orientationProp,
-    scale = 2,
+    scale = 1.5, // Reducido de 2 → 1.5: PDFs ~44% más livianos, calidad A4 suficiente
   } = options;
 
   const element = document.getElementById(elementId);
