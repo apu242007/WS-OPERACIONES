@@ -1,7 +1,6 @@
 
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { uploadFileToDrive } from '../lib/uploadToDrive';
 
 interface ExportPdfOptions {
   filename?: string;
@@ -133,27 +132,15 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void>
 
     pdf.save(`${filename}.pdf`);
 
-    // Upload to Google Drive
-    try {
-      const pdfBlob = pdf.output('blob');
-      const pdfFile = new File(
-        [pdfBlob],
-        `${filename}_${new Date().toISOString().slice(0, 10)}.pdf`,
-        { type: 'application/pdf' }
-      );
-      console.log('[exportPdf] Iniciando subida a Drive, tamaño blob:', pdfBlob.size, 'bytes');
-      const driveUrl = await uploadFileToDrive(pdfFile);
-      console.log('[exportPdf] ✅ PDF subido a Google Drive:', driveUrl);
-    } catch (driveError) {
-      console.error('[exportPdf] ❌ Error subiendo PDF a Drive:', driveError);
-      // No bloqueamos la descarga local, pero informamos en consola
-    }
+    // Send email with PDF attached
+    const overlay = document.getElementById('pdf-loading-overlay');
+    if (overlay) overlay.innerHTML = '<div style="background:#1f2937;padding:24px 40px;border-radius:12px;">✉️ Enviando email...</div>';
 
-    // Send email
     try {
       const summary = extractSummaryFromDOM(elementId);
       const pdfBase64 = pdf.output('datauristring').split(',')[1];
-      await fetch(import.meta.env.VITE_SUPABASE_URL + '/functions/v1/send-report-email', {
+
+      const emailRes = await fetch(import.meta.env.VITE_SUPABASE_URL + '/functions/v1/send-report-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -164,17 +151,24 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void>
           pdfBase64,
           filename,
           formType: filename,
+          to: 'jcastro@tackertools.com',
           summary: {
             fecha:    summary.fecha    ?? new Date().toLocaleDateString('es-AR'),
             pozo:     summary.pozo     ?? '',
             equipo:   summary.equipo   ?? '',
             operador: summary.operador ?? '',
-          }
+          },
         }),
       });
-      console.log('Email enviado correctamente');
+
+      const emailData = await emailRes.json().catch(() => ({}));
+      if (!emailRes.ok) {
+        console.error('[exportPdf] ❌ Error enviando email:', emailData);
+      } else {
+        console.log('[exportPdf] ✅ Email enviado. ID:', emailData.emailId);
+      }
     } catch (emailError) {
-      console.error('Error enviando email:', emailError);
+      console.error('[exportPdf] ❌ Error enviando email:', emailError);
     }
 
   } catch (error) {
