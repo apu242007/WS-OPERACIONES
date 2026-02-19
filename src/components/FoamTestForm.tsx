@@ -5,6 +5,7 @@ import { FoamTestReport, FoamTestMetadata } from '../types';
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { FoamTestPdf } from '../pdf/FoamTestPdf';
 
 interface Props {
   initialData?: FoamTestReport;
@@ -279,6 +280,7 @@ export const FoamTestForm: React.FC<Props> = ({ initialData, onSave, onCancel })
                filename={`prueba_espumigeno_${metadata.date}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<FoamTestPdf report={{ id: initialData?.id ?? '', metadata, activity, specsAndPerformance, conclusions, photoAnnex, images, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

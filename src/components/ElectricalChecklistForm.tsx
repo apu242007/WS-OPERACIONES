@@ -4,6 +4,7 @@ import { ElectricalChecklistReport, ElectricalChecklistMetadata, ElectricalCheck
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { ElectricalChecklistPdf } from '../pdf/ElectricalChecklistPdf';
 
 interface Props {
   initialData?: ElectricalChecklistReport;
@@ -160,7 +161,7 @@ export const ElectricalChecklistForm: React.FC<Props> = ({ initialData, onSave, 
          <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 flex flex-col sm:flex-row sm:items-end gap-1 border-b border-black border-dashed pb-1">
                <span className="whitespace-nowrap font-bold w-40">Nombre y Apellido Eléctrico:</span>
-               <input name="electricianName" value={metadata.electricianName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="electricianName" title="Nombre y Apellido Eléctrico" value={metadata.electricianName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             {/* Signature placeholder visually */}
             <div className="w-full sm:w-48 flex items-end gap-2 border-b border-black border-dashed pb-1">
@@ -169,7 +170,7 @@ export const ElectricalChecklistForm: React.FC<Props> = ({ initialData, onSave, 
             </div>
             <div className="w-full sm:w-48 flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold mr-1">Equipo TKR N°:</span>
-               <select name="equipmentNumber" value={metadata.equipmentNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent">
+               <select name="equipmentNumber" title="Equipo TKR N°" value={metadata.equipmentNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent">
 <option value="tacker01">TACKER01</option>
 <option value="tacker05">TACKER05</option>
 <option value="tacker06">TACKER06</option>
@@ -189,7 +190,7 @@ export const ElectricalChecklistForm: React.FC<Props> = ({ initialData, onSave, 
          <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 flex flex-col sm:flex-row sm:items-end gap-1 border-b border-black border-dashed pb-1">
                <span className="whitespace-nowrap font-bold w-48 text-xs">Nombre y Apellido Supervisor:</span>
-               <input name="supervisorName" value={metadata.supervisorName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="supervisorName" title="Nombre y Apellido Supervisor" value={metadata.supervisorName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="w-full sm:w-48 flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold text-xs">Firma:</span>
@@ -197,7 +198,7 @@ export const ElectricalChecklistForm: React.FC<Props> = ({ initialData, onSave, 
             </div>
             <div className="w-full sm:w-48 flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold text-xs">Fecha:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input type="date" title="Fecha" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
 
@@ -205,15 +206,15 @@ export const ElectricalChecklistForm: React.FC<Props> = ({ initialData, onSave, 
          <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold text-xs">Cliente:</span>
-               <input name="client" value={metadata.client} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="client" title="Cliente" value={metadata.client} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex-1 flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold text-xs">Yacimiento:</span>
-               <input name="field" value={metadata.field} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="field" title="Yacimiento" value={metadata.field} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex-1 flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold text-xs">Pozo:</span>
-               <input name="well" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="well" title="Pozo" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
       </div>
@@ -279,22 +280,22 @@ export const ElectricalChecklistForm: React.FC<Props> = ({ initialData, onSave, 
                   <tbody>
                      <tr className="border-b border-black">
                         <td className="border-r border-black font-bold p-1">R</td>
-                        <td className="border-r border-black p-0"><input name="v_r" value={analyzer.v_r} onChange={handleAnalyzerChange} className="w-full text-center outline-none bg-transparent" /></td>
-                        <td className="p-0"><input name="i_r" value={analyzer.i_r} onChange={handleAnalyzerChange} className="w-full text-center outline-none bg-transparent" /></td>
+                        <td className="border-r border-black p-0"><input name="v_r" title="Tensión Fase R" value={analyzer.v_r} onChange={handleAnalyzerChange} className="w-full text-center outline-none bg-transparent" /></td>
+                        <td className="p-0"><input name="i_r" title="Corriente Fase R" value={analyzer.i_r} onChange={handleAnalyzerChange} className="w-full text-center outline-none bg-transparent" /></td>
                      </tr>
                      <tr className="border-b border-black">
                         <td className="border-r border-black font-bold p-1">S</td>
-                        <td className="border-r border-black p-0"><input name="v_s" value={analyzer.v_s} onChange={handleAnalyzerChange} className="w-full text-center outline-none bg-transparent" /></td>
-                        <td className="p-0"><input name="i_s" value={analyzer.i_s} onChange={handleAnalyzerChange} className="w-full text-center outline-none bg-transparent" /></td>
+                        <td className="border-r border-black p-0"><input name="v_s" title="Tensión Fase S" value={analyzer.v_s} onChange={handleAnalyzerChange} className="w-full text-center outline-none bg-transparent" /></td>
+                        <td className="p-0"><input name="i_s" title="Corriente Fase S" value={analyzer.i_s} onChange={handleAnalyzerChange} className="w-full text-center outline-none bg-transparent" /></td>
                      </tr>
                      <tr className="border-b border-black">
                         <td className="border-r border-black font-bold p-1">T</td>
-                        <td className="border-r border-black p-0"><input name="v_t" value={analyzer.v_t} onChange={handleAnalyzerChange} className="w-full text-center outline-none bg-transparent" /></td>
-                        <td className="p-0"><input name="i_t" value={analyzer.i_t} onChange={handleAnalyzerChange} className="w-full text-center outline-none bg-transparent" /></td>
+                        <td className="border-r border-black p-0"><input name="v_t" title="Tensión Fase T" value={analyzer.v_t} onChange={handleAnalyzerChange} className="w-full text-center outline-none bg-transparent" /></td>
+                        <td className="p-0"><input name="i_t" title="Corriente Fase T" value={analyzer.i_t} onChange={handleAnalyzerChange} className="w-full text-center outline-none bg-transparent" /></td>
                      </tr>
                      <tr>
                         <td className="border-r border-black font-bold p-1">F (Hz)</td>
-                        <td colSpan={2} className="p-0"><input name="freq" value={analyzer.freq} onChange={handleAnalyzerChange} className="w-full text-center outline-none bg-transparent" /></td>
+                        <td colSpan={2} className="p-0"><input name="freq" title="Frecuencia (Hz)" value={analyzer.freq} onChange={handleAnalyzerChange} className="w-full text-center outline-none bg-transparent" /></td>
                      </tr>
                   </tbody>
                </table>
@@ -306,8 +307,8 @@ export const ElectricalChecklistForm: React.FC<Props> = ({ initialData, onSave, 
       <div className="p-4 border-t border-black page-break-inside-avoid">
          <div className="font-bold text-xs mb-1">Observaciones:</div>
          <textarea 
+            title="Observaciones"
             className="w-full h-24 p-2 resize-none outline-none border border-gray-300 rounded text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6"
-            style={{ backgroundSize: '100% 24px' }}
             value={observations}
             onChange={(e) => setObservations(e.target.value)}
          />
@@ -357,6 +358,7 @@ export const ElectricalChecklistForm: React.FC<Props> = ({ initialData, onSave, 
              <ExportPdfButton 
                filename={`checklist_electrico_${metadata.date}`}
                orientation="p"
+               pdfComponent={<ElectricalChecklistPdf report={{ id: initialData?.id ?? '', metadata, rows, analyzer, observations, signatures }} />}
                className="w-full"
              />
            </div>

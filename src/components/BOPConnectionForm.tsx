@@ -4,6 +4,7 @@ import { BOPConnectionReport, BOPConnectionMetadata, BOPItem } from '../types';
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { BOPConnectionPdf } from '../pdf/BOPConnectionPdf';
 
 interface Props {
   initialData?: BOPConnectionReport;
@@ -100,6 +101,7 @@ export const BOPConnectionForm: React.FC<Props> = ({ initialData, onSave, onCanc
                     className="border-b border-gray-400 outline-none bg-transparent w-32 font-mono" 
                     value={section === 'ANULAR' ? metadata.anularSerial : metadata.parcialSerial}
                     onChange={(e) => setMetadata(prev => ({ ...prev, [section === 'ANULAR' ? 'anularSerial' : 'parcialSerial']: e.target.value }))}
+                    title="N° Serie"
                   />
                </div>
             )}
@@ -178,11 +180,11 @@ export const BOPConnectionForm: React.FC<Props> = ({ initialData, onSave, onCanc
          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div className="flex border-b border-gray-400 border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-48 text-gray-500 uppercase">Jefe de Equipo:</span>
-               <input name="rigManagerName" value={metadata.rigManagerName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent font-medium" />
+               <input name="rigManagerName" value={metadata.rigManagerName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent font-medium" title="Jefe de Equipo" />
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-24 text-gray-500 uppercase">Equipo N°:</span>
-               <select name="rigNumber" value={metadata.rigNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent font-medium">
+               <select name="rigNumber" value={metadata.rigNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent font-medium" title="Equipo N°">
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
                   <option value="tacker06">TACKER06</option>
@@ -200,25 +202,25 @@ export const BOPConnectionForm: React.FC<Props> = ({ initialData, onSave, onCanc
          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div className="flex border-b border-gray-400 border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-48 text-gray-500 uppercase">Encargado Turno:</span>
-               <input name="shiftLeaderName" value={metadata.shiftLeaderName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent font-medium" />
+               <input name="shiftLeaderName" value={metadata.shiftLeaderName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent font-medium" title="Encargado Turno" />
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-12 text-gray-500 uppercase">Fecha:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" title="Fecha" />
             </div>
          </div>
          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="flex border-b border-gray-400 border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-16 text-gray-500 uppercase">Cliente:</span>
-               <input name="client" value={metadata.client} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
+               <input name="client" value={metadata.client} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" title="Cliente" />
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-20 text-gray-500 uppercase">Yacimiento:</span>
-               <input name="field" value={metadata.field} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
+               <input name="field" value={metadata.field} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" title="Yacimiento" />
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-12 text-gray-500 uppercase">Pozo:</span>
-               <input name="well" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
+               <input name="well" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" title="Pozo" />
             </div>
          </div>
       </div>
@@ -271,8 +273,8 @@ export const BOPConnectionForm: React.FC<Props> = ({ initialData, onSave, onCanc
       <div className="p-4 border-b border-black">
          <div className="font-bold underline mb-2 text-xs uppercase text-gray-500">Observaciones Generales:</div>
          <textarea 
-            className="w-full h-24 p-3 resize-none outline-none border border-gray-300 rounded text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6"
-            style={{ backgroundSize: '100% 24px' }}
+            className="w-full h-24 p-3 resize-none outline-none border border-gray-300 rounded text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6 [background-size:100%_24px]"
+            title="Observaciones Generales"
             value={observations}
             onChange={(e) => setObservations(e.target.value)}
          />
@@ -321,6 +323,7 @@ export const BOPConnectionForm: React.FC<Props> = ({ initialData, onSave, onCanc
                filename={`bop_connection_${metadata.date}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<BOPConnectionPdf report={{ id: initialData?.id ?? '', metadata, items, observations, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

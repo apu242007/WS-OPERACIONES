@@ -4,6 +4,7 @@ import { FacilityInspectionReport, FacilityInspectionMetadata, FacilityInspectio
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { FacilityInspectionPdf } from '../pdf/FacilityInspectionPdf';
 
 interface Props {
   initialData?: FacilityInspectionReport;
@@ -336,6 +337,7 @@ export const FacilityInspectionForm: React.FC<Props> = ({ initialData, onSave, o
                filename={`insp_instalaciones_${metadata.date}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<FacilityInspectionPdf report={{ id: initialData?.id ?? '', metadata, rows, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

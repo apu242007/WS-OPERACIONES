@@ -4,6 +4,7 @@ import { FBUChecklistReport, FBUChecklistMetadata, FBUChecklistRow, FBUChecklist
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { FBUChecklistPdf } from '../pdf/FBUChecklistPdf';
 
 interface Props {
   initialData?: FBUChecklistReport;
@@ -360,40 +361,40 @@ export const FBUChecklistForm: React.FC<Props> = ({ initialData, onSave, onCance
          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-1">
             <div className="flex border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold w-28">Compañía:</span>
-               <input name="company" value={metadata.company} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="company" title="Compañía" value={metadata.company} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold w-24">N° FBU:</span>
-               <input name="fbuNumber" value={metadata.fbuNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="fbuNumber" title="N° FBU" value={metadata.fbuNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
                <span className="font-bold w-24 pl-2">Yacimiento:</span>
-               <input name="field" value={metadata.field} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="field" title="Yacimiento" value={metadata.field} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
 
             <div className="flex border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold w-28">Locación:</span>
-               <input name="location" value={metadata.location} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="location" title="Locación" value={metadata.location} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold w-24">Fecha:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input type="date" name="date" title="Fecha" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
 
             <div className="flex border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold w-28">Jefe de Equipo:</span>
-               <input name="teamLeader" value={metadata.teamLeader} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="teamLeader" title="Jefe de Equipo" value={metadata.teamLeader} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
              <div className="flex border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold w-32">Inspeccionado por:</span>
-               <input name="inspectedBy" value={metadata.inspectedBy} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="inspectedBy" title="Inspeccionado por" value={metadata.inspectedBy} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
 
             <div className="flex border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold w-28">Operación:</span>
-               <input name="operation" value={metadata.operation} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="operation" title="Operación" value={metadata.operation} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold w-32">Inspector Cliente:</span>
-               <input name="clientInspector" value={metadata.clientInspector} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="clientInspector" title="Inspector Cliente" value={metadata.clientInspector} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
       </div>
@@ -432,16 +433,16 @@ export const FBUChecklistForm: React.FC<Props> = ({ initialData, onSave, onCance
                    {observations.map((obs) => (
                       <tr key={obs.id}>
                          <td className="border border-black p-0 h-8">
-                            <input className="w-full h-full p-1 outline-none bg-transparent" value={obs.observation} onChange={(e) => handleObservationChange(obs.id, 'observation', e.target.value)} />
+                            <input title="Observación" className="w-full h-full p-1 outline-none bg-transparent" value={obs.observation} onChange={(e) => handleObservationChange(obs.id, 'observation', e.target.value)} />
                          </td>
                          <td className="border border-black p-0">
-                            <input className="w-full h-full p-1 outline-none bg-transparent" value={obs.responsible} onChange={(e) => handleObservationChange(obs.id, 'responsible', e.target.value)} />
+                            <input title="Responsable de Acción" className="w-full h-full p-1 outline-none bg-transparent" value={obs.responsible} onChange={(e) => handleObservationChange(obs.id, 'responsible', e.target.value)} />
                          </td>
                          <td className="border border-black p-0">
-                            <input className="w-full h-full p-1 outline-none bg-transparent text-center" value={obs.compliance} onChange={(e) => handleObservationChange(obs.id, 'compliance', e.target.value)} />
+                            <input title="Cumplimiento" className="w-full h-full p-1 outline-none bg-transparent text-center" value={obs.compliance} onChange={(e) => handleObservationChange(obs.id, 'compliance', e.target.value)} />
                          </td>
                          <td className="border border-black p-0">
-                            <input type="date" className="w-full h-full p-1 outline-none bg-transparent text-center" value={obs.date} onChange={(e) => handleObservationChange(obs.id, 'date', e.target.value)} />
+                            <input type="date" title="Fecha de Cumplimiento" className="w-full h-full p-1 outline-none bg-transparent text-center" value={obs.date} onChange={(e) => handleObservationChange(obs.id, 'date', e.target.value)} />
                          </td>
                          <td className="border border-black p-0 text-center no-print">
                             <button onClick={() => removeObservation(obs.id)} className="text-gray-400 hover:text-red-500 font-bold">&times;</button>
@@ -464,6 +465,7 @@ export const FBUChecklistForm: React.FC<Props> = ({ initialData, onSave, onCance
                      <textarea 
                         className="w-full border border-gray-300 rounded p-2 text-sm bg-white" 
                         rows={2}
+                        title="Observación"
                         value={obs.observation} 
                         onChange={(e) => handleObservationChange(obs.id, 'observation', e.target.value)} 
                      />
@@ -472,6 +474,7 @@ export const FBUChecklistForm: React.FC<Props> = ({ initialData, onSave, onCance
                      <label className="block text-xs font-bold text-gray-500 mb-1">RESPONSABLE:</label>
                      <input 
                         className="w-full border border-gray-300 rounded p-2 text-sm bg-white" 
+                        title="Responsable de Acción"
                         value={obs.responsible} 
                         onChange={(e) => handleObservationChange(obs.id, 'responsible', e.target.value)} 
                      />
@@ -481,6 +484,7 @@ export const FBUChecklistForm: React.FC<Props> = ({ initialData, onSave, onCance
                         <label className="block text-xs font-bold text-gray-500 mb-1">CUMPLIMIENTO:</label>
                         <input 
                            className="w-full border border-gray-300 rounded p-2 text-sm bg-white" 
+                           title="Cumplimiento"
                            value={obs.compliance} 
                            onChange={(e) => handleObservationChange(obs.id, 'compliance', e.target.value)} 
                         />
@@ -490,6 +494,7 @@ export const FBUChecklistForm: React.FC<Props> = ({ initialData, onSave, onCance
                         <input 
                            type="date"
                            className="w-full border border-gray-300 rounded p-2 text-sm bg-white" 
+                           title="Fecha de Cumplimiento"
                            value={obs.date} 
                            onChange={(e) => handleObservationChange(obs.id, 'date', e.target.value)} 
                         />
@@ -550,6 +555,7 @@ export const FBUChecklistForm: React.FC<Props> = ({ initialData, onSave, onCance
              <ExportPdfButton 
                filename={`checklist_fbu_${metadata.date}`}
                orientation="l"
+               pdfComponent={<FBUChecklistPdf report={{ id: initialData?.id ?? '', metadata, rows, observations, signatures }} />}
                className="w-full"
              />
            </div>

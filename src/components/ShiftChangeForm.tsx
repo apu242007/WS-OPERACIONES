@@ -4,6 +4,7 @@ import { ShiftChangeReport, ShiftChangeMetadata, OperationalAspects, ShiftChange
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { ShiftChangePdf } from '../pdf/ShiftChangePdf';
 
 interface Props {
   initialData?: ShiftChangeReport;
@@ -114,7 +115,7 @@ export const ShiftChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel
       <div className="flex flex-col sm:grid sm:grid-cols-12 text-sm border-b border-black">
          <div className="col-span-4 flex flex-col sm:flex-row border-b sm:border-b-0 sm:border-r border-black">
             <div className="font-bold p-1 pl-2 bg-gray-50 print:bg-transparent uppercase w-full sm:w-auto">EQUIPO:</div>
-            <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 p-2 sm:p-1 outline-none font-medium sm:text-center uppercase w-full">
+            <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 p-2 sm:p-1 outline-none font-medium sm:text-center uppercase w-full" title="Equipo">
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
                   <option value="tacker06">TACKER06</option>
@@ -130,15 +131,15 @@ export const ShiftChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel
          </div>
          <div className="col-span-4 flex flex-col sm:flex-row border-b sm:border-b-0 sm:border-r border-black">
             <div className="font-bold p-1 pl-2 bg-gray-50 print:bg-transparent uppercase w-full sm:w-auto">POZO:</div>
-            <input name="well" value={metadata.well} onChange={handleMetadataChange} className="flex-1 p-2 sm:p-1 outline-none font-medium sm:text-center uppercase w-full" />
+            <input name="well" value={metadata.well} onChange={handleMetadataChange} className="flex-1 p-2 sm:p-1 outline-none font-medium sm:text-center uppercase w-full" title="Pozo" />
          </div>
          <div className="col-span-2 flex flex-col sm:flex-row border-b sm:border-b-0 sm:border-r border-black">
             <div className="font-bold p-1 pl-2 bg-gray-50 print:bg-transparent uppercase w-full sm:w-auto">FECHA:</div>
-            <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 p-2 sm:p-1 outline-none font-medium sm:text-center w-full" />
+            <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 p-2 sm:p-1 outline-none font-medium sm:text-center w-full" title="Fecha" />
          </div>
          <div className="col-span-2 flex flex-col sm:flex-row">
             <div className="font-bold p-1 pl-2 bg-gray-50 print:bg-transparent uppercase w-full sm:w-auto">HORA:</div>
-            <input type="time" name="time" value={metadata.time} onChange={handleMetadataChange} className="flex-1 p-2 sm:p-1 outline-none font-medium sm:text-center w-full" />
+            <input type="time" name="time" value={metadata.time} onChange={handleMetadataChange} className="flex-1 p-2 sm:p-1 outline-none font-medium sm:text-center w-full" title="Hora" />
          </div>
       </div>
 
@@ -146,15 +147,15 @@ export const ShiftChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel
       <div className="text-sm border-b-2 border-black">
          <div className="flex flex-col sm:flex-row sm:items-center border-b border-gray-400">
             <div className="font-bold p-2 sm:p-1 sm:pl-2 w-full sm:w-48 bg-gray-50 print:bg-transparent uppercase">TIPO DE REUNION:</div>
-            <input name="meetingType" value={metadata.meetingType} onChange={handleMetadataChange} className="flex-1 p-2 sm:p-1 outline-none w-full" />
+            <input name="meetingType" value={metadata.meetingType} onChange={handleMetadataChange} className="flex-1 p-2 sm:p-1 outline-none w-full" title="Tipo de Reunión" />
          </div>
          <div className="flex flex-col sm:flex-row sm:items-center border-b border-gray-400">
             <div className="font-bold p-2 sm:p-1 sm:pl-2 w-full sm:w-56 bg-gray-50 print:bg-transparent uppercase">COORDINADOR DE REUNION:</div>
-            <input name="coordinator" value={metadata.coordinator} onChange={handleMetadataChange} className="flex-1 p-2 sm:p-1 outline-none w-full" />
+            <input name="coordinator" value={metadata.coordinator} onChange={handleMetadataChange} className="flex-1 p-2 sm:p-1 outline-none w-full" title="Coordinador de Reunión" />
          </div>
          <div className="flex flex-col sm:flex-row sm:items-center">
             <div className="font-bold p-2 sm:p-1 sm:pl-2 w-full sm:w-48 bg-gray-50 print:bg-transparent uppercase">OPERACIÓN EN EL EQUIPO:</div>
-            <input name="operation" value={metadata.operation} onChange={handleMetadataChange} className="flex-1 p-2 sm:p-1 outline-none w-full" />
+            <input name="operation" value={metadata.operation} onChange={handleMetadataChange} className="flex-1 p-2 sm:p-1 outline-none w-full" title="Operación en el Equipo" />
          </div>
       </div>
 
@@ -166,8 +167,8 @@ export const ShiftChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel
             value={metadata.topic}
             onChange={handleMetadataChange}
             rows={5}
-            className="w-full p-2 text-sm outline-none resize-none bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6"
-            style={{ backgroundSize: '100% 24px' }}
+            className="w-full p-2 text-sm outline-none resize-none bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6 [background-size:100%_24px]"
+            title="Tema de Reunión"
           />
       </div>
 
@@ -183,7 +184,8 @@ export const ShiftChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel
                    <input 
                       value={operational.htaWell} 
                       onChange={(e) => handleOpChange('htaWell', e.target.value)} 
-                      className="flex-1 border-b border-gray-400 outline-none text-center px-1" 
+                      className="flex-1 border-b border-gray-400 outline-none text-center px-1"
+                      aria-label="HTA en el Pozo"
                    />
                 </div>
                 <div className="flex items-end gap-1">
@@ -191,7 +193,8 @@ export const ShiftChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel
                    <input 
                       value={operational.tbgWell} 
                       onChange={(e) => handleOpChange('tbgWell', e.target.value)} 
-                      className="flex-1 border-b border-gray-400 outline-none text-center px-1" 
+                      className="flex-1 border-b border-gray-400 outline-none text-center px-1"
+                      aria-label="Tbg Pozo"
                    />
                 </div>
                 <div className="flex gap-4">
@@ -200,7 +203,8 @@ export const ShiftChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel
                       <input 
                          value={operational.vbWell} 
                          onChange={(e) => handleOpChange('vbWell', e.target.value)} 
-                         className="flex-1 border-b border-gray-400 outline-none text-center px-1" 
+                         className="flex-1 border-b border-gray-400 outline-none text-center px-1"
+                         aria-label="V/B Pozo"
                       />
                    </div>
                    <div className="flex items-end gap-1 flex-1">
@@ -208,7 +212,8 @@ export const ShiftChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel
                       <input 
                          value={operational.tankLevel1} 
                          onChange={(e) => handleOpChange('tankLevel1', e.target.value)} 
-                         className="flex-1 border-b border-gray-400 outline-none text-center px-1" 
+                         className="flex-1 border-b border-gray-400 outline-none text-center px-1"
+                         aria-label="Nivel Pileta 1"
                       />
                    </div>
                 </div>
@@ -221,7 +226,8 @@ export const ShiftChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel
                    <input 
                       value={operational.pmWell} 
                       onChange={(e) => handleOpChange('pmWell', e.target.value)} 
-                      className="flex-1 border-b border-gray-400 outline-none text-center px-1" 
+                      className="flex-1 border-b border-gray-400 outline-none text-center px-1"
+                      aria-label="PM Pozo"
                    />
                 </div>
                 <div className="flex items-end gap-1">
@@ -229,7 +235,8 @@ export const ShiftChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel
                    <input 
                       value={operational.tbgTower} 
                       onChange={(e) => handleOpChange('tbgTower', e.target.value)} 
-                      className="flex-1 border-b border-gray-400 outline-none text-center px-1" 
+                      className="flex-1 border-b border-gray-400 outline-none text-center px-1"
+                      aria-label="Tbg Torre"
                    />
                 </div>
                 <div className="flex gap-4">
@@ -238,7 +245,8 @@ export const ShiftChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel
                       <input 
                          value={operational.vbScaffold} 
                          onChange={(e) => handleOpChange('vbScaffold', e.target.value)} 
-                         className="flex-1 border-b border-gray-400 outline-none text-center px-1" 
+                         className="flex-1 border-b border-gray-400 outline-none text-center px-1"
+                         aria-label="V/B Caballete"
                       />
                    </div>
                    <div className="flex items-end gap-1 flex-1">
@@ -246,7 +254,8 @@ export const ShiftChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel
                       <input 
                          value={operational.tankLevel2} 
                          onChange={(e) => handleOpChange('tankLevel2', e.target.value)} 
-                         className="flex-1 border-b border-gray-400 outline-none text-center px-1" 
+                         className="flex-1 border-b border-gray-400 outline-none text-center px-1"
+                         aria-label="Nivel Pileta 2"
                       />
                    </div>
                 </div>
@@ -259,7 +268,8 @@ export const ShiftChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel
                    <input 
                       value={operational.pmScaffold} 
                       onChange={(e) => handleOpChange('pmScaffold', e.target.value)} 
-                      className="flex-1 border-b border-gray-400 outline-none text-center px-1" 
+                      className="flex-1 border-b border-gray-400 outline-none text-center px-1"
+                      aria-label="PM Caballete"
                    />
                 </div>
                 <div className="flex items-end gap-1">
@@ -267,7 +277,8 @@ export const ShiftChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel
                    <input 
                       value={operational.tbgScaffold} 
                       onChange={(e) => handleOpChange('tbgScaffold', e.target.value)} 
-                      className="flex-1 border-b border-gray-400 outline-none text-center px-1" 
+                      className="flex-1 border-b border-gray-400 outline-none text-center px-1"
+                      aria-label="Tbg Caballete"
                    />
                 </div>
                 <div className="flex gap-4">
@@ -276,7 +287,8 @@ export const ShiftChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel
                       <input 
                          value={operational.pumpFunc} 
                          onChange={(e) => handleOpChange('pumpFunc', e.target.value)} 
-                         className="flex-1 border-b border-gray-400 outline-none text-center px-1" 
+                         className="flex-1 border-b border-gray-400 outline-none text-center px-1"
+                         aria-label="Func. Bomba"
                       />
                    </div>
                    <div className="flex items-end gap-1 flex-1">
@@ -284,7 +296,8 @@ export const ShiftChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel
                       <input 
                          value={operational.tankLevel3} 
                          onChange={(e) => handleOpChange('tankLevel3', e.target.value)} 
-                         className="flex-1 border-b border-gray-400 outline-none text-center px-1" 
+                         className="flex-1 border-b border-gray-400 outline-none text-center px-1"
+                         aria-label="Nivel Pileta 3"
                       />
                    </div>
                 </div>
@@ -321,8 +334,8 @@ export const ShiftChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel
             value={observations}
             onChange={(e) => setObservations(e.target.value)}
             rows={4}
-            className="w-full p-2 text-sm outline-none resize-none bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6"
-            style={{ backgroundSize: '100% 24px' }}
+            className="w-full p-2 text-sm outline-none resize-none bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6 [background-size:100%_24px]"
+            title="Observaciones"
           />
       </div>
 
@@ -363,6 +376,7 @@ export const ShiftChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel
                filename={`cambio_turno_${metadata.date}_${metadata.well || 'pozo'}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<ShiftChangePdf report={{ id: initialData?.id ?? '', metadata, operational, checklist, observations, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

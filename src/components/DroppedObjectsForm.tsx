@@ -4,6 +4,7 @@ import { DroppedObjectsReport, DroppedObjectsMetadata, DroppedObjectsRow } from 
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { DroppedObjectsPdf } from '../pdf/DroppedObjectsPdf';
 
 interface Props {
   initialData?: DroppedObjectsReport;
@@ -90,11 +91,11 @@ export const DroppedObjectsForm: React.FC<Props> = ({ initialData, onSave, onCan
          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div className="flex flex-col gap-1">
                <span className="font-bold text-xs uppercase text-gray-500">FECHA</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white w-full" />
+               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white w-full" title="Fecha" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-xs uppercase text-gray-500">EQUIPO</span>
-               <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white w-full uppercase">
+               <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white w-full uppercase" title="Equipo">
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
                   <option value="tacker06">TACKER06</option>
@@ -110,7 +111,7 @@ export const DroppedObjectsForm: React.FC<Props> = ({ initialData, onSave, onCan
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-xs uppercase text-gray-500">POZO</span>
-               <input name="well" value={metadata.well} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white w-full uppercase" />
+               <input name="well" value={metadata.well} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white w-full uppercase" title="Pozo" />
             </div>
          </div>
       </div>
@@ -216,6 +217,7 @@ export const DroppedObjectsForm: React.FC<Props> = ({ initialData, onSave, onCan
                filename={`checklist_caida_objetos_${metadata.date}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<DroppedObjectsPdf report={{ id: initialData?.id ?? '', metadata, rows, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

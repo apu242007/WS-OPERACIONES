@@ -4,6 +4,7 @@ import { FirstAidReport, FirstAidMetadata, FirstAidRow } from '../types';
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { FirstAidInspectionPdf } from '../pdf/FirstAidInspectionPdf';
 
 interface Props {
   initialData?: FirstAidReport;
@@ -127,33 +128,33 @@ export const FirstAidInspectionForm: React.FC<Props> = ({ initialData, onSave, o
          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1">
                <span className="font-bold text-xs text-gray-500 uppercase">Equipo/Base</span>
-               <input name="equipmentBase" value={metadata.equipmentBase} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" />
+               <input name="equipmentBase" value={metadata.equipmentBase} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" title="Equipo/Base" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-xs text-gray-500 uppercase">Yacimiento/ Locacion</span>
-               <input name="location" value={metadata.location} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" />
+               <input name="location" value={metadata.location} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" title="Yacimiento/Locación" />
             </div>
          </div>
          {/* Row 2 */}
          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1">
                <span className="font-bold text-xs text-gray-500 uppercase">Fecha</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" />
+               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" title="Fecha" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-xs text-gray-500 uppercase">Tecnicio HSE</span>
-               <input name="hseTech" value={metadata.hseTech} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" />
+               <input name="hseTech" value={metadata.hseTech} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" title="Técnico HSE" />
             </div>
          </div>
          {/* Row 3 */}
          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1">
                <span className="font-bold text-xs text-gray-500 uppercase">Jefe de equipo/ Base</span>
-               <input name="teamLeader" value={metadata.teamLeader} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" />
+               <input name="teamLeader" value={metadata.teamLeader} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" title="Jefe de Equipo/Base" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-xs text-gray-500 uppercase">Representante cliente</span>
-               <input name="clientRep" value={metadata.clientRep} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" />
+               <input name="clientRep" value={metadata.clientRep} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" title="Representante Cliente" />
             </div>
          </div>
       </div>
@@ -197,6 +198,7 @@ export const FirstAidInspectionForm: React.FC<Props> = ({ initialData, onSave, o
                      className="w-full h-full p-1 text-center outline-none bg-transparent text-xs"
                      value={row.expiration}
                      onChange={(e) => handleRowChange(row.id, 'expiration', e.target.value)}
+                     title="Vencimiento"
                    />
                 </div>
                 <div className="col-span-6 p-1 pl-4 uppercase font-medium text-xs">{row.description}</div>
@@ -235,6 +237,7 @@ export const FirstAidInspectionForm: React.FC<Props> = ({ initialData, onSave, o
                        className="w-full border border-gray-300 rounded p-1.5 text-sm bg-white"
                        value={row.expiration}
                        onChange={(e) => handleRowChange(row.id, 'expiration', e.target.value)}
+                       title="Vencimiento"
                     />
                  </div>
               </div>
@@ -246,8 +249,8 @@ export const FirstAidInspectionForm: React.FC<Props> = ({ initialData, onSave, o
       <div className="p-4 border-b border-black border-dashed">
          <div className="font-bold mb-1 text-sm uppercase text-gray-500">Observaciones:</div>
          <textarea 
-            className="w-full h-24 p-2 bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6 resize-none outline-none border border-gray-300 rounded text-sm"
-            style={{ backgroundSize: '100% 24px', lineHeight: '24px' }}
+            className="w-full h-24 p-2 bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6 resize-none outline-none border border-gray-300 rounded text-sm [background-size:100%_24px]"
+            title="Observaciones"
             value={observations}
             onChange={(e) => setObservations(e.target.value)}
          />
@@ -292,6 +295,7 @@ export const FirstAidInspectionForm: React.FC<Props> = ({ initialData, onSave, o
                filename={`botiquin_${metadata.date}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<FirstAidInspectionPdf report={{ id: initialData?.id ?? '', metadata, rows, observations, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

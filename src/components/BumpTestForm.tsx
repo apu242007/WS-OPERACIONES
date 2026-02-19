@@ -79,7 +79,7 @@ export const BumpTestForm: React.FC<Props> = ({ initialData, onSave, onCancel })
                {rows.map((row) => (
                  <tr key={row.id} className="border-b border-black hover:bg-gray-50 h-10">
                     <td className="border-r border-black p-0">
-                       <input type="date" className="w-full h-full text-center outline-none bg-transparent p-1" value={row.date} onChange={(e) => handleRowChange(row.id, 'date', e.target.value)} />
+                       <input type="date" className="w-full h-full text-center outline-none bg-transparent p-1" value={row.date} onChange={(e) => handleRowChange(row.id, 'date', e.target.value)} title="Fecha" />
                     </td>
                     <td className="border-r border-black p-0">
                        <input className="w-full h-full outline-none bg-transparent p-1 px-2" value={row.brandModel} onChange={(e) => handleRowChange(row.id, 'brandModel', e.target.value)} placeholder="Marca..." />

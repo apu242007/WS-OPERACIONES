@@ -4,6 +4,7 @@ import { FoamSystemReport, FoamSystemRow } from '../types';
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { FoamSystemPdf } from '../pdf/FoamSystemPdf';
 
 interface Props {
   initialData?: FoamSystemReport;
@@ -230,6 +231,7 @@ export const FoamSystemForm: React.FC<Props> = ({ initialData, onSave, onCancel 
              <ExportPdfButton 
                filename={`sistema_espumigeno_${rows[0]?.date}`}
                orientation="l"
+               pdfComponent={<FoamSystemPdf report={{ id: initialData?.id ?? '', rows, signature }} />}
                className="w-full"
              />
            </div>

@@ -4,6 +4,7 @@ import { ForkliftReport, ForkliftMetadata, ForkliftRow, ForkliftStatus } from '.
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { ForkliftInspectionPdf } from '../pdf/ForkliftInspectionPdf';
 
 interface Props {
   initialData?: ForkliftReport;
@@ -210,6 +211,7 @@ export const ForkliftInspectionForm: React.FC<Props> = ({ initialData, onSave, o
                 className="w-full h-full bg-transparent outline-none text-center font-bold text-xs appearance-none cursor-pointer border sm:border-0 rounded sm:rounded-none py-1 sm:py-0"
                 value={row.status}
                 onChange={(e) => handleStatusChange(row.id, e.target.value)}
+                title="Estado del ítem"
               >
                 <option value="">-</option>
                 <option value="N">N</option>
@@ -250,15 +252,15 @@ export const ForkliftInspectionForm: React.FC<Props> = ({ initialData, onSave, o
          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase">MONTACARGA</span>
-               <input name="forklift" value={metadata.forklift} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white uppercase" />
+               <input name="forklift" value={metadata.forklift} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white uppercase" title="Montacarga" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase">HOROMETRO</span>
-               <input name="hourMeter" value={metadata.hourMeter} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" />
+               <input name="hourMeter" value={metadata.hourMeter} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" title="Horómetro" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase">INTERNO Nº</span>
-               <input name="internalNumber" value={metadata.internalNumber} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white uppercase" />
+               <input name="internalNumber" value={metadata.internalNumber} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white uppercase" title="Interno N°" />
             </div>
          </div>
 
@@ -266,11 +268,11 @@ export const ForkliftInspectionForm: React.FC<Props> = ({ initialData, onSave, o
          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase">NUMERO SERIE</span>
-               <input name="serialNumber" value={metadata.serialNumber} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white uppercase" />
+               <input name="serialNumber" value={metadata.serialNumber} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white uppercase" title="Número de Serie" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase">OPERADOR</span>
-               <input name="operator" value={metadata.operator} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white uppercase" />
+               <input name="operator" value={metadata.operator} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white uppercase" title="Operador" />
             </div>
          </div>
 
@@ -278,19 +280,19 @@ export const ForkliftInspectionForm: React.FC<Props> = ({ initialData, onSave, o
          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase">FECHA INSPECCION</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" />
+               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" title="Fecha Inspección" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase">LICENCIA Nº</span>
-               <input name="licenseNumber" value={metadata.licenseNumber} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" />
+               <input name="licenseNumber" value={metadata.licenseNumber} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" title="Licencia N°" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase">TIPO</span>
-               <input name="type" value={metadata.type} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" />
+               <input name="type" value={metadata.type} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" title="Tipo" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase">VTO.</span>
-               <input name="licenseExpiration" value={metadata.licenseExpiration} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" />
+               <input name="licenseExpiration" value={metadata.licenseExpiration} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" title="Vencimiento Licencia" />
             </div>
          </div>
 
@@ -298,11 +300,11 @@ export const ForkliftInspectionForm: React.FC<Props> = ({ initialData, onSave, o
          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase">HABILITACIÓN MONTACARGA</span>
-               <input name="enablement" value={metadata.enablement} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white uppercase" />
+               <input name="enablement" value={metadata.enablement} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white uppercase" title="Habilitación Montacarga" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase">VTO</span>
-               <input name="enablementExpiration" value={metadata.enablementExpiration} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" />
+               <input name="enablementExpiration" value={metadata.enablementExpiration} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" title="Vencimiento Habilitación" />
             </div>
          </div>
       </div>
@@ -326,8 +328,8 @@ export const ForkliftInspectionForm: React.FC<Props> = ({ initialData, onSave, o
       <div className="p-4 border-t border-black page-break-inside-avoid">
          <div className="font-bold text-xs mb-1 uppercase text-gray-500">OBSERVACIONES:</div>
          <textarea 
-            className="w-full h-24 p-2 resize-none outline-none border border-gray-300 text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6"
-            style={{ backgroundSize: '100% 24px' }}
+            className="w-full h-24 p-2 resize-none outline-none border border-gray-300 text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6 [background-size:100%_24px]"
+            title="Observaciones"
             value={observations}
             onChange={(e) => setObservations(e.target.value)}
          />
@@ -383,6 +385,7 @@ export const ForkliftInspectionForm: React.FC<Props> = ({ initialData, onSave, o
                filename={`insp_montacarga_${metadata.date}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<ForkliftInspectionPdf report={{ id: initialData?.id ?? '', metadata, rows, observations, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

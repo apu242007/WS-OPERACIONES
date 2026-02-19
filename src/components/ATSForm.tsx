@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ATSReport, ATSMetadata, ATSEpp, ATSRow } from '../types';
 import { Button } from './ui/Button';
 import { ExportPdfButton } from './ExportPdfButton';
+import { ATSPdf } from '../pdf/ATSPdf';
 
 interface Props {
   initialData?: ATSReport;
@@ -79,15 +80,15 @@ export const ATSForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => {
         <div className="col-span-3 p-3 flex flex-col justify-center gap-1 text-xs">
           <div className="flex items-center gap-1">
             <span className="font-bold w-16">N°:</span>
-            <input name="numero" value={metadata.numero} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" />
+            <input name="numero" title="Número" value={metadata.numero} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" />
           </div>
           <div className="flex items-center gap-1">
             <span className="font-bold w-16">Revisión:</span>
-            <input name="revision" value={metadata.revision} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" />
+            <input name="revision" title="Revisión" value={metadata.revision} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" />
           </div>
           <div className="flex items-center gap-1">
             <span className="font-bold w-16">Fecha:</span>
-            <input type="date" name="fecha" value={metadata.fecha} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" />
+            <input type="date" name="fecha" title="Fecha" value={metadata.fecha} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" />
           </div>
         </div>
       </div>
@@ -96,40 +97,40 @@ export const ATSForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => {
       <div className="grid grid-cols-3 border-b border-black">
         <div className="flex items-center border-r border-black p-2 gap-1">
           <span className="font-bold whitespace-nowrap">Sector:</span>
-          <input name="sector" value={metadata.sector} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" />
+          <input name="sector" title="Sector" value={metadata.sector} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" />
         </div>
         <div className="flex items-center border-r border-black p-2 gap-1">
           <span className="font-bold whitespace-nowrap">Equipo:</span>
-          <select name="equipo" value={(metadata as any).equipo || ''} onChange={handleMeta} className="flex-1 outline-none bg-transparent border-b border-gray-300">
+          <select name="equipo" title="Equipo" value={(metadata as any).equipo || ''} onChange={handleMeta} className="flex-1 outline-none bg-transparent border-b border-gray-300">
             <option value="">-</option>
             {EQUIPOS.map(e => <option key={e} value={e}>{e.toUpperCase()}</option>)}
           </select>
         </div>
         <div className="flex items-center p-2 gap-1">
           <span className="font-bold whitespace-nowrap">Fecha:</span>
-          <input type="date" name="fecha" value={metadata.fecha} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" />
+          <input type="date" name="fecha" title="Fecha" value={metadata.fecha} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" />
         </div>
       </div>
 
       {/* Tarea */}
       <div className="flex items-center border-b border-black p-2 gap-1">
         <span className="font-bold whitespace-nowrap">Tarea u operación:</span>
-        <input name="tarea" value={metadata.tarea} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" />
+          <input name="tarea" title="Tarea u Operación" value={metadata.tarea} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" />
       </div>
 
       {/* Elaborado / Revisado / Aprobado */}
       <div className="grid grid-cols-3 border-b border-black">
         <div className="border-r border-black p-2">
-          <div className="flex gap-1 mb-1"><span className="font-bold whitespace-nowrap">Elaborado por:</span><input name="elaboradoPor" value={metadata.elaboradoPor} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" /></div>
-          <div className="flex gap-1"><span className="font-bold">Función:</span><input name="funcionElab" value={metadata.funcionElab} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" /></div>
+          <div className="flex gap-1 mb-1"><span className="font-bold whitespace-nowrap">Elaborado por:</span><input name="elaboradoPor" title="Elaborado por" value={metadata.elaboradoPor} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" /></div>
+          <div className="flex gap-1"><span className="font-bold">Función:</span><input name="funcionElab" title="Función Elaborado" value={metadata.funcionElab} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" /></div>
         </div>
         <div className="border-r border-black p-2">
-          <div className="flex gap-1 mb-1"><span className="font-bold whitespace-nowrap">Revisado por:</span><input name="revisadoPor" value={metadata.revisadoPor} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" /></div>
-          <div className="flex gap-1"><span className="font-bold">Función:</span><input name="funcionRev" value={metadata.funcionRev} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" /></div>
+          <div className="flex gap-1 mb-1"><span className="font-bold whitespace-nowrap">Revisado por:</span><input name="revisadoPor" title="Revisado por" value={metadata.revisadoPor} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" /></div>
+          <div className="flex gap-1"><span className="font-bold">Función:</span><input name="funcionRev" title="Función Revisado" value={metadata.funcionRev} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" /></div>
         </div>
         <div className="p-2">
-          <div className="flex gap-1 mb-1"><span className="font-bold whitespace-nowrap">Aprobado por:</span><input name="aprobadoPor" value={metadata.aprobadoPor} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" /></div>
-          <div className="flex gap-1"><span className="font-bold">Función:</span><input name="funcionApro" value={metadata.funcionApro} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" /></div>
+          <div className="flex gap-1 mb-1"><span className="font-bold whitespace-nowrap">Aprobado por:</span><input name="aprobadoPor" title="Aprobado por" value={metadata.aprobadoPor} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" /></div>
+          <div className="flex gap-1"><span className="font-bold">Función:</span><input name="funcionApro" title="Función Aprobado" value={metadata.funcionApro} onChange={handleMeta} className="flex-1 outline-none border-b border-gray-300 bg-transparent" /></div>
         </div>
       </div>
 
@@ -145,7 +146,7 @@ export const ATSForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => {
         <CheckItem label="Barbijos" field="barbijos" />
         <div className="flex items-center gap-1 text-xs col-span-1">
           <span className="font-bold whitespace-nowrap">Otros:</span>
-          <input name="otrosEpp1" value={epp.otrosEpp1} onChange={handleEppText} className="flex-1 outline-none border-b border-gray-300 bg-transparent min-w-0" />
+          <input name="otrosEpp1" title="Otros EPP 1" value={epp.otrosEpp1} onChange={handleEppText} className="flex-1 outline-none border-b border-gray-300 bg-transparent min-w-0" />
         </div>
 
         <CheckItem label="Bloqueo/rotulado" field="bloqueoRotulado" />
@@ -155,7 +156,7 @@ export const ATSForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => {
 
         <div className="col-span-4 flex items-center gap-1 text-xs">
           <span className="font-bold whitespace-nowrap">Otros:</span>
-          <input name="otrosEpp2" value={epp.otrosEpp2} onChange={handleEppText} className="flex-1 outline-none border-b border-gray-300 bg-transparent" />
+          <input name="otrosEpp2" title="Otros EPP 2" value={epp.otrosEpp2} onChange={handleEppText} className="flex-1 outline-none border-b border-gray-300 bg-transparent" />
         </div>
 
         <CheckItem label="Anteojos de Seguridad" field="anteojos" />
@@ -163,7 +164,7 @@ export const ATSForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => {
         <CheckItem label="Protección auditiva" field="proteccionAuditiva" />
         <div className="flex items-center gap-1 text-xs">
           <span className="font-bold whitespace-nowrap">Otros:</span>
-          <input name="otrosEpp3" value={epp.otrosEpp3} onChange={handleEppText} className="flex-1 outline-none border-b border-gray-300 bg-transparent min-w-0" />
+          <input name="otrosEpp3" title="Otros EPP 3" value={epp.otrosEpp3} onChange={handleEppText} className="flex-1 outline-none border-b border-gray-300 bg-transparent min-w-0" />
         </div>
 
         <CheckItem label="Guantes de Cuero" field="guantessCuero" />
@@ -174,7 +175,7 @@ export const ATSForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => {
         <CheckItem label="Permiso de Trabajo Requerido" field="permisoTrabajo" />
         <div className="flex items-center gap-1 text-xs col-span-3">
           <span className="font-bold whitespace-nowrap">Extintores Kg:</span>
-          <input name="extintores" value={epp.extintores} onChange={handleEppText} className="w-24 outline-none border-b border-gray-300 bg-transparent" />
+          <input name="extintores" title="Extintores Kg" value={epp.extintores} onChange={handleEppText} className="w-24 outline-none border-b border-gray-300 bg-transparent" />
         </div>
       </div>
 
@@ -192,16 +193,16 @@ export const ATSForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => {
           {rows.map((row) => (
             <tr key={row.id}>
               <td className="border border-black p-0 align-top">
-                <textarea value={row.descripcion} onChange={e => handleRow(row.id, 'descripcion', e.target.value)} className="w-full p-2 outline-none resize-none h-20 bg-transparent" />
+                <textarea title="Descripción de la tarea" value={row.descripcion} onChange={e => handleRow(row.id, 'descripcion', e.target.value)} className="w-full p-2 outline-none resize-none h-20 bg-transparent" />
               </td>
               <td className="border border-black p-0 align-top">
-                <textarea value={row.peligros} onChange={e => handleRow(row.id, 'peligros', e.target.value)} className="w-full p-2 outline-none resize-none h-20 bg-transparent" />
+                <textarea title="Peligros/Aspectos potenciales" value={row.peligros} onChange={e => handleRow(row.id, 'peligros', e.target.value)} className="w-full p-2 outline-none resize-none h-20 bg-transparent" />
               </td>
               <td className="border border-black p-0 align-top">
-                <textarea value={row.riesgos} onChange={e => handleRow(row.id, 'riesgos', e.target.value)} className="w-full p-2 outline-none resize-none h-20 bg-transparent" />
+                <textarea title="Riesgos/Impactos" value={row.riesgos} onChange={e => handleRow(row.id, 'riesgos', e.target.value)} className="w-full p-2 outline-none resize-none h-20 bg-transparent" />
               </td>
               <td className="border border-black p-0 align-top relative">
-                <textarea value={row.recomendaciones} onChange={e => handleRow(row.id, 'recomendaciones', e.target.value)} className="w-full p-2 outline-none resize-none h-20 bg-transparent" />
+                <textarea title="Recomendaciones" value={row.recomendaciones} onChange={e => handleRow(row.id, 'recomendaciones', e.target.value)} className="w-full p-2 outline-none resize-none h-20 bg-transparent" />
                 {rows.length > 1 && (
                   <button onClick={() => removeRow(row.id)} className="absolute top-1 right-1 text-red-400 hover:text-red-600 text-lg leading-none no-print" title="Eliminar fila">×</button>
                 )}
@@ -220,7 +221,7 @@ export const ATSForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => {
       <div className="flex justify-between mt-4 no-print">
         <Button variant="ghost" onClick={onCancel}>Cancelar</Button>
         <div className="flex gap-2">
-          <ExportPdfButton elementId="print-area" filename="ATS" />
+          <ExportPdfButton elementId="print-area" filename="ATS" pdfComponent={<ATSPdf report={{ id: initialData?.id ?? '', metadata, epp, rows }} />} />
           <Button variant="primary" onClick={handleSave}>Guardar</Button>
         </div>
       </div>

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { DailyReport, TimeEntry } from '../types';
 import { Button } from './ui/Button';
 import { ExportPdfButton } from './ExportPdfButton';
+import { DailyOperationsPdf } from '../pdf/DailyOperationsPdf';
 
 interface Props {
   initialData?: DailyReport;
@@ -114,6 +115,7 @@ export const DailyOperationsForm: React.FC<Props> = ({ initialData, onSave, onCa
               name="date" 
               value={metadata.date} 
               onChange={handleMetadataChange}
+              title="Fecha"
               className="w-full bg-transparent border-b border-gray-400 focus:border-black outline-none text-center"
             />
           </div>
@@ -128,6 +130,7 @@ export const DailyOperationsForm: React.FC<Props> = ({ initialData, onSave, onCa
                 name="client"
                 value={metadata.client}
                 onChange={handleMetadataChange}
+                title="Cliente"
                 className="flex-1 p-2 outline-none uppercase w-full"
               />
            </div>
@@ -137,6 +140,7 @@ export const DailyOperationsForm: React.FC<Props> = ({ initialData, onSave, onCa
                 name="well"
                 value={metadata.well}
                 onChange={handleMetadataChange}
+                title="Pozo"
                 className="flex-1 p-2 outline-none uppercase w-full"
               />
            </div>
@@ -146,6 +150,7 @@ export const DailyOperationsForm: React.FC<Props> = ({ initialData, onSave, onCa
                 name="reportNumber"
                 value={metadata.reportNumber}
                 onChange={handleMetadataChange}
+                title="Parte N°"
                 className="flex-1 p-2 outline-none w-full"
               />
            </div>
@@ -157,12 +162,13 @@ export const DailyOperationsForm: React.FC<Props> = ({ initialData, onSave, onCa
                 name="field"
                 value={metadata.field}
                 onChange={handleMetadataChange}
+                title="Yacimiento"
                 className="flex-1 p-2 outline-none uppercase w-full"
               />
            </div>
            <div className="col-span-6 flex flex-col sm:flex-row">
               <div className="w-full sm:w-24 p-2 bg-gray-50 font-bold text-xs uppercase sm:border-r border-gray-300 sm:border-l border-gray-300 flex items-center print:bg-transparent">Equipo N°:</div>
-              <select name="rigNumber" value={metadata.rigNumber} onChange={handleMetadataChange} className="flex-1 p-2 outline-none w-full">
+              <select name="rigNumber" value={metadata.rigNumber} onChange={handleMetadataChange} title="Equipo N°" className="flex-1 p-2 outline-none w-full">
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
                   <option value="tacker06">TACKER06</option>
@@ -184,6 +190,7 @@ export const DailyOperationsForm: React.FC<Props> = ({ initialData, onSave, onCa
                name="province"
                value={metadata.province}
                onChange={handleMetadataChange}
+               title="Provincia"
                className="flex-1 p-2 outline-none uppercase w-full"
              />
            </div>
@@ -199,8 +206,8 @@ export const DailyOperationsForm: React.FC<Props> = ({ initialData, onSave, onCa
             value={metadata.objective}
             onChange={handleMetadataChange}
             rows={2}
+            title="Objetivo de la Intervención"
             className="w-full p-2 outline-none resize-none bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6"
-            style={{ backgroundSize: '100% 24px' }}
           />
         </div>
 
@@ -224,6 +231,7 @@ export const DailyOperationsForm: React.FC<Props> = ({ initialData, onSave, onCa
                   <td className="border-r border-black p-0">
                     <input 
                       type="time" 
+                      title="Desde"
                       className="w-full h-full p-2 text-center outline-none bg-transparent"
                       value={entry.from}
                       onChange={(e) => handleEntryChange(entry.id, 'from', e.target.value)}
@@ -232,6 +240,7 @@ export const DailyOperationsForm: React.FC<Props> = ({ initialData, onSave, onCa
                   <td className="border-r border-black p-0">
                     <input 
                       type="time" 
+                      title="Hasta"
                       className="w-full h-full p-2 text-center outline-none bg-transparent"
                       value={entry.to}
                       onChange={(e) => handleEntryChange(entry.id, 'to', e.target.value)}
@@ -247,6 +256,7 @@ export const DailyOperationsForm: React.FC<Props> = ({ initialData, onSave, onCa
                   </td>
                    <td className="border-r border-black p-0">
                     <input 
+                      title="Clase de Tiempo"
                       className="w-full h-full p-2 text-center outline-none bg-transparent"
                       value={entry.timeClass}
                       onChange={(e) => handleEntryChange(entry.id, 'timeClass', e.target.value)}
@@ -254,6 +264,7 @@ export const DailyOperationsForm: React.FC<Props> = ({ initialData, onSave, onCa
                   </td>
                    <td className="border-r border-black p-0">
                     <input 
+                      title="Tarifa"
                       className="w-full h-full p-2 text-center outline-none bg-transparent"
                       value={entry.tariff}
                       onChange={(e) => handleEntryChange(entry.id, 'tariff', e.target.value)}
@@ -261,6 +272,7 @@ export const DailyOperationsForm: React.FC<Props> = ({ initialData, onSave, onCa
                   </td>
                   <td className="border-r border-black p-0">
                     <input 
+                      title="Detalle de Operaciones"
                       className="w-full h-full p-2 outline-none bg-transparent"
                       value={entry.detail}
                       onChange={(e) => handleEntryChange(entry.id, 'detail', e.target.value)}
@@ -299,6 +311,7 @@ export const DailyOperationsForm: React.FC<Props> = ({ initialData, onSave, onCa
              <ExportPdfButton 
                filename={`parte_diario_${metadata.date}_${metadata.well || 'pozo'}`}
                orientation="p"
+               pdfComponent={<DailyOperationsPdf report={{ id: initialData?.id ?? '', metadata, entries }} />}
                className="w-full"
              />
            </div>

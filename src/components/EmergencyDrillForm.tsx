@@ -5,6 +5,7 @@ import { EmergencyDrillReport, EmergencyDrillMetadata, EmergencyDrillData } from
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { EmergencyDrillPdf } from '../pdf/EmergencyDrillPdf';
 
 interface Props {
   initialData?: EmergencyDrillReport;
@@ -450,6 +451,7 @@ export const EmergencyDrillForm: React.FC<Props> = ({ initialData, onSave, onCan
            <ExportPdfButton 
              filename={`simulacro_${metadata.date}`}
              orientation="p"
+             pdfComponent={<EmergencyDrillPdf report={{ id: initialData?.id ?? '', metadata, data, images, signature }} />}
            />
            <Button variant="secondary" onClick={() => window.print()}>
              🖨️ Imprimir

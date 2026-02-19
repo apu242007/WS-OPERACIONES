@@ -4,6 +4,7 @@ import { FlareChecklistReport, FlareChecklistMetadata, FlareChecklistRow } from 
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { FlareChecklistPdf } from '../pdf/FlareChecklistPdf';
 
 interface Props {
   initialData?: FlareChecklistReport;
@@ -92,19 +93,19 @@ export const FlareChecklistForm: React.FC<Props> = ({ initialData, onSave, onCan
          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2">UBICACIÓN:</span>
-               <input name="location" value={metadata.location} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="location" value={metadata.location} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" title="Ubicación" />
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2">FECHA:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" title="Fecha" />
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2">USUARIO:</span>
-               <input name="user" value={metadata.user} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="user" value={metadata.user} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" title="Usuario" />
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2">PRÓX. MANTENIMIENTO:</span>
-               <input type="date" name="nextMaintenance" value={metadata.nextMaintenance} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input type="date" name="nextMaintenance" value={metadata.nextMaintenance} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" title="Próximo Mantenimiento" />
             </div>
          </div>
       </div>
@@ -151,6 +152,7 @@ export const FlareChecklistForm: React.FC<Props> = ({ initialData, onSave, onCan
                     className="w-full h-full px-2 outline-none bg-transparent"
                     value={row.observations}
                     onChange={(e) => handleRowChange(row.id, 'observations', e.target.value)}
+                    title="Observaciones"
                  />
               </div>
            </div>
@@ -161,8 +163,8 @@ export const FlareChecklistForm: React.FC<Props> = ({ initialData, onSave, onCan
       <div className="p-4 border-b border-black">
          <div className="font-bold mb-1 uppercase text-xs">Observaciones Generales:</div>
          <textarea 
-            className="w-full h-24 p-2 resize-none outline-none border border-gray-300 rounded text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6"
-            style={{ backgroundSize: '100% 24px' }}
+            className="w-full h-24 p-2 resize-none outline-none border border-gray-300 rounded text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6 [background-size:100%_24px]"
+            title="Observaciones Generales"
             value={observations}
             onChange={(e) => setObservations(e.target.value)}
          />
@@ -196,6 +198,7 @@ export const FlareChecklistForm: React.FC<Props> = ({ initialData, onSave, onCan
                filename={`checklist_flare_${metadata.date}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<FlareChecklistPdf report={{ id: initialData?.id ?? '', metadata, rows, observations, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

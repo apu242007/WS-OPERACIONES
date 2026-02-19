@@ -4,6 +4,7 @@ import { QHSEReport, QHSEMetadata, QHSERow, QHSEFooter } from '../types';
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { QHSEReportPdf } from '../pdf/QHSEReportPdf';
 
 interface Props {
   initialData?: QHSEReport;
@@ -105,6 +106,7 @@ export const QHSEReportForm: React.FC<Props> = ({ initialData, onSave, onCancel 
          <div className="col-span-2 border-b sm:border-b-0 sm:border-r border-black p-0">
              <input 
                type="date" 
+               title="Fecha de Informe"
                className="w-full h-full p-2 text-center outline-none bg-transparent"
                value={metadata.reportDate}
                onChange={(e) => handleMetadataChange('reportDate', e.target.value)}
@@ -113,6 +115,7 @@ export const QHSEReportForm: React.FC<Props> = ({ initialData, onSave, onCancel 
          <div className="col-span-3 border-b sm:border-b-0 sm:border-r border-black font-bold p-2 bg-gray-50 print:bg-transparent flex items-center justify-center uppercase text-xs">Mes que corresponde</div>
          <div className="col-span-5 p-0">
              <input 
+               title="Mes que corresponde"
                className="w-full h-full p-2 text-center outline-none bg-transparent capitalize"
                placeholder="Ej: Octubre 2023"
                value={metadata.month}
@@ -124,6 +127,7 @@ export const QHSEReportForm: React.FC<Props> = ({ initialData, onSave, onCancel 
          <div className="col-span-2 border-b sm:border-b-0 sm:border-r border-black font-bold p-2 bg-gray-50 print:bg-transparent flex items-center uppercase text-xs">Nombre y Apellido</div>
          <div className="col-span-10 p-0">
              <input 
+               title="Nombre y Apellido"
                className="w-full h-full p-2 pl-4 outline-none bg-transparent uppercase font-medium"
                value={metadata.name}
                onChange={(e) => handleMetadataChange('name', e.target.value)}
@@ -152,6 +156,7 @@ export const QHSEReportForm: React.FC<Props> = ({ initialData, onSave, onCancel 
                  
                  <td className="border-r border-black p-0">
                    <input 
+                     title="Cantidad realizada"
                      className="w-full h-full text-center bg-transparent outline-none p-1 font-bold"
                      value={row.realized}
                      onChange={(e) => handleRowChange(row.id, 'realized', e.target.value)}
@@ -161,6 +166,7 @@ export const QHSEReportForm: React.FC<Props> = ({ initialData, onSave, onCancel 
                  {/* 3 Detail Columns as per image grid */}
                  <td className="border-r border-black p-0 w-32">
                     <input 
+                     title="Detalle 1"
                      className="w-full h-full bg-transparent outline-none p-1 text-center text-[10px]"
                      value={row.detail1}
                      onChange={(e) => handleRowChange(row.id, 'detail1', e.target.value)}
@@ -168,6 +174,7 @@ export const QHSEReportForm: React.FC<Props> = ({ initialData, onSave, onCancel 
                  </td>
                  <td className="border-r border-black p-0 w-32">
                     <input 
+                     title="Detalle 2"
                      className="w-full h-full bg-transparent outline-none p-1 text-center text-[10px]"
                      value={row.detail2}
                      onChange={(e) => handleRowChange(row.id, 'detail2', e.target.value)}
@@ -175,6 +182,7 @@ export const QHSEReportForm: React.FC<Props> = ({ initialData, onSave, onCancel 
                  </td>
                  <td className="p-0 w-32">
                     <input 
+                     title="Detalle 3"
                      className="w-full h-full bg-transparent outline-none p-1 text-center text-[10px]"
                      value={row.detail3}
                      onChange={(e) => handleRowChange(row.id, 'detail3', e.target.value)}
@@ -204,6 +212,7 @@ export const QHSEReportForm: React.FC<Props> = ({ initialData, onSave, onCancel 
                  <label className="text-xs font-bold text-gray-500 uppercase">Cantidad Realizada:</label>
                  <input 
                    type="number"
+                   title="Cantidad realizada"
                    className="border border-gray-300 rounded p-1.5 text-center font-bold"
                    value={row.realized}
                    onChange={(e) => handleRowChange(row.id, 'realized', e.target.value)}
@@ -225,23 +234,23 @@ export const QHSEReportForm: React.FC<Props> = ({ initialData, onSave, onCancel 
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-0 sm:divide-x divide-black text-center text-xs">
               <div className="p-2 flex flex-col justify-center bg-red-50 text-red-800 font-bold border border-red-200 sm:border-0 rounded sm:rounded-none">
                  <span className="mb-1">EQ Tck 1</span>
-                 <input className="w-full bg-transparent border-b border-red-400 text-center font-bold text-lg outline-none" value={footerStats.eqTck1} onChange={e => handleFooterChange('eqTck1', e.target.value)} />
+                 <input className="w-full bg-transparent border-b border-red-400 text-center font-bold text-lg outline-none" title="EQ Tck 1" value={footerStats.eqTck1} onChange={e => handleFooterChange('eqTck1', e.target.value)} />
               </div>
               <div className="p-2 flex flex-col justify-center bg-red-50 text-red-800 font-bold border border-red-200 sm:border-0 rounded sm:rounded-none">
                  <span className="mb-1">EQ Tck 2</span>
-                 <input className="w-full bg-transparent border-b border-red-400 text-center font-bold text-lg outline-none" value={footerStats.eqTck2} onChange={e => handleFooterChange('eqTck2', e.target.value)} />
+                 <input className="w-full bg-transparent border-b border-red-400 text-center font-bold text-lg outline-none" title="EQ Tck 2" value={footerStats.eqTck2} onChange={e => handleFooterChange('eqTck2', e.target.value)} />
               </div>
               <div className="p-2 flex flex-col justify-center bg-red-50 text-red-800 font-bold border border-red-200 sm:border-0 rounded sm:rounded-none">
                  <span className="mb-1">EQ Tck 3</span>
-                 <input className="w-full bg-transparent border-b border-red-400 text-center font-bold text-lg outline-none" value={footerStats.eqTck3} onChange={e => handleFooterChange('eqTck3', e.target.value)} />
+                 <input className="w-full bg-transparent border-b border-red-400 text-center font-bold text-lg outline-none" title="EQ Tck 3" value={footerStats.eqTck3} onChange={e => handleFooterChange('eqTck3', e.target.value)} />
               </div>
               <div className="p-2 flex flex-col justify-center bg-red-50 text-red-800 font-bold border border-red-200 sm:border-0 rounded sm:rounded-none">
                  <span className="mb-1">EQ Tck 4</span>
-                 <input className="w-full bg-transparent border-b border-red-400 text-center font-bold text-lg outline-none" value={footerStats.eqTck4} onChange={e => handleFooterChange('eqTck4', e.target.value)} />
+                 <input className="w-full bg-transparent border-b border-red-400 text-center font-bold text-lg outline-none" title="EQ Tck 4" value={footerStats.eqTck4} onChange={e => handleFooterChange('eqTck4', e.target.value)} />
               </div>
               <div className="p-2 col-span-2 sm:col-span-1 flex flex-col justify-center bg-red-50 text-red-800 font-bold border border-red-200 sm:border-0 rounded sm:rounded-none">
                  <span className="mb-1">Base Operativa</span>
-                 <input className="w-full bg-transparent border-b border-red-400 text-center font-bold text-lg outline-none" value={footerStats.baseOperativa} onChange={e => handleFooterChange('baseOperativa', e.target.value)} />
+                 <input className="w-full bg-transparent border-b border-red-400 text-center font-bold text-lg outline-none" title="Base Operativa" value={footerStats.baseOperativa} onChange={e => handleFooterChange('baseOperativa', e.target.value)} />
               </div>
           </div>
       </div>
@@ -256,9 +265,9 @@ export const QHSEReportForm: React.FC<Props> = ({ initialData, onSave, onCancel 
       <div className="p-4 border-b border-gray-300">
         <div className="font-bold text-sm mb-2 text-gray-700 uppercase">Observaciones en el trasncurso del Mes:</div>
         <textarea 
+          title="Observaciones en el transcurso del mes"
           rows={4}
-          className="w-full p-3 text-sm border border-gray-300 rounded-md outline-none resize-none focus:ring-1 focus:ring-brand-red bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6"
-          style={{ backgroundSize: '100% 24px' }}
+          className="w-full p-3 text-sm border border-gray-300 rounded-md outline-none resize-none focus:ring-1 focus:ring-brand-red bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] [background-size:100%_24px] leading-6"
           value={observations}
           onChange={(e) => setObservations(e.target.value)}
           placeholder="Ingrese observaciones..."
@@ -268,9 +277,9 @@ export const QHSEReportForm: React.FC<Props> = ({ initialData, onSave, onCancel 
       <div className="p-4 border-b border-gray-300">
         <div className="font-bold text-sm mb-2 text-gray-700 uppercase">Tareas Pendientes a realizar:</div>
         <textarea 
+          title="Tareas pendientes a realizar"
           rows={4}
-          className="w-full p-3 text-sm border border-gray-300 rounded-md outline-none resize-none focus:ring-1 focus:ring-brand-red bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6"
-          style={{ backgroundSize: '100% 24px' }}
+          className="w-full p-3 text-sm border border-gray-300 rounded-md outline-none resize-none focus:ring-1 focus:ring-brand-red bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] [background-size:100%_24px] leading-6"
           value={pendingTasks}
           onChange={(e) => setPendingTasks(e.target.value)}
           placeholder="Ingrese tareas pendientes..."
@@ -280,9 +289,9 @@ export const QHSEReportForm: React.FC<Props> = ({ initialData, onSave, onCancel 
       <div className="p-4 border-b border-black">
         <div className="font-bold text-sm mb-2 text-gray-700 uppercase">Compromiso para el proximo Mes:</div>
         <textarea 
+          title="Compromiso para el próximo mes"
           rows={4}
-          className="w-full p-3 text-sm border border-gray-300 rounded-md outline-none resize-none focus:ring-1 focus:ring-brand-red bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6"
-          style={{ backgroundSize: '100% 24px' }}
+          className="w-full p-3 text-sm border border-gray-300 rounded-md outline-none resize-none focus:ring-1 focus:ring-brand-red bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] [background-size:100%_24px] leading-6"
           value={nextMonthCommitment}
           onChange={(e) => setNextMonthCommitment(e.target.value)}
           placeholder="Ingrese compromisos..."
@@ -318,6 +327,7 @@ export const QHSEReportForm: React.FC<Props> = ({ initialData, onSave, onCancel 
                filename={`qhse_${metadata.month}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<QHSEReportPdf report={{ id: initialData?.id ?? '', metadata, rows, footerStats, observations, pendingTasks, nextMonthCommitment, signature }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

@@ -4,6 +4,7 @@ import { AccumulatorTestReport, AccumulatorTestMetadata, AccumulatorPumpRow, Acc
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { AccumulatorTestPdf } from '../pdf/AccumulatorTestPdf';
 
 interface Props {
   initialData?: AccumulatorTestReport;
@@ -90,7 +91,7 @@ export const AccumulatorTestForm: React.FC<Props> = ({ initialData, onSave, onCa
          <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 flex flex-col sm:flex-row sm:items-end gap-1 border-b border-black border-dashed pb-1">
                <span className="font-bold w-48 text-xs uppercase">Nombre Mecánico:</span>
-               <input name="mechanicName" value={metadata.mechanicName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="mechanicName" title="Nombre Mecánico" value={metadata.mechanicName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="w-full sm:w-48 flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold text-xs uppercase">Firma:</span>
@@ -98,7 +99,7 @@ export const AccumulatorTestForm: React.FC<Props> = ({ initialData, onSave, onCa
             </div>
             <div className="w-full sm:w-48 flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold text-xs uppercase">Equipo TKR N°:</span>
-               <select name="rigNumber" value={metadata.rigNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent">
+               <select name="rigNumber" title="Equipo TKR N°" value={metadata.rigNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent">
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
                   <option value="tacker06">TACKER06</option>
@@ -118,7 +119,7 @@ export const AccumulatorTestForm: React.FC<Props> = ({ initialData, onSave, onCa
          <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 flex flex-col sm:flex-row sm:items-end gap-1 border-b border-black border-dashed pb-1">
                <span className="font-bold w-48 text-xs uppercase">Nombre Encargado:</span>
-               <input name="shiftLeaderName" value={metadata.shiftLeaderName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="shiftLeaderName" title="Nombre Encargado" value={metadata.shiftLeaderName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="w-full sm:w-48 flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold text-xs uppercase">Firma:</span>
@@ -126,7 +127,7 @@ export const AccumulatorTestForm: React.FC<Props> = ({ initialData, onSave, onCa
             </div>
             <div className="w-full sm:w-48 flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold text-xs uppercase">Fecha:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input type="date" name="date" title="Fecha" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
 
@@ -134,15 +135,15 @@ export const AccumulatorTestForm: React.FC<Props> = ({ initialData, onSave, onCa
          <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold text-xs uppercase">Cliente:</span>
-               <input name="client" value={metadata.client} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="client" title="Cliente" value={metadata.client} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex-1 flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold text-xs uppercase">Yacimiento:</span>
-               <input name="field" value={metadata.field} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="field" title="Yacimiento" value={metadata.field} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex-1 flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold text-xs uppercase">Pozo:</span>
-               <input name="well" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="well" title="Pozo" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
       </div>
@@ -184,9 +185,9 @@ export const AccumulatorTestForm: React.FC<Props> = ({ initialData, onSave, onCa
                   {pumps.map(pump => (
                      <tr key={pump.id}>
                         <td className="border border-black p-2 text-left font-medium">{pump.type}</td>
-                        <td className="border border-black p-0"><input className="w-full h-full text-center outline-none p-2 bg-transparent" value={pump.startPressure} onChange={(e) => handlePumpChange(pump.id, 'startPressure', e.target.value)} /></td>
-                        <td className="border border-black p-0"><input className="w-full h-full text-center outline-none p-2 bg-transparent" value={pump.stopPressure} onChange={(e) => handlePumpChange(pump.id, 'stopPressure', e.target.value)} /></td>
-                        <td className="border border-black p-0"><input className="w-full h-full text-center outline-none p-2 bg-transparent" value={pump.chargeTime} onChange={(e) => handlePumpChange(pump.id, 'chargeTime', e.target.value)} /></td>
+                        <td className="border border-black p-0"><input title="Presión Encendido" className="w-full h-full text-center outline-none p-2 bg-transparent" value={pump.startPressure} onChange={(e) => handlePumpChange(pump.id, 'startPressure', e.target.value)} /></td>
+                        <td className="border border-black p-0"><input title="Presión Corte" className="w-full h-full text-center outline-none p-2 bg-transparent" value={pump.stopPressure} onChange={(e) => handlePumpChange(pump.id, 'stopPressure', e.target.value)} /></td>
+                        <td className="border border-black p-0"><input title="Tiempo Carga" className="w-full h-full text-center outline-none p-2 bg-transparent" value={pump.chargeTime} onChange={(e) => handlePumpChange(pump.id, 'chargeTime', e.target.value)} /></td>
                      </tr>
                   ))}
                </tbody>
@@ -222,7 +223,7 @@ export const AccumulatorTestForm: React.FC<Props> = ({ initialData, onSave, onCa
                    <tr>
                       {bottles.slice(0, 5).map(b => (
                          <td key={b.id} className="border border-black p-0 h-10">
-                            <input className="w-full h-full text-center outline-none p-1 bg-transparent" value={b.pressure} onChange={(e) => handleBottleChange(b.id, e.target.value)} />
+                            <input title="Presión Botellón" className="w-full h-full text-center outline-none p-1 bg-transparent" value={b.pressure} onChange={(e) => handleBottleChange(b.id, e.target.value)} />
                          </td>
                       ))}
                    </tr>
@@ -238,7 +239,7 @@ export const AccumulatorTestForm: React.FC<Props> = ({ initialData, onSave, onCa
                    <tr>
                       {bottles.slice(5, 10).map(b => (
                          <td key={b.id} className="border border-black p-0 h-10">
-                            <input className="w-full h-full text-center outline-none p-1 bg-transparent" value={b.pressure} onChange={(e) => handleBottleChange(b.id, e.target.value)} />
+                            <input title="Presión Botellón" className="w-full h-full text-center outline-none p-1 bg-transparent" value={b.pressure} onChange={(e) => handleBottleChange(b.id, e.target.value)} />
                          </td>
                       ))}
                    </tr>
@@ -251,6 +252,7 @@ export const AccumulatorTestForm: React.FC<Props> = ({ initialData, onSave, onCa
       <div className="p-4 border-b border-black flex flex-col sm:flex-row sm:items-end gap-2 text-sm bg-yellow-50/50">
          <span className="font-bold">Presión de Regulación de valvula de Alivio (PSI):</span>
          <input 
+            title="Presión Válvula Alivio"
             className="border-b border-black outline-none w-full sm:w-32 text-center bg-transparent font-bold"
             value={reliefValvePressure}
             onChange={(e) => setReliefValvePressure(e.target.value)}
@@ -261,8 +263,8 @@ export const AccumulatorTestForm: React.FC<Props> = ({ initialData, onSave, onCa
       <div className="p-4 border-b border-black">
          <div className="font-bold underline mb-1 text-sm uppercase">Observaciones Generales:</div>
          <textarea 
-            className="w-full h-32 p-2 resize-none outline-none border border-gray-300 rounded text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6"
-            style={{ backgroundSize: '100% 24px', lineHeight: '24px' }}
+            title="Observaciones Generales"
+            className="w-full h-32 p-2 resize-none outline-none border border-gray-300 rounded text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] [background-size:100%_24px] leading-6"
             value={observations}
             onChange={(e) => setObservations(e.target.value)}
          />
@@ -309,6 +311,7 @@ export const AccumulatorTestForm: React.FC<Props> = ({ initialData, onSave, onCa
                filename={`prueba_acumulador_${metadata.date}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<AccumulatorTestPdf report={{ id: initialData?.id ?? '', metadata, pumps, bottles, reliefValvePressure, observations, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

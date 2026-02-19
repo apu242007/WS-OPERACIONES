@@ -4,6 +4,7 @@ import { CircuitBreakerReport, CircuitBreakerMetadata, CircuitBreakerRow, Networ
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { CircuitBreakerPdf } from '../pdf/CircuitBreakerPdf';
 
 interface Props {
   initialData?: CircuitBreakerReport;
@@ -133,7 +134,7 @@ export const CircuitBreakerForm: React.FC<Props> = ({ initialData, onSave, onCan
          <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 flex flex-col sm:flex-row sm:items-end gap-1 border-b border-black border-dashed pb-1">
                <span className="whitespace-nowrap font-bold w-48 text-xs">Nombre y Apellido Eléctrico:</span>
-               <input name="electricianName" value={metadata.electricianName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="electricianName" title="Nombre y Apellido Eléctrico" value={metadata.electricianName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             {/* Signature placeholder visually */}
             <div className="w-full sm:w-48 flex items-end gap-2 border-b border-black border-dashed pb-1">
@@ -142,7 +143,7 @@ export const CircuitBreakerForm: React.FC<Props> = ({ initialData, onSave, onCan
             </div>
             <div className="w-full sm:w-48 flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold text-xs">Equipo TKR N°:</span>
-               <select name="equipmentNumber" value={metadata.equipmentNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent">
+               <select name="equipmentNumber" title="Equipo TKR N°" value={metadata.equipmentNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent">
 <option value="tacker01">TACKER01</option>
 <option value="tacker05">TACKER05</option>
 <option value="tacker06">TACKER06</option>
@@ -162,7 +163,7 @@ export const CircuitBreakerForm: React.FC<Props> = ({ initialData, onSave, onCan
          <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 flex flex-col sm:flex-row sm:items-end gap-1 border-b border-black border-dashed pb-1">
                <span className="whitespace-nowrap font-bold w-48 text-xs">Nombre y Apellido Supervisor:</span>
-               <input name="supervisorName" value={metadata.supervisorName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="supervisorName" title="Nombre y Apellido Supervisor" value={metadata.supervisorName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="w-full sm:w-48 flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold text-xs">Firma:</span>
@@ -170,7 +171,7 @@ export const CircuitBreakerForm: React.FC<Props> = ({ initialData, onSave, onCan
             </div>
             <div className="w-full sm:w-48 flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold text-xs">Fecha:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input type="date" name="date" title="Fecha" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
 
@@ -178,15 +179,15 @@ export const CircuitBreakerForm: React.FC<Props> = ({ initialData, onSave, onCan
          <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold text-xs">Cliente:</span>
-               <input name="client" value={metadata.client} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="client" title="Cliente" value={metadata.client} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex-1 flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold text-xs">Yacimiento:</span>
-               <input name="field" value={metadata.field} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="field" title="Yacimiento" value={metadata.field} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex-1 flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold text-xs">Pozo:</span>
-               <input name="well" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="well" title="Pozo" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
       </div>
@@ -197,15 +198,15 @@ export const CircuitBreakerForm: React.FC<Props> = ({ initialData, onSave, onCan
          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold text-xs">MARCA:</span>
-               <input name="instrumentBrand" value={metadata.instrumentBrand} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="instrumentBrand" title="Marca Instrumento" value={metadata.instrumentBrand} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold text-xs">MODELO:</span>
-               <input name="instrumentModel" value={metadata.instrumentModel} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="instrumentModel" title="Modelo Instrumento" value={metadata.instrumentModel} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex items-end gap-2 border-b border-black border-dashed pb-1">
                <span className="font-bold text-xs">N° SERIE:</span>
-               <input name="instrumentSerial" value={metadata.instrumentSerial} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="instrumentSerial" title="N° Serie Instrumento" value={metadata.instrumentSerial} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
       </div>
@@ -246,22 +247,22 @@ export const CircuitBreakerForm: React.FC<Props> = ({ initialData, onSave, onCan
                              <input className="w-full h-full p-1 pl-2 outline-none bg-transparent" value={row.description} onChange={(e) => handleRowChange(row.id, 'description', e.target.value)} placeholder="Descripción..." />
                           </td>
                           <td className="border-r border-black p-0">
-                             <input className="w-full h-full p-1 outline-none bg-transparent text-center" value={row.voltage} onChange={(e) => handleRowChange(row.id, 'voltage', e.target.value)} />
+                             <input title="Voltaje" className="w-full h-full p-1 outline-none bg-transparent text-center" value={row.voltage} onChange={(e) => handleRowChange(row.id, 'voltage', e.target.value)} />
                           </td>
                           <td className="border-r border-black p-0">
-                             <input className="w-full h-full p-1 outline-none bg-transparent text-center" value={row.amperage} onChange={(e) => handleRowChange(row.id, 'amperage', e.target.value)} />
+                             <input title="Amper" className="w-full h-full p-1 outline-none bg-transparent text-center" value={row.amperage} onChange={(e) => handleRowChange(row.id, 'amperage', e.target.value)} />
                           </td>
                           <td className="border-r border-black p-0">
-                             <input className="w-full h-full p-1 outline-none bg-transparent text-center" value={row.sensitivityNominal} onChange={(e) => handleRowChange(row.id, 'sensitivityNominal', e.target.value)} />
+                             <input title="mA Nominal" className="w-full h-full p-1 outline-none bg-transparent text-center" value={row.sensitivityNominal} onChange={(e) => handleRowChange(row.id, 'sensitivityNominal', e.target.value)} />
                           </td>
                           <td className="border-r border-black p-0">
-                             <input className="w-full h-full p-1 outline-none bg-transparent text-center" value={row.sensitivityMeasured} onChange={(e) => handleRowChange(row.id, 'sensitivityMeasured', e.target.value)} />
+                             <input title="mA Medido" className="w-full h-full p-1 outline-none bg-transparent text-center" value={row.sensitivityMeasured} onChange={(e) => handleRowChange(row.id, 'sensitivityMeasured', e.target.value)} />
                           </td>
                           <td className="border-r border-black p-0">
-                             <input className="w-full h-full p-1 outline-none bg-transparent text-center" value={row.responseTime} onChange={(e) => handleRowChange(row.id, 'responseTime', e.target.value)} />
+                             <input title="Tiempo de Respuesta" className="w-full h-full p-1 outline-none bg-transparent text-center" value={row.responseTime} onChange={(e) => handleRowChange(row.id, 'responseTime', e.target.value)} />
                           </td>
                           <td className="p-0 border-r border-black">
-                             <input className="w-full h-full p-1 outline-none bg-transparent" value={row.observations} onChange={(e) => handleRowChange(row.id, 'observations', e.target.value)} />
+                             <input title="Observaciones" className="w-full h-full p-1 outline-none bg-transparent" value={row.observations} onChange={(e) => handleRowChange(row.id, 'observations', e.target.value)} />
                           </td>
                           <td className="text-center no-print">
                              <button onClick={() => removeRow(row.id)} className="text-red-500 font-bold opacity-100 sm:opacity-0 sm:group-hover:opacity-100 hover:bg-red-50 w-full h-full">×</button>
@@ -288,31 +289,31 @@ export const CircuitBreakerForm: React.FC<Props> = ({ initialData, onSave, onCan
          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-2 border border-gray-300 rounded bg-gray-50">
              <div className="flex flex-col gap-1">
                  <label className="text-[10px] font-bold text-gray-500">R - Volt</label>
-                 <input className="border border-gray-300 rounded p-1 text-sm text-center bg-white" value={analyzer.v_r} onChange={(e) => setAnalyzer({...analyzer, v_r: e.target.value})} />
+                 <input title="R - Volt" className="border border-gray-300 rounded p-1 text-sm text-center bg-white" value={analyzer.v_r} onChange={(e) => setAnalyzer({...analyzer, v_r: e.target.value})} />
              </div>
              <div className="flex flex-col gap-1">
                  <label className="text-[10px] font-bold text-gray-500">R - Amp</label>
-                 <input className="border border-gray-300 rounded p-1 text-sm text-center bg-white" value={analyzer.i_r} onChange={(e) => setAnalyzer({...analyzer, i_r: e.target.value})} />
+                 <input title="R - Amp" className="border border-gray-300 rounded p-1 text-sm text-center bg-white" value={analyzer.i_r} onChange={(e) => setAnalyzer({...analyzer, i_r: e.target.value})} />
              </div>
              <div className="flex flex-col gap-1">
                  <label className="text-[10px] font-bold text-gray-500">S - Volt</label>
-                 <input className="border border-gray-300 rounded p-1 text-sm text-center bg-white" value={analyzer.v_s} onChange={(e) => setAnalyzer({...analyzer, v_s: e.target.value})} />
+                 <input title="S - Volt" className="border border-gray-300 rounded p-1 text-sm text-center bg-white" value={analyzer.v_s} onChange={(e) => setAnalyzer({...analyzer, v_s: e.target.value})} />
              </div>
              <div className="flex flex-col gap-1">
                  <label className="text-[10px] font-bold text-gray-500">S - Amp</label>
-                 <input className="border border-gray-300 rounded p-1 text-sm text-center bg-white" value={analyzer.i_s} onChange={(e) => setAnalyzer({...analyzer, i_s: e.target.value})} />
+                 <input title="S - Amp" className="border border-gray-300 rounded p-1 text-sm text-center bg-white" value={analyzer.i_s} onChange={(e) => setAnalyzer({...analyzer, i_s: e.target.value})} />
              </div>
              <div className="flex flex-col gap-1">
                  <label className="text-[10px] font-bold text-gray-500">T - Volt</label>
-                 <input className="border border-gray-300 rounded p-1 text-sm text-center bg-white" value={analyzer.v_t} onChange={(e) => setAnalyzer({...analyzer, v_t: e.target.value})} />
+                 <input title="T - Volt" className="border border-gray-300 rounded p-1 text-sm text-center bg-white" value={analyzer.v_t} onChange={(e) => setAnalyzer({...analyzer, v_t: e.target.value})} />
              </div>
              <div className="flex flex-col gap-1">
                  <label className="text-[10px] font-bold text-gray-500">T - Amp</label>
-                 <input className="border border-gray-300 rounded p-1 text-sm text-center bg-white" value={analyzer.i_t} onChange={(e) => setAnalyzer({...analyzer, i_t: e.target.value})} />
+                 <input title="T - Amp" className="border border-gray-300 rounded p-1 text-sm text-center bg-white" value={analyzer.i_t} onChange={(e) => setAnalyzer({...analyzer, i_t: e.target.value})} />
              </div>
              <div className="flex flex-col gap-1 col-span-2 sm:col-span-1">
                  <label className="text-[10px] font-bold text-gray-500">Frecuencia (Hz)</label>
-                 <input className="border border-gray-300 rounded p-1 text-sm text-center bg-white" value={analyzer.freq} onChange={(e) => setAnalyzer({...analyzer, freq: e.target.value})} />
+                 <input title="Frecuencia (Hz)" className="border border-gray-300 rounded p-1 text-sm text-center bg-white" value={analyzer.freq} onChange={(e) => setAnalyzer({...analyzer, freq: e.target.value})} />
              </div>
          </div>
       </div>
@@ -321,6 +322,7 @@ export const CircuitBreakerForm: React.FC<Props> = ({ initialData, onSave, onCan
       <div className="p-4 border-b border-black">
          <div className="font-bold mb-1 text-xs">Observaciones Generales:</div>
          <textarea 
+            title="Observaciones Generales"
             className="w-full p-2 border border-gray-300 rounded resize-none h-24 outline-none text-sm"
             value={generalObservations}
             onChange={(e) => setGeneralObservations(e.target.value)}
@@ -372,6 +374,7 @@ export const CircuitBreakerForm: React.FC<Props> = ({ initialData, onSave, onCan
                filename={`checklist_electrico_${metadata.date}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<CircuitBreakerPdf report={{ id: initialData?.id ?? '', metadata, rows, analyzer, generalObservations, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

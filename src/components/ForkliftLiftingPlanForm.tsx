@@ -5,6 +5,7 @@ import { ForkliftLiftingPlanReport, LiftingPlanCheckItem } from '../types';
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { ForkliftLiftingPlanPdf } from '../pdf/ForkliftLiftingPlanPdf';
 
 interface Props {
   initialData?: ForkliftLiftingPlanReport;
@@ -324,6 +325,7 @@ export const ForkliftLiftingPlanForm: React.FC<Props> = ({ initialData, onSave, 
                filename={`plan_izaje_${general.date}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<ForkliftLiftingPlanPdf report={{ id: initialData?.id ?? '', general, equipment, personnel, checklist, sketch, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

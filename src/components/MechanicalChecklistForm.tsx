@@ -4,6 +4,7 @@ import { MechanicalChecklistReport, MechanicalChecklistMetadata, MechanicalCheck
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { MechanicalChecklistPdf } from '../pdf/MechanicalChecklistPdf';
 
 interface Props {
   initialData?: MechanicalChecklistReport;
@@ -119,7 +120,7 @@ export const MechanicalChecklistForm: React.FC<Props> = ({ initialData, onSave, 
          <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-48">Nombre y Apellido Mecánico:</span>
-               <input name="mechanicName" value={metadata.mechanicName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="mechanicName" title="Nombre y Apellido Mecánico" value={metadata.mechanicName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="w-full sm:w-48 flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2">Firma:</span>
@@ -127,7 +128,7 @@ export const MechanicalChecklistForm: React.FC<Props> = ({ initialData, onSave, 
             </div>
             <div className="w-full sm:w-48 flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2">Equipo TKR N°:</span>
-               <select name="equipmentNumber" value={metadata.equipmentNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent">
+               <select name="equipmentNumber" title="Equipo TKR N°" value={metadata.equipmentNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent">
 <option value="tacker01">TACKER01</option>
 <option value="tacker05">TACKER05</option>
 <option value="tacker06">TACKER06</option>
@@ -147,7 +148,7 @@ export const MechanicalChecklistForm: React.FC<Props> = ({ initialData, onSave, 
          <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-48">Nombre y Apellido Supervisor:</span>
-               <input name="supervisorName" value={metadata.supervisorName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="supervisorName" title="Nombre y Apellido Supervisor" value={metadata.supervisorName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="w-full sm:w-48 flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2">Firma:</span>
@@ -155,7 +156,7 @@ export const MechanicalChecklistForm: React.FC<Props> = ({ initialData, onSave, 
             </div>
             <div className="w-full sm:w-48 flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2">Fecha:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input type="date" name="date" title="Fecha" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
 
@@ -163,15 +164,15 @@ export const MechanicalChecklistForm: React.FC<Props> = ({ initialData, onSave, 
          <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2">Cliente:</span>
-               <input name="client" value={metadata.client} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="client" title="Cliente" value={metadata.client} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex-1 flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2">Yacimiento:</span>
-               <input name="field" value={metadata.field} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="field" title="Yacimiento" value={metadata.field} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex-1 flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2">Pozo:</span>
-               <input name="well" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="well" title="Pozo" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
       </div>
@@ -203,15 +204,15 @@ export const MechanicalChecklistForm: React.FC<Props> = ({ initialData, onSave, 
                            <div className="flex sm:contents px-2 sm:px-0 gap-2">
                                <div className="flex-1 sm:col-span-2 sm:border-r border-black h-full">
                                   <label className="sm:hidden text-[10px] font-bold text-gray-500 block mb-1">NIVEL</label>
-                                  <input className="w-full h-full text-center bg-transparent border rounded sm:border-none p-1 sm:p-0 outline-none" value={item.level} onChange={(e) => handleStoppedItemChange(item.id, 'level', e.target.value)} />
+                                  <input title="Nivel" className="w-full h-full text-center bg-transparent border rounded sm:border-none p-1 sm:p-0 outline-none" value={item.level} onChange={(e) => handleStoppedItemChange(item.id, 'level', e.target.value)} />
                                </div>
                                <div className="flex-1 sm:col-span-2 sm:border-r border-black h-full">
                                   <label className="sm:hidden text-[10px] font-bold text-gray-500 block mb-1">LTS AGREG.</label>
-                                  <input className="w-full h-full text-center bg-transparent border rounded sm:border-none p-1 sm:p-0 outline-none" value={item.litersAdded} onChange={(e) => handleStoppedItemChange(item.id, 'litersAdded', e.target.value)} />
+                                  <input title="Lts Agreg." className="w-full h-full text-center bg-transparent border rounded sm:border-none p-1 sm:p-0 outline-none" value={item.litersAdded} onChange={(e) => handleStoppedItemChange(item.id, 'litersAdded', e.target.value)} />
                                </div>
                                <div className="flex-1 sm:col-span-2 h-full">
                                   <label className="sm:hidden text-[10px] font-bold text-gray-500 block mb-1">HORAS</label>
-                                  <input className="w-full h-full text-center bg-transparent border rounded sm:border-none p-1 sm:p-0 outline-none" value={item.hours} onChange={(e) => handleStoppedItemChange(item.id, 'hours', e.target.value)} />
+                                  <input title="Horas" className="w-full h-full text-center bg-transparent border rounded sm:border-none p-1 sm:p-0 outline-none" value={item.hours} onChange={(e) => handleStoppedItemChange(item.id, 'hours', e.target.value)} />
                                </div>
                            </div>
                         </div>
@@ -244,11 +245,12 @@ export const MechanicalChecklistForm: React.FC<Props> = ({ initialData, onSave, 
                            <div className="flex sm:contents px-2 sm:px-0 gap-2">
                                <div className="flex-1 sm:col-span-3 sm:border-r border-black h-full">
                                   <label className="sm:hidden text-[10px] font-bold text-gray-500 block mb-1">°C/PSI</label>
-                                  <input className="w-full h-full text-center bg-transparent border rounded sm:border-none p-1 sm:p-0 outline-none" value={item.value} onChange={(e) => handleRunningItemChange(item.id, 'value', e.target.value)} />
+                                  <input title="°C/PSI" className="w-full h-full text-center bg-transparent border rounded sm:border-none p-1 sm:p-0 outline-none" value={item.value} onChange={(e) => handleRunningItemChange(item.id, 'value', e.target.value)} />
                                </div>
                                <div className="flex-1 sm:col-span-3 h-full">
                                   <label className="sm:hidden text-[10px] font-bold text-gray-500 block mb-1">ESTADO</label>
                                   <select 
+                                     title="Estado"
                                      className="w-full h-full text-center bg-transparent border rounded sm:border-none p-1 sm:p-0 outline-none appearance-none cursor-pointer text-xs"
                                      value={item.state || ''}
                                      onChange={(e) => handleRunningItemChange(item.id, 'state', e.target.value)}
@@ -276,8 +278,8 @@ export const MechanicalChecklistForm: React.FC<Props> = ({ initialData, onSave, 
       <div className="p-4 border-b border-black">
          <div className="font-bold underline mb-1">Observaciones:</div>
          <textarea 
-            className="w-full h-24 p-2 resize-none outline-none border-none text-xs bg-[linear-gradient(transparent,transparent_19px,#ccc_20px)] leading-5"
-            style={{ backgroundSize: '100% 20px', lineHeight: '20px' }}
+            title="Observaciones"
+            className="w-full h-24 p-2 resize-none outline-none border-none text-xs bg-[linear-gradient(transparent,transparent_19px,#ccc_20px)] [background-size:100%_20px] leading-5"
             value={observations}
             onChange={(e) => setObservations(e.target.value)}
          />
@@ -326,6 +328,7 @@ export const MechanicalChecklistForm: React.FC<Props> = ({ initialData, onSave, 
                filename={`checklist_mecanico_${metadata.date}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<MechanicalChecklistPdf report={{ id: initialData?.id ?? '', metadata, stoppedItems, runningItems, observations, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

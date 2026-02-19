@@ -4,6 +4,7 @@ import { VehicleInspectionReport, VehicleInspectionMetadata, VehicleInspectionRo
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { VehicleInspectionPdf } from '../pdf/VehicleInspectionPdf';
 
 interface Props {
   initialData?: VehicleInspectionReport;
@@ -130,7 +131,7 @@ export const VehicleInspectionForm: React.FC<Props> = ({ initialData, onSave, on
           <div>POSGI001-A1-2</div>
           <div className="flex items-center gap-1 mt-1 font-normal w-full justify-center">
              <span>FECHA:</span>
-             <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="border-b border-black outline-none bg-transparent text-xs w-24 text-center"/>
+             <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="border-b border-black outline-none bg-transparent text-xs w-24 text-center" title="Fecha"/>
           </div>
         </div>
       </div>
@@ -141,16 +142,16 @@ export const VehicleInspectionForm: React.FC<Props> = ({ initialData, onSave, on
          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-20">VEHÍCULO:</span>
-               <input name="vehicle" value={metadata.vehicle} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="vehicle" value={metadata.vehicle} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" title="Vehículo" />
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-28">KILOMETRAJE:</span>
-               <input name="mileage" value={metadata.mileage} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="mileage" value={metadata.mileage} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" title="Kilometraje" />
                <span className="ml-1">kms</span>
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-24">Tarjeta verde:</span>
-               <input name="greenCard" value={metadata.greenCard} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="greenCard" value={metadata.greenCard} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" title="Tarjeta Verde" />
             </div>
          </div>
 
@@ -158,16 +159,16 @@ export const VehicleInspectionForm: React.FC<Props> = ({ initialData, onSave, on
          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-20">PATENTE:</span>
-               <input name="plate" value={metadata.plate} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="plate" value={metadata.plate} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" title="Patente" />
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-28">Último Servicio:</span>
-               <input name="lastServiceKms" value={metadata.lastServiceKms} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="lastServiceKms" value={metadata.lastServiceKms} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" title="Último Servicio (kms)" />
                <span className="ml-1">kms</span>
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-20">S. O. Vto.:</span>
-               <input name="soExpiration" value={metadata.soExpiration} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="soExpiration" value={metadata.soExpiration} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" title="S.O. Vencimiento" />
             </div>
          </div>
 
@@ -175,15 +176,15 @@ export const VehicleInspectionForm: React.FC<Props> = ({ initialData, onSave, on
          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-20">INTERNO:</span>
-               <input name="internalNumber" value={metadata.internalNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="internalNumber" value={metadata.internalNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" title="Interno" />
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-20">VTV Vto.:</span>
-               <input name="vtvExpiration" value={metadata.vtvExpiration} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="vtvExpiration" value={metadata.vtvExpiration} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" title="VTV Vencimiento" />
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-20">RUTA Vto.:</span>
-               <input name="routeExpiration" value={metadata.routeExpiration} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="routeExpiration" value={metadata.routeExpiration} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" title="Ruta Vencimiento" />
             </div>
          </div>
       </div>
@@ -269,6 +270,7 @@ export const VehicleInspectionForm: React.FC<Props> = ({ initialData, onSave, on
                filename={`insp_vehiculo_${metadata.date}_${metadata.plate || 'patente'}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<VehicleInspectionPdf report={{ id: initialData?.id ?? '', metadata, rows, signature }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

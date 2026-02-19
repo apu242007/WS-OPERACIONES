@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { CustomerPropertyCustodyReport, CustomerPropertyCustodyItem, CustomerPropertyCustodyMetadata } from '../types';
 import { Button } from './ui/Button';
 import { ExportPdfButton } from './ExportPdfButton';
+import { CustomerPropertyCustodyPdf } from '../pdf/CustomerPropertyCustodyPdf';
 
 interface Props {
   initialData?: CustomerPropertyCustodyReport;
@@ -91,6 +92,7 @@ export const CustomerPropertyCustodyForm: React.FC<Props> = ({ initialData, onSa
              <input 
                 type="date" 
                 name="date"
+                title="Fecha"
                 value={metadata.date}
                 onChange={handleMetadataChange}
                 className="flex-1 text-center outline-none bg-transparent"
@@ -131,25 +133,25 @@ export const CustomerPropertyCustodyForm: React.FC<Props> = ({ initialData, onSa
              {items.map((row, index) => (
                 <tr key={row.id} className="border-b border-black hover:bg-gray-50 h-8 text-center">
                    <td className="border-r border-black font-bold">{index + 1}</td>
-                   <td className="border-r border-black p-0"><input type="date" className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.entryDate} onChange={(e) => handleItemChange(row.id, 'entryDate', e.target.value)} /></td>
-                   <td className="border-r border-black p-0"><input className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.entryDocument} onChange={(e) => handleItemChange(row.id, 'entryDocument', e.target.value)} /></td>
-                   <td className="border-r border-black p-0"><input className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.transportIn} onChange={(e) => handleItemChange(row.id, 'transportIn', e.target.value)} /></td>
-                   <td className="border-r border-black p-0"><input className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.receivingArea} onChange={(e) => handleItemChange(row.id, 'receivingArea', e.target.value)} /></td>
-                   <td className="border-r border-black p-0"><input className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.client} onChange={(e) => handleItemChange(row.id, 'client', e.target.value)} /></td>
-                   <td className="border-r border-black p-0"><input className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.clientContact} onChange={(e) => handleItemChange(row.id, 'clientContact', e.target.value)} /></td>
-                   <td className="border-r border-black p-0"><input className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.productCode} onChange={(e) => handleItemChange(row.id, 'productCode', e.target.value)} /></td>
-                   <td className="border-r border-black p-0"><input className="w-full h-full p-0 text-left pl-1 outline-none bg-transparent" value={row.productDescription} onChange={(e) => handleItemChange(row.id, 'productDescription', e.target.value)} /></td>
-                   <td className="border-r border-black p-0"><input className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.serialNumber} onChange={(e) => handleItemChange(row.id, 'serialNumber', e.target.value)} /></td>
-                   <td className="border-r border-black p-0"><input className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.receptionStatus} onChange={(e) => handleItemChange(row.id, 'receptionStatus', e.target.value)} /></td>
-                   <td className="border-r border-black p-0"><input className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.requiredTreatment} onChange={(e) => handleItemChange(row.id, 'requiredTreatment', e.target.value)} /></td>
-                   <td className="border-r border-black p-0"><input className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.storageLocation} onChange={(e) => handleItemChange(row.id, 'storageLocation', e.target.value)} /></td>
-                   <td className="border-r border-black p-0"><input type="date" className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.estimatedDeliveryDate} onChange={(e) => handleItemChange(row.id, 'estimatedDeliveryDate', e.target.value)} /></td>
-                   <td className="border-r border-black p-0"><input className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.status} onChange={(e) => handleItemChange(row.id, 'status', e.target.value)} /></td>
-                   <td className="border-r border-black p-0"><input className="w-full h-full p-0 text-left pl-1 outline-none bg-transparent" value={row.deliveryDescription} onChange={(e) => handleItemChange(row.id, 'deliveryDescription', e.target.value)} /></td>
-                   <td className="border-r border-black p-0"><input type="date" className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.actualDeliveryDate} onChange={(e) => handleItemChange(row.id, 'actualDeliveryDate', e.target.value)} /></td>
-                   <td className="border-r border-black p-0"><input className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.exitDocument} onChange={(e) => handleItemChange(row.id, 'exitDocument', e.target.value)} /></td>
-                   <td className="border-r border-black p-0"><input className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.deliveryResponsible} onChange={(e) => handleItemChange(row.id, 'deliveryResponsible', e.target.value)} /></td>
-                   <td className="border-r border-black p-0"><input className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.transportOut} onChange={(e) => handleItemChange(row.id, 'transportOut', e.target.value)} /></td>
+                   <td className="border-r border-black p-0"><input type="date" title="Fecha Ingreso" className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.entryDate} onChange={(e) => handleItemChange(row.id, 'entryDate', e.target.value)} /></td>
+                   <td className="border-r border-black p-0"><input title="Documento Ingreso" className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.entryDocument} onChange={(e) => handleItemChange(row.id, 'entryDocument', e.target.value)} /></td>
+                   <td className="border-r border-black p-0"><input title="Transporte Entrada" className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.transportIn} onChange={(e) => handleItemChange(row.id, 'transportIn', e.target.value)} /></td>
+                   <td className="border-r border-black p-0"><input title="Área que Recibe" className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.receivingArea} onChange={(e) => handleItemChange(row.id, 'receivingArea', e.target.value)} /></td>
+                   <td className="border-r border-black p-0"><input title="Cliente" className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.client} onChange={(e) => handleItemChange(row.id, 'client', e.target.value)} /></td>
+                   <td className="border-r border-black p-0"><input title="Contacto Cliente" className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.clientContact} onChange={(e) => handleItemChange(row.id, 'clientContact', e.target.value)} /></td>
+                   <td className="border-r border-black p-0"><input title="Código Producto" className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.productCode} onChange={(e) => handleItemChange(row.id, 'productCode', e.target.value)} /></td>
+                   <td className="border-r border-black p-0"><input title="Descripción Producto" className="w-full h-full p-0 text-left pl-1 outline-none bg-transparent" value={row.productDescription} onChange={(e) => handleItemChange(row.id, 'productDescription', e.target.value)} /></td>
+                   <td className="border-r border-black p-0"><input title="N° Serie" className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.serialNumber} onChange={(e) => handleItemChange(row.id, 'serialNumber', e.target.value)} /></td>
+                   <td className="border-r border-black p-0"><input title="Estado Recepción" className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.receptionStatus} onChange={(e) => handleItemChange(row.id, 'receptionStatus', e.target.value)} /></td>
+                   <td className="border-r border-black p-0"><input title="Tratamiento Requerido" className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.requiredTreatment} onChange={(e) => handleItemChange(row.id, 'requiredTreatment', e.target.value)} /></td>
+                   <td className="border-r border-black p-0"><input title="Ubicación Almacenaje" className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.storageLocation} onChange={(e) => handleItemChange(row.id, 'storageLocation', e.target.value)} /></td>
+                   <td className="border-r border-black p-0"><input type="date" title="Fecha Prevista Entrega" className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.estimatedDeliveryDate} onChange={(e) => handleItemChange(row.id, 'estimatedDeliveryDate', e.target.value)} /></td>
+                   <td className="border-r border-black p-0"><input title="Estado" className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.status} onChange={(e) => handleItemChange(row.id, 'status', e.target.value)} /></td>
+                   <td className="border-r border-black p-0"><input title="Descripción Producto Entregado" className="w-full h-full p-0 text-left pl-1 outline-none bg-transparent" value={row.deliveryDescription} onChange={(e) => handleItemChange(row.id, 'deliveryDescription', e.target.value)} /></td>
+                   <td className="border-r border-black p-0"><input type="date" title="Fecha Entrega Efectiva" className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.actualDeliveryDate} onChange={(e) => handleItemChange(row.id, 'actualDeliveryDate', e.target.value)} /></td>
+                   <td className="border-r border-black p-0"><input title="Documento Egreso" className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.exitDocument} onChange={(e) => handleItemChange(row.id, 'exitDocument', e.target.value)} /></td>
+                   <td className="border-r border-black p-0"><input title="Responsable de Entrega" className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.deliveryResponsible} onChange={(e) => handleItemChange(row.id, 'deliveryResponsible', e.target.value)} /></td>
+                   <td className="border-r border-black p-0"><input title="Transporte Salida" className="w-full h-full p-0 text-center outline-none bg-transparent" value={row.transportOut} onChange={(e) => handleItemChange(row.id, 'transportOut', e.target.value)} /></td>
                    
                    <td className="p-0 text-center no-print">
                       <button onClick={() => removeItem(row.id)} className="text-gray-400 hover:text-red-500 font-bold">&times;</button>
@@ -186,6 +188,7 @@ export const CustomerPropertyCustodyForm: React.FC<Props> = ({ initialData, onSa
                  <div>
                    <label className="block text-[10px] font-bold text-gray-500 uppercase">Producto / Descripción</label>
                    <input 
+                     title="Descripción Producto"
                      className="w-full border-b border-gray-400 bg-transparent py-1 text-sm font-medium"
                      value={item.productDescription}
                      onChange={(e) => handleItemChange(item.id, 'productDescription', e.target.value)}
@@ -197,6 +200,7 @@ export const CustomerPropertyCustodyForm: React.FC<Props> = ({ initialData, onSa
                    <div>
                       <label className="block text-[10px] font-bold text-gray-500 uppercase">Cantidad/Serial</label>
                       <input 
+                        title="Cantidad/Serial"
                         className="w-full border-b border-gray-400 bg-transparent py-1 text-sm"
                         value={item.serialNumber}
                         onChange={(e) => handleItemChange(item.id, 'serialNumber', e.target.value)}
@@ -205,6 +209,7 @@ export const CustomerPropertyCustodyForm: React.FC<Props> = ({ initialData, onSa
                    <div>
                       <label className="block text-[10px] font-bold text-gray-500 uppercase">Estado Recep.</label>
                       <input 
+                        title="Estado Recepción"
                         className="w-full border-b border-gray-400 bg-transparent py-1 text-sm"
                         value={item.receptionStatus}
                         onChange={(e) => handleItemChange(item.id, 'receptionStatus', e.target.value)}
@@ -216,6 +221,7 @@ export const CustomerPropertyCustodyForm: React.FC<Props> = ({ initialData, onSa
                     <div>
                        <label className="block text-[10px] font-bold text-gray-500 uppercase">Cliente</label>
                        <input 
+                         title="Cliente"
                          className="w-full border-b border-gray-400 bg-transparent py-1 text-sm"
                          value={item.client}
                          onChange={(e) => handleItemChange(item.id, 'client', e.target.value)}
@@ -225,6 +231,7 @@ export const CustomerPropertyCustodyForm: React.FC<Props> = ({ initialData, onSa
                        <label className="block text-[10px] font-bold text-gray-500 uppercase">Fecha Ingreso</label>
                        <input 
                          type="date"
+                         title="Fecha Ingreso"
                          className="w-full border-b border-gray-400 bg-transparent py-1 text-sm"
                          value={item.entryDate}
                          onChange={(e) => handleItemChange(item.id, 'entryDate', e.target.value)}
@@ -254,6 +261,7 @@ export const CustomerPropertyCustodyForm: React.FC<Props> = ({ initialData, onSa
                filename={`custodia_propiedad_${metadata.date}`}
                orientation="l"
                className="w-full"
+               pdfComponent={<CustomerPropertyCustodyPdf report={{ id: initialData?.id ?? '', metadata, items }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

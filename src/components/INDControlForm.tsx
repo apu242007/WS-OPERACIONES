@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { INDControlReport, INDControlMetadata, INDControlRow } from '../types';
 import { Button } from './ui/Button';
 import { ExportPdfButton } from './ExportPdfButton';
+import { INDControlPdf } from '../pdf/INDControlPdf';
 
 interface Props {
   initialData?: INDControlReport;
@@ -142,7 +143,7 @@ export const INDControlForm: React.FC<Props> = ({ initialData, onSave, onCancel 
          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
             <div className="flex flex-col sm:flex-row sm:items-end gap-1 sm:gap-2">
                 <span className="font-bold text-sm uppercase">Equipo:</span>
-                <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="border-b border-black outline-none bg-transparent w-full sm:w-48 uppercase">
+                <select name="equipment" title="Equipo" value={metadata.equipment} onChange={handleMetadataChange} className="border-b border-black outline-none bg-transparent w-full sm:w-48 uppercase">
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
                   <option value="tacker06">TACKER06</option>
@@ -163,6 +164,7 @@ export const INDControlForm: React.FC<Props> = ({ initialData, onSave, onCancel 
                     name="date" 
                     value={metadata.date} 
                     onChange={handleMetadataChange}
+                    title="Fecha"
                     className="border-b border-black outline-none bg-transparent w-full sm:w-32"
                 />
             </div>
@@ -200,6 +202,7 @@ export const INDControlForm: React.FC<Props> = ({ initialData, onSave, onCancel 
                       
                       <td className="border-r border-black p-0">
                          <input 
+                            title="Número de Identificación"
                             className="w-full h-full p-1 text-center outline-none bg-transparent"
                             value={row.identificationNumber}
                             onChange={(e) => handleRowChange(row.id, 'identificationNumber', e.target.value)}
@@ -207,6 +210,7 @@ export const INDControlForm: React.FC<Props> = ({ initialData, onSave, onCancel 
                       </td>
                       <td className="border-r border-black p-0">
                          <input 
+                            title="TAG Cuño"
                             className="w-full h-full p-1 text-center outline-none bg-transparent"
                             value={row.tag}
                             onChange={(e) => handleRowChange(row.id, 'tag', e.target.value)}
@@ -216,6 +220,7 @@ export const INDControlForm: React.FC<Props> = ({ initialData, onSave, onCancel 
                       <td className="border-r border-black p-0">
                          <input 
                             type="date"
+                            title="Fecha de Inspección"
                             className="w-full h-full p-1 text-center outline-none bg-transparent text-[10px]"
                             value={row.inspectionDate}
                             onChange={(e) => handleRowChange(row.id, 'inspectionDate', e.target.value)}
@@ -224,6 +229,7 @@ export const INDControlForm: React.FC<Props> = ({ initialData, onSave, onCancel 
                       <td className="border-r border-black p-0 bg-yellow-50/50 print:bg-transparent">
                          <input 
                             type="date"
+                            title="Fecha de Puesta en Servicio"
                             className="w-full h-full p-1 text-center outline-none bg-transparent font-medium text-[10px]"
                             value={row.serviceDate}
                             onChange={(e) => handleRowChange(row.id, 'serviceDate', e.target.value)}
@@ -258,6 +264,7 @@ export const INDControlForm: React.FC<Props> = ({ initialData, onSave, onCancel 
              <ExportPdfButton 
                filename={`planilla_ind_${metadata.date}`}
                orientation="l"
+               pdfComponent={<INDControlPdf report={{ id: initialData?.id ?? '', metadata, rows }} />}
                className="w-full"
              />
            </div>

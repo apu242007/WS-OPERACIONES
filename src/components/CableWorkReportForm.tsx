@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { CableWorkReport, CableWorkMetadata, CableWorkRow } from '../types';
 import { Button } from './ui/Button';
 import { ExportPdfButton } from './ExportPdfButton';
+import { CableWorkReportPdf } from '../pdf/CableWorkReportPdf';
 
 interface Props {
   initialData?: CableWorkReport;
@@ -103,15 +104,15 @@ export const CableWorkReportForm: React.FC<Props> = ({ initialData, onSave, onCa
          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             <div className="flex items-end gap-1 border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold text-gray-500 uppercase whitespace-nowrap">Compañía:</span>
-               <input name="company" value={metadata.company} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent min-w-[50px]" />
+               <input name="company" title="Compañía" value={metadata.company} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent min-w-[50px]" />
             </div>
             <div className="flex items-end gap-1 border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold text-gray-500 uppercase whitespace-nowrap">Pozo:</span>
-               <input name="well" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent min-w-[50px]" />
+               <input name="well" title="Pozo" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent min-w-[50px]" />
             </div>
             <div className="flex items-end gap-1 border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold text-gray-500 uppercase whitespace-nowrap">Equipo:</span>
-               <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent min-w-[50px]">
+               <select name="equipment" title="Equipo" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent min-w-[50px]">
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
                   <option value="tacker06">TACKER06</option>
@@ -127,7 +128,7 @@ export const CableWorkReportForm: React.FC<Props> = ({ initialData, onSave, onCa
             </div>
             <div className="flex items-end gap-1 border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold text-gray-500 uppercase whitespace-nowrap">Marca/Tipo Cuadro:</span>
-               <input name="frameType" value={metadata.frameType} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent min-w-[50px]" />
+               <input name="frameType" title="Marca/Tipo Cuadro" value={metadata.frameType} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent min-w-[50px]" />
             </div>
          </div>
 
@@ -135,23 +136,23 @@ export const CableWorkReportForm: React.FC<Props> = ({ initialData, onSave, onCa
          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase text-[10px]">Diam. Tambor</span>
-               <input name="drumDiameter" value={metadata.drumDiameter} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
+               <input name="drumDiameter" title="Diámetro Tambor" value={metadata.drumDiameter} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase text-[10px]">Liso o Acanot.</span>
-               <input name="drumType" value={metadata.drumType} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
+               <input name="drumType" title="Liso o Acanalado" value={metadata.drumType} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase text-[10px]">Diam. Poleas</span>
-               <input name="pulleyDiameter" value={metadata.pulleyDiameter} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
+               <input name="pulleyDiameter" title="Diámetro Poleas" value={metadata.pulleyDiameter} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase text-[10px]">Peso Aparejo</span>
-               <input name="blockWeight" value={metadata.blockWeight} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
+               <input name="blockWeight" title="Peso Aparejo" value={metadata.blockWeight} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
             </div>
             <div className="col-span-2 flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase text-[10px]">Medida y peso de B/S</span>
-               <input name="bsMeasureWeight" value={metadata.bsMeasureWeight} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
+               <input name="bsMeasureWeight" title="Medida y Peso B/S" value={metadata.bsMeasureWeight} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
             </div>
          </div>
 
@@ -159,23 +160,23 @@ export const CableWorkReportForm: React.FC<Props> = ({ initialData, onSave, onCa
          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase text-[10px]">Marca Cable</span>
-               <input name="cableBrand" value={metadata.cableBrand} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
+               <input name="cableBrand" title="Marca Cable" value={metadata.cableBrand} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase text-[10px]">Medidas/Long</span>
-               <input name="cableMeasureLength" value={metadata.cableMeasureLength} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
+               <input name="cableMeasureLength" title="Medidas/Longitud" value={metadata.cableMeasureLength} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase text-[10px]">Construcción</span>
-               <input name="construction" value={metadata.construction} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
+               <input name="construction" title="Construcción" value={metadata.construction} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase text-[10px]">Grado</span>
-               <input name="grade" value={metadata.grade} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
+               <input name="grade" title="Grado" value={metadata.grade} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase text-[10px]">Bobina Nº</span>
-               <input name="reelNumber" value={metadata.reelNumber} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
+               <input name="reelNumber" title="Bobina Nº" value={metadata.reelNumber} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
             </div>
          </div>
 
@@ -183,23 +184,23 @@ export const CableWorkReportForm: React.FC<Props> = ({ initialData, onSave, onCa
          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase text-[10px]">Puesta Servicio</span>
-               <input type="date" name="serviceStartDate" value={metadata.serviceStartDate} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
+               <input type="date" name="serviceStartDate" title="Puesta en Servicio" value={metadata.serviceStartDate} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase text-[10px]">Retiro</span>
-               <input type="date" name="retirementDate" value={metadata.retirementDate} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
+               <input type="date" name="retirementDate" title="Fecha Retiro" value={metadata.retirementDate} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase text-[10px]">Nº Líneas</span>
-               <input name="linesNumber" value={metadata.linesNumber} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
+               <input name="linesNumber" title="Número de Líneas" value={metadata.linesNumber} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase text-[10px]">Cambio</span>
-               <input name="change" value={metadata.change} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
+               <input name="change" title="Cambio" value={metadata.change} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-gray-500 uppercase text-[10px]">Prof. Cambio Sarta</span>
-               <input name="stringChangeDepth" value={metadata.stringChangeDepth} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
+               <input name="stringChangeDepth" title="Prof. Cambio Sarta" value={metadata.stringChangeDepth} onChange={handleMetadataChange} className="border-b border-gray-300 outline-none bg-transparent" />
             </div>
          </div>
       </div>
@@ -264,61 +265,61 @@ export const CableWorkReportForm: React.FC<Props> = ({ initialData, onSave, onCa
              {rows.map((row) => (
                <tr key={row.id} className="hover:bg-gray-50 group border-b border-black h-6 text-center">
                   <td className="border-r border-black p-0">
-                     <input type="date" className="w-full h-full p-0 bg-transparent outline-none text-[9px]" value={row.date} onChange={(e) => handleRowChange(row.id, 'date', e.target.value)} />
+                     <input type="date" title="Fecha" className="w-full h-full p-0 bg-transparent outline-none text-[9px]" value={row.date} onChange={(e) => handleRowChange(row.id, 'date', e.target.value)} />
                   </td>
                   <td className="border-r border-black p-0">
-                     <input className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.runNumber} onChange={(e) => handleRowChange(row.id, 'runNumber', e.target.value)} />
+                     <input title="Número Carrera" className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.runNumber} onChange={(e) => handleRowChange(row.id, 'runNumber', e.target.value)} />
                   </td>
                   <td className="border-r border-black p-0">
-                     <input className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.runDepth} onChange={(e) => handleRowChange(row.id, 'runDepth', e.target.value)} />
+                     <input title="Profundidad Carrera" className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.runDepth} onChange={(e) => handleRowChange(row.id, 'runDepth', e.target.value)} />
                   </td>
                   <td className="border-r border-black p-0">
-                     <input className="w-full h-full p-0.5 bg-transparent outline-none text-left" value={row.operation} onChange={(e) => handleRowChange(row.id, 'operation', e.target.value)} />
+                     <input title="Operación" className="w-full h-full p-0.5 bg-transparent outline-none text-left" value={row.operation} onChange={(e) => handleRowChange(row.id, 'operation', e.target.value)} />
                   </td>
                   <td className="border-r border-black p-0">
-                     <input className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.mudDensity} onChange={(e) => handleRowChange(row.id, 'mudDensity', e.target.value)} />
+                     <input title="Densidad Lodo" className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.mudDensity} onChange={(e) => handleRowChange(row.id, 'mudDensity', e.target.value)} />
                   </td>
                   <td className="border-r border-black p-0">
-                     <input className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.effectiveWeight} onChange={(e) => handleRowChange(row.id, 'effectiveWeight', e.target.value)} />
+                     <input title="Peso Efectivo" className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.effectiveWeight} onChange={(e) => handleRowChange(row.id, 'effectiveWeight', e.target.value)} />
                   </td>
                   
                   {/* Protamechas inputs */}
                   <td className="border-r border-black p-0">
-                     <input className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.collarDiameter} onChange={(e) => handleRowChange(row.id, 'collarDiameter', e.target.value)} />
+                     <input title="Diámetro Collar" className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.collarDiameter} onChange={(e) => handleRowChange(row.id, 'collarDiameter', e.target.value)} />
                   </td>
                   <td className="border-r border-black p-0">
-                     <input className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.collarWeight} onChange={(e) => handleRowChange(row.id, 'collarWeight', e.target.value)} />
+                     <input title="Peso Collar" className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.collarWeight} onChange={(e) => handleRowChange(row.id, 'collarWeight', e.target.value)} />
                   </td>
                   <td className="border-r border-black p-0">
-                     <input className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.excessWeight} onChange={(e) => handleRowChange(row.id, 'excessWeight', e.target.value)} />
+                     <input title="Exceso de Peso" className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.excessWeight} onChange={(e) => handleRowChange(row.id, 'excessWeight', e.target.value)} />
                   </td>
                   <td className="border-r border-black p-0">
-                     <input className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.collarLength} onChange={(e) => handleRowChange(row.id, 'collarLength', e.target.value)} />
+                     <input title="Longitud Collar" className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.collarLength} onChange={(e) => handleRowChange(row.id, 'collarLength', e.target.value)} />
                   </td>
 
                   <td className="border-r border-black p-0">
-                     <input className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.factorC} onChange={(e) => handleRowChange(row.id, 'factorC', e.target.value)} />
+                     <input title="Factor C" className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.factorC} onChange={(e) => handleRowChange(row.id, 'factorC', e.target.value)} />
                   </td>
                   <td className="border-r border-black p-0">
-                     <input className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.factorM} onChange={(e) => handleRowChange(row.id, 'factorM', e.target.value)} />
+                     <input title="Factor M" className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.factorM} onChange={(e) => handleRowChange(row.id, 'factorM', e.target.value)} />
                   </td>
                   <td className="border-r border-black p-0">
-                     <input className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.tonKmOperation} onChange={(e) => handleRowChange(row.id, 'tonKmOperation', e.target.value)} />
+                     <input title="Ton.Km Operación" className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.tonKmOperation} onChange={(e) => handleRowChange(row.id, 'tonKmOperation', e.target.value)} />
                   </td>
                   <td className="border-r border-black p-0">
-                     <input className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.tonKmAccumLastRun} onChange={(e) => handleRowChange(row.id, 'tonKmAccumLastRun', e.target.value)} />
+                     <input title="Ton.Km Acum. Últ. Carrera" className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.tonKmAccumLastRun} onChange={(e) => handleRowChange(row.id, 'tonKmAccumLastRun', e.target.value)} />
                   </td>
                   <td className="border-r border-black p-0">
-                     <input className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.runLength} onChange={(e) => handleRowChange(row.id, 'runLength', e.target.value)} />
+                     <input title="Longitud Carrera" className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.runLength} onChange={(e) => handleRowChange(row.id, 'runLength', e.target.value)} />
                   </td>
                   <td className="border-r border-black p-0">
-                     <input className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.tonKmAccumLastCut} onChange={(e) => handleRowChange(row.id, 'tonKmAccumLastCut', e.target.value)} />
+                     <input title="Ton.Km Acum. Últ. Corte" className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.tonKmAccumLastCut} onChange={(e) => handleRowChange(row.id, 'tonKmAccumLastCut', e.target.value)} />
                   </td>
                   <td className="border-r border-black p-0">
-                     <input className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.cutLength} onChange={(e) => handleRowChange(row.id, 'cutLength', e.target.value)} />
+                     <input title="Longitud Corte" className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.cutLength} onChange={(e) => handleRowChange(row.id, 'cutLength', e.target.value)} />
                   </td>
                   <td className="border-r border-black p-0">
-                     <input className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.remainingCableLength} onChange={(e) => handleRowChange(row.id, 'remainingCableLength', e.target.value)} />
+                     <input title="Cable Remanente" className="w-full h-full p-0 text-center bg-transparent outline-none" value={row.remainingCableLength} onChange={(e) => handleRowChange(row.id, 'remainingCableLength', e.target.value)} />
                   </td>
                   <td className="p-0 text-center no-print">
                      <button onClick={() => removeRow(row.id)} className="text-gray-400 hover:text-red-500 font-bold opacity-0 group-hover:opacity-100">&times;</button>
@@ -353,19 +354,19 @@ export const CableWorkReportForm: React.FC<Props> = ({ initialData, onSave, onCa
               <div className="grid grid-cols-2 gap-3 mb-3">
                  <div>
                     <label className="block text-[10px] font-bold text-gray-500 uppercase">Fecha</label>
-                    <input type="date" value={row.date} onChange={(e) => handleRowChange(row.id, 'date', e.target.value)} className="w-full border-b border-gray-400 bg-transparent text-sm py-1" />
+                    <input type="date" title="Fecha" value={row.date} onChange={(e) => handleRowChange(row.id, 'date', e.target.value)} className="w-full border-b border-gray-400 bg-transparent text-sm py-1" />
                  </div>
                  <div>
                     <label className="block text-[10px] font-bold text-gray-500 uppercase">Operación</label>
-                    <input value={row.operation} onChange={(e) => handleRowChange(row.id, 'operation', e.target.value)} className="w-full border-b border-gray-400 bg-transparent text-sm py-1" />
+                    <input title="Operación" value={row.operation} onChange={(e) => handleRowChange(row.id, 'operation', e.target.value)} className="w-full border-b border-gray-400 bg-transparent text-sm py-1" />
                  </div>
                  <div>
                     <label className="block text-[10px] font-bold text-gray-500 uppercase">Profundidad</label>
-                    <input value={row.runDepth} onChange={(e) => handleRowChange(row.id, 'runDepth', e.target.value)} className="w-full border-b border-gray-400 bg-transparent text-sm py-1" />
+                    <input title="Profundidad" value={row.runDepth} onChange={(e) => handleRowChange(row.id, 'runDepth', e.target.value)} className="w-full border-b border-gray-400 bg-transparent text-sm py-1" />
                  </div>
                  <div>
                     <label className="block text-[10px] font-bold text-gray-500 uppercase">Ton.Km Oper.</label>
-                    <input value={row.tonKmOperation} onChange={(e) => handleRowChange(row.id, 'tonKmOperation', e.target.value)} className="w-full border-b border-gray-400 bg-transparent text-sm py-1" />
+                    <input title="Ton.Km Operación" value={row.tonKmOperation} onChange={(e) => handleRowChange(row.id, 'tonKmOperation', e.target.value)} className="w-full border-b border-gray-400 bg-transparent text-sm py-1" />
                  </div>
               </div>
 
@@ -400,6 +401,7 @@ export const CableWorkReportForm: React.FC<Props> = ({ initialData, onSave, onCa
                filename={`trab_cable_${rows[0]?.date || 'fecha'}_${metadata.well || 'pozo'}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<CableWorkReportPdf report={{ id: initialData?.id ?? '', metadata, rows }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

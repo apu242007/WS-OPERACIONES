@@ -4,6 +4,7 @@ import { OilChangeReport, OilChangeMetadata, OilChangeSection } from '../types';
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { OilChangePdf } from '../pdf/OilChangePdf';
 
 interface Props {
   initialData?: OilChangeReport;
@@ -101,6 +102,7 @@ export const OilChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel }
            <div className="flex-1 flex flex-col">
               <span className="font-bold mb-1 text-gray-500">Horómetro:</span>
               <input 
+                 title="Horómetro"
                  className="border border-gray-300 p-1.5 rounded bg-white text-center font-medium" 
                  value={section.hourMeter}
                  onChange={(e) => handleSectionFieldChange(section.id, 'hourMeter', e.target.value)}
@@ -109,6 +111,7 @@ export const OilChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel }
            <div className="flex-1 flex flex-col">
               <span className="font-bold mb-1 text-gray-500">Hs. Prox. Mant:</span>
               <input 
+                 title="Hs. Próx. Mant."
                  className="border border-gray-300 p-1.5 rounded bg-white text-center font-medium"
                  value={section.maintenanceHours}
                  onChange={(e) => handleSectionFieldChange(section.id, 'maintenanceHours', e.target.value)}
@@ -144,6 +147,7 @@ export const OilChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel }
                     </td>
                     <td className="p-0">
                        <input 
+                          title="Cant/Lts"
                           className="w-full h-full text-center outline-none bg-transparent"
                           value={row.partsOrLiters}
                           onChange={(e) => handleRowChange(section.id, row.id, 'partsOrLiters', e.target.value)}
@@ -158,6 +162,7 @@ export const OilChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel }
         <div className="p-2 flex flex-col mt-auto bg-gray-50 border-t border-gray-300">
            <span className="font-bold text-xs mb-1 text-gray-500">Observaciones:</span>
            <textarea 
+              title="Observaciones"
               className="w-full p-2 resize-none outline-none border border-gray-300 text-xs rounded bg-white"
               rows={4}
               value={section.observations}
@@ -190,21 +195,21 @@ export const OilChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel }
          <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1 flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-20 sm:w-auto">Mecánico 1:</span>
-               <input name="mechanic1" value={metadata.mechanic1} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="mechanic1" title="Mecánico 1" value={metadata.mechanic1} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex-1 flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-20 sm:w-auto">Mecánico 2:</span>
-               <input name="mechanic2" value={metadata.mechanic2} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="mechanic2" title="Mecánico 2" value={metadata.mechanic2} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="sm:w-40 flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2">Fecha:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input type="date" name="date" title="Fecha" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2">Equipo:</span>
-               <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase">
+               <select name="equipment" title="Equipo" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase">
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
                   <option value="tacker06">TACKER06</option>
@@ -220,15 +225,15 @@ export const OilChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel }
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2">Cliente:</span>
-               <input name="client" value={metadata.client} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
+               <input name="client" title="Cliente" value={metadata.client} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2">Yacimiento:</span>
-               <input name="field" value={metadata.field} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
+               <input name="field" title="Yacimiento" value={metadata.field} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2">Pozo:</span>
-               <input name="well" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
+               <input name="well" title="Pozo" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
             </div>
          </div>
       </div>
@@ -301,6 +306,7 @@ export const OilChangeForm: React.FC<Props> = ({ initialData, onSave, onCancel }
                filename={`cambio_aceite_${metadata.date}`}
                orientation="l"
                className="w-full"
+               pdfComponent={<OilChangePdf report={{ id: initialData?.id ?? '', metadata, sections, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 
