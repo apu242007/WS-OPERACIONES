@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { FacilityInspectionReport, FacilityInspectionMetadata, FacilityInspectionRow, FacilityInspectionStatus } from '../types';
+import { FacilityInspectionReport, FacilityInspectionMetadata, FacilityInspectionRow } from '../types';
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';

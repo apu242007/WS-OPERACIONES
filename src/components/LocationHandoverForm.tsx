@@ -1,6 +1,7 @@
 
 import React, { useState, useRef } from 'react';
 import { LocationHandoverReport, LocationHandoverMetadata, LayoutElement } from '../types';
+import { uploadFileToDrive } from '../lib/uploadToDrive';
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
@@ -55,19 +56,17 @@ export const LocationHandoverForm: React.FC<Props> = ({ initialData, onSave, onC
     });
   };
 
-  // Generic Image Uploader
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, target: 'photos') => {
+  // Upload photos to Google Drive (async)
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, _target: 'photos') => {
     if (e.target.files && e.target.files[0]) {
       const files = Array.from(e.target.files);
-      files.forEach((file: File) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          if (reader.result) {
-             setPhotos(prev => [...prev, reader.result as string]);
-          }
-        };
-        reader.readAsDataURL(file);
-      });
+      try {
+        const urls = await Promise.all(files.map((file) => uploadFileToDrive(file)));
+        setPhotos(prev => [...prev, ...urls]);
+      } catch (err) {
+        console.error('Error subiendo foto a Drive:', err);
+        alert('Error al subir la foto. Revisá la conexión e intentá nuevamente.');
+      }
     }
   };
 

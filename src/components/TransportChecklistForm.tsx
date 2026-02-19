@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { TransportChecklistReport, TransportChecklistMetadata, TransportChecklistRow, TransportChecklistStatus } from '../types';
+import { TransportChecklistReport, TransportChecklistMetadata, TransportChecklistRow } from '../types';
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
