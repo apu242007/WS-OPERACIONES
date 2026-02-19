@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useExportPdf } from '../hooks/useExportPdf';
+import { exportReactPdf } from '../utils/exportReactPdf';
+import type { EmailStatus } from '../hooks/useExportPdf';
 
 interface ExportPdfButtonProps {
   filename: string;
@@ -7,6 +9,18 @@ interface ExportPdfButtonProps {
   orientation?: 'p' | 'l';
   className?: string;
   label?: string;
+  /**
+   * Optional: a `<Document>` element built with @react-pdf/renderer.
+   * When provided the button uses react-pdf to generate the PDF instead
+   * of the html2canvas fallback, producing pixel-perfect output.
+   *
+   * Example:
+   *   <ExportPdfButton
+   *     filename="bump_test"
+   *     pdfComponent={<BumpTestPdf report={report} />}
+   *   />
+   */
+  pdfComponent?: React.ReactElement;
 }
 
 export const ExportPdfButton: React.FC<ExportPdfButtonProps> = ({
@@ -14,7 +28,8 @@ export const ExportPdfButton: React.FC<ExportPdfButtonProps> = ({
   elementId,
   orientation = 'p',
   className = '',
-  label = 'Exportar PDF'
+  label = 'Exportar PDF',
+  pdfComponent,
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [emailInput, setEmailInput] = useState('');
@@ -22,8 +37,23 @@ export const ExportPdfButton: React.FC<ExportPdfButtonProps> = ({
   const [emailFieldError, setEmailFieldError] = useState('');
   const emailRef = useRef<HTMLInputElement>(null);
 
-  const { handleExport, exporting, emailStatus, emailTo, emailSendError } =
+  // ── html2canvas path (existing) ──────────────────────────────────────────
+  const { handleExport, exporting: htmlExporting, emailStatus: htmlStatus,
+          emailTo: htmlEmailTo, emailSendError: htmlError } =
     useExportPdf(filename, orientation as 'p' | 'l', elementId);
+
+  // ── @react-pdf/renderer path (new) ──────────────────────────────────────
+  const [reactExporting, setReactExporting]       = useState(false);
+  const [reactStatus,    setReactStatus]          = useState<EmailStatus>('idle');
+  const [reactEmailTo,   setReactEmailTo]         = useState('');
+  const [reactError,     setReactError]           = useState('');
+
+  // Derived: use the active path's state
+  const usingReact  = !!pdfComponent;
+  const exporting   = usingReact ? reactExporting   : htmlExporting;
+  const emailStatus = usingReact ? reactStatus      : htmlStatus;
+  const emailTo     = usingReact ? reactEmailTo     : htmlEmailTo;
+  const emailSendError = usingReact ? reactError    : htmlError;
 
   useEffect(() => {
     if (modalOpen) {
@@ -42,13 +72,37 @@ export const ExportPdfButton: React.FC<ExportPdfButtonProps> = ({
 
   const handleConfirm = () => {
     if (!isValidEmail(emailInput)) {
-      setEmailFieldError('Ingres\u00e1 un email v\u00e1lido');
+      setEmailFieldError('Ingresá un email válido');
       emailRef.current?.focus();
       return;
     }
     setEmailFieldError('');
     setModalOpen(false);
-    handleExport(emailInput, messageInput.trim() || undefined);
+
+    if (usingReact && pdfComponent) {
+      // ── @react-pdf/renderer path ─────────────────────────────────────────
+      setReactExporting(true);
+      setReactStatus('sending');
+      setReactEmailTo(emailInput);
+      setReactError('');
+
+      exportReactPdf(pdfComponent, {
+        filename,
+        to: emailInput,
+        message: messageInput.trim() || undefined,
+      }).then(result => {
+        setReactStatus(result.emailSuccess ? 'sent' : 'error');
+        if (!result.emailSuccess) setReactError(result.emailError ?? 'Error desconocido');
+        setTimeout(() => setReactStatus('idle'), 6000);
+      }).catch(err => {
+        setReactStatus('error');
+        setReactError(err instanceof Error ? err.message : 'Error desconocido');
+        setTimeout(() => setReactStatus('idle'), 6000);
+      }).finally(() => setReactExporting(false));
+    } else {
+      // ── html2canvas path (existing) ──────────────────────────────────────
+      handleExport(emailInput, messageInput.trim() || undefined);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
