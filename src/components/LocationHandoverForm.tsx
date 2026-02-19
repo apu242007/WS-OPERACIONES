@@ -62,10 +62,7 @@ export const LocationHandoverForm: React.FC<Props> = ({ initialData, onSave, onC
              setPhotos(prev => [...prev, reader.result as string]);
           }
         };
-        reader.readAsDataURL(file);
-      });
-    }
-  };
+
 
   const removePhoto = (index: number) => {
     setPhotos(prev => prev.filter((_, i) => i !== index));

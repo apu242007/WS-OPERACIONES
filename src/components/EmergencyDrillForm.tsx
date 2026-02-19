@@ -116,10 +116,7 @@ export const EmergencyDrillForm: React.FC<Props> = ({ initialData, onSave, onCan
       }
     }
   };
-        reader.readAsDataURL(file);
-      });
-    }
-  };
+
 
   const removeImage = (index: number) => {
     setImages(prev => prev.filter((_, i) => i !== index));

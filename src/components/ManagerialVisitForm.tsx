@@ -89,10 +89,7 @@ export const ManagerialVisitForm: React.FC<Props> = ({ initialData, onSave, onCa
       }
     }
   };
-        reader.readAsDataURL(file);
-      });
-    }
-  };
+
 
   const removeImage = (index: number) => {
     setImages(prev => prev.filter((_, i) => i !== index));

@@ -78,10 +78,7 @@ export const PreAssemblyChecklistForm: React.FC<Props> = ({ initialData, onSave,
       }
     }
   };
-        reader.readAsDataURL(file);
-      });
-    }
-  };
+
 
   const removeImage = (index: number) => {
     setImages(prev => prev.filter((_, i) => i !== index));

@@ -61,10 +61,7 @@ export const FoamTestForm: React.FC<Props> = ({ initialData, onSave, onCancel })
       }
     }
   };
-        reader.readAsDataURL(file);
-      });
-    }
-  };
+
 
   const removeImage = (index: number) => {
     setImages(prev => prev.filter((_, i) => i !== index));
