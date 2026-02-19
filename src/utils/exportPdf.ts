@@ -40,7 +40,6 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void>
     filename = 'reporte',
     elementId = 'print-area',
     orientation: orientationProp,
-    scale = 1.5, // Reducido de 2 → 1.5: PDFs ~44% más livianos, calidad A4 suficiente
   } = options;
 
   const element = document.getElementById(elementId);
@@ -68,8 +67,26 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void>
       el.style.display = 'none';
     });
 
-    // Force background color on element to ensure white background
-    const originalBg = element.style.backgroundColor;
+    // --- Decide orientation BEFORE capture, based on real scroll dimensions ---
+    const contentW = element.scrollWidth;
+    const contentH = element.scrollHeight;
+    const autoOrientation: 'p' | 'l' = contentW > contentH ? 'l' : 'p';
+    const orientation: 'p' | 'l' = orientationProp ?? autoOrientation;
+
+    // A4 at 96 dpi: portrait 794×1123 px, landscape 1123×794 px
+    const pageWidthPx = orientation === 'p' ? 794 : 1123;
+
+    // Dynamic scale: fit the full content width into the A4 page width
+    const fitScale = pageWidthPx / contentW;
+    // Clamp: don't go below 1 (blurry) or above 2 (unnecessarily heavy)
+    const scale = Math.min(2, Math.max(1, fitScale));
+
+    // --- Force element to its full scroll width so html2canvas captures everything ---
+    const originalWidth    = element.style.width;
+    const originalOverflow = element.style.overflow;
+    const originalBg       = element.style.backgroundColor;
+    element.style.width    = contentW + 'px';
+    element.style.overflow = 'visible';
     element.style.backgroundColor = '#ffffff';
 
     const canvas = await html2canvas(element, {
@@ -77,26 +94,25 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void>
       useCORS: true,
       logging: false,
       backgroundColor: '#ffffff',
-      windowWidth: element.scrollWidth,
-      windowHeight: element.scrollHeight,
+      windowWidth: contentW,
+      windowHeight: contentH,
       onclone: (clonedDoc) => {
         const clonedElement = clonedDoc.getElementById(elementId);
         if (clonedElement) {
+          clonedElement.style.width = contentW + 'px';
+          clonedElement.style.overflow = 'visible';
           clonedElement.style.backgroundColor = '#ffffff';
         }
-      }
+      },
     });
 
-    // Restore elements
+    // Restore element styles
+    element.style.width           = originalWidth;
+    element.style.overflow        = originalOverflow;
     element.style.backgroundColor = originalBg;
     noPrintEls.forEach(el => {
       el.style.display = el.dataset.prevDisplay || '';
     });
-
-    // Auto-detect orientation from canvas aspect ratio if not explicitly provided
-    // canvas.width > canvas.height means the content is wider than tall → landscape
-    const autoOrientation: 'p' | 'l' = canvas.width > canvas.height ? 'l' : 'p';
-    const orientation: 'p' | 'l' = orientationProp ?? autoOrientation;
 
     const pdf = new jsPDF({
       orientation,
@@ -107,26 +123,20 @@ export const exportToPdf = async (options: ExportPdfOptions = {}): Promise<void>
     const pageWidthMm  = pdf.internal.pageSize.getWidth();
     const pageHeightMm = pdf.internal.pageSize.getHeight();
 
-    // Scale the image so its width fits exactly within the page width.
-    // imgHeight is the total rendered height in mm at this scale.
     const imgWidthMm  = pageWidthMm;
     const imgHeightMm = (canvas.height * imgWidthMm) / canvas.width;
 
+    // Single toDataURL call — reused across all pages
+    const imgData = canvas.toDataURL('image/png');
+
     // Render first page
-    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, imgWidthMm, imgHeightMm);
+    pdf.addImage(imgData, 'PNG', 0, 0, imgWidthMm, imgHeightMm);
 
     // Render additional pages by shifting the image upward
     let pagesRendered = 1;
     while (pagesRendered * pageHeightMm < imgHeightMm) {
       pdf.addPage();
-      pdf.addImage(
-        canvas.toDataURL('image/png'),
-        'PNG',
-        0,
-        -(pagesRendered * pageHeightMm),
-        imgWidthMm,
-        imgHeightMm
-      );
+      pdf.addImage(imgData, 'PNG', 0, -(pagesRendered * pageHeightMm), imgWidthMm, imgHeightMm);
       pagesRendered++;
     }
 
