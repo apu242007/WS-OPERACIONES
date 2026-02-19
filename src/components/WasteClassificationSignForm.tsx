@@ -172,11 +172,11 @@ export const WasteClassificationSignForm: React.FC<Props> = ({ initialData, onSa
       </div>
 
       {/* Preview Container with Scroll */}
-      <div className="w-full p-4 bg-gray-50 border-t border-gray-200 no-print">
-         <h3 className="text-sm font-semibold text-gray-700 mb-3">Vista Previa del Cartel</h3>
+      <div className="w-full p-4 bg-gray-50 border-t border-gray-200">
+         <h3 className="text-sm font-semibold text-gray-700 mb-3 no-print">Vista Previa del Cartel</h3>
          
          {/* Mobile Scroll Indicator */}
-         <div className="sm:hidden bg-yellow-50 border border-yellow-200 rounded-md p-2 mb-3 flex items-center gap-2">
+         <div className="sm:hidden no-print bg-yellow-50 border border-yellow-200 rounded-md p-2 mb-3 flex items-center gap-2">
             <span className="text-yellow-600 text-lg">👈👉</span>
             <span className="text-xs text-yellow-700 font-medium">Deslizá horizontalmente para ver el cartel completo</span>
          </div>
