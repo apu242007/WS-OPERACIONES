@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { WasteSignData, WasteType } from '../types';
 import { Button } from './ui/Button';
 import { ExportPdfButton } from './ExportPdfButton';
+import { WasteClassificationSignPdf } from '../pdf/WasteClassificationSignPdf';
 
 interface Props {
   initialData?: WasteSignData;
@@ -151,16 +152,17 @@ export const WasteClassificationSignForm: React.FC<Props> = ({ initialData, onSa
                </div>
                <div>
                   <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Empresa</label>
-                  <input name="company" value={data.company} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Ej: TACKER SOLUTIONS" />
+                  <input name="company" title="Empresa" value={data.company} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Ej: TACKER SOLUTIONS" />
                </div>
                <div>
                   <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Ubicación</label>
-                  <input name="location" value={data.location} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Ej: LOMA CAMPANA" />
+                  <input name="location" title="Ubicación" value={data.location} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Ej: LOMA CAMPANA" />
                </div>
             </div>
             <div className="space-y-2">
                <label className="block text-xs font-bold uppercase text-gray-500">Items (Editable)</label>
                <textarea 
+                  title="Items"
                   value={itemsText} 
                   onChange={handleItemsChange} 
                   className="w-full h-40 p-2 border rounded text-sm font-mono" 
@@ -235,11 +237,11 @@ export const WasteClassificationSignForm: React.FC<Props> = ({ initialData, onSa
          <Button variant="secondary" onClick={() => window.print()} className="w-full sm:w-auto order-2">🖨️ Imprimir Cartel</Button>
          <div className="w-full sm:w-auto order-1 sm:order-3">
              <ExportPdfButton 
-               elementId="print-area"
                filename={`cartel_residuos_${data.type}`}
                orientation="p"
                label="Exportar PDF"
                className="w-full"
+               pdfComponent={<WasteClassificationSignPdf data={data} />}
              />
          </div>
          <Button variant="primary" onClick={() => onSave(data)} className="w-full sm:w-auto order-first sm:order-last">Guardar</Button>

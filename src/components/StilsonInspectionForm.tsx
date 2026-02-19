@@ -4,6 +4,7 @@ import { StilsonInspectionReport, StilsonInspectionMetadata, StilsonItem, Stilso
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { StilsonInspectionPdf } from '../pdf/StilsonInspectionPdf';
 
 interface Props {
   initialData?: StilsonInspectionReport;
@@ -128,19 +129,19 @@ export const StilsonInspectionForm: React.FC<Props> = ({ initialData, onSave, on
          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="flex flex-col gap-1">
                <span className="font-bold text-xs uppercase">Fecha:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1 outline-none text-xs text-center" />
+               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} title="Fecha" className="border border-gray-300 rounded p-1 outline-none text-xs text-center" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-xs uppercase">Marca:</span>
-               <input name="brand" value={metadata.brand} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1 outline-none" />
+               <input name="brand" value={metadata.brand} onChange={handleMetadataChange} title="Marca" className="border border-gray-300 rounded p-1 outline-none" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-xs uppercase">ID/ Serial:</span>
-               <input name="serial" value={metadata.serial} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1 outline-none" />
+               <input name="serial" value={metadata.serial} onChange={handleMetadataChange} title="ID/Serial" className="border border-gray-300 rounded p-1 outline-none" />
             </div>
             <div className="flex flex-col gap-1">
                <span className="font-bold text-xs uppercase">Pulgadas:</span>
-               <input name="inches" value={metadata.inches} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1 outline-none" />
+               <input name="inches" value={metadata.inches} onChange={handleMetadataChange} title="Pulgadas" className="border border-gray-300 rounded p-1 outline-none" />
             </div>
          </div>
       </div>
@@ -196,6 +197,7 @@ export const StilsonInspectionForm: React.FC<Props> = ({ initialData, onSave, on
                   {WEEKS.map(week => (
                      <td key={week} colSpan={3} className="border-r border-black p-0 align-middle">
                         <input 
+                          title="Nombre y Apellido del Inspector"
                           className="w-full h-full p-1 text-center outline-none bg-transparent text-xs" 
                           value={weeksData[week].inspectorName || ''}
                           onChange={(e) => handleInspectorChange(week, e.target.value)}
@@ -237,8 +239,8 @@ export const StilsonInspectionForm: React.FC<Props> = ({ initialData, onSave, on
          <div className="flex-1 p-4 border-b sm:border-b-0 sm:border-r border-black">
             <div className="font-bold mb-2 text-xs uppercase">OBSERVACIONES:</div>
             <textarea 
-               className="w-full h-24 p-2 outline-none resize-none border border-gray-300 rounded text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6"
-               style={{ backgroundSize: '100% 24px' }}
+               title="Observaciones"
+               className="w-full h-24 p-2 outline-none resize-none border border-gray-300 rounded text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6 [background-size:100%_24px]"
                value={observations}
                onChange={(e) => setObservations(e.target.value)}
             />
@@ -281,6 +283,7 @@ export const StilsonInspectionForm: React.FC<Props> = ({ initialData, onSave, on
                filename={`insp_stilson_${metadata.date}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<StilsonInspectionPdf report={{ id: initialData?.id ?? '', metadata, items, weeks: weeksData, observations }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

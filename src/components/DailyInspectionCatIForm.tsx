@@ -5,6 +5,7 @@ import { DailyInspectionCatIReport, DailyInspectionCatIMetadata, DailyInspection
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { DailyInspectionCatIPdf } from '../pdf/DailyInspectionCatIPdf';
 
 interface Props {
   initialData?: DailyInspectionCatIReport;
@@ -272,6 +273,7 @@ export const DailyInspectionCatIForm: React.FC<Props> = ({ initialData, onSave, 
 
                   <div className="sm:col-span-4 h-full p-1 sm:p-0">
                      <input 
+                        title="Comentarios de la inspección"
                         className="w-full h-full px-2 py-1 sm:py-0 outline-none bg-transparent border border-gray-200 sm:border-none rounded sm:rounded-none"
                         value={row.comments}
                         onChange={(e) => handleRowChange(row.id, 'comments', e.target.value)}
@@ -310,6 +312,7 @@ export const DailyInspectionCatIForm: React.FC<Props> = ({ initialData, onSave, 
                       </div>
                       <div className="flex-[3] sm:col-span-5 h-full p-1 sm:p-0 border-t sm:border-t-0 border-gray-200">
                          <input 
+                            title="Observación"
                             className="w-full h-full px-2 outline-none bg-transparent border sm:border-0 rounded sm:rounded-none"
                             value={row.observation}
                             onChange={(e) => handleAdditionalRowChange(row.id, 'observation', e.target.value)}
@@ -406,6 +409,7 @@ export const DailyInspectionCatIForm: React.FC<Props> = ({ initialData, onSave, 
                filename={`insp_visual_diaria_${metadata.date}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<DailyInspectionCatIPdf report={{ id: initialData?.id ?? '', metadata, rows, additionalRows, signatures, images }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

@@ -4,6 +4,7 @@ import { TorqueReport, TorqueMetadata, TorqueRow } from '../types';
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { TorqueRegisterPdf } from '../pdf/TorqueRegisterPdf';
 
 interface Props {
   initialData?: TorqueReport;
@@ -97,15 +98,15 @@ export const TorqueRegisterForm: React.FC<Props> = ({ initialData, onSave, onCan
          <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-20 text-xs uppercase">FECHA:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} title="Fecha" className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex-1 flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-48 text-xs uppercase">NOMBRE Y APELLIDO:</span>
-               <input name="responsible1" value={metadata.responsible1} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
+               <input name="responsible1" value={metadata.responsible1} onChange={handleMetadataChange} title="Nombre y Apellido" className="flex-1 outline-none bg-transparent uppercase" />
             </div>
             <div className="flex-1 flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-24 text-xs uppercase">EQUIPO:</span>
-               <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase">
+               <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} title="Equipo" className="flex-1 outline-none bg-transparent uppercase">
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
                   <option value="tacker06">TACKER06</option>
@@ -125,7 +126,7 @@ export const TorqueRegisterForm: React.FC<Props> = ({ initialData, onSave, onCan
             <div className="flex-1 hidden md:block"></div> {/* Spacer */}
             <div className="flex-1 flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-48 text-xs uppercase">NOMBRE Y APELLIDO:</span>
-               <input name="responsible2" value={metadata.responsible2} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
+               <input name="responsible2" value={metadata.responsible2} onChange={handleMetadataChange} title="Nombre y Apellido" className="flex-1 outline-none bg-transparent uppercase" />
             </div>
             <div className="flex-1 hidden md:block"></div> {/* Spacer */}
          </div>
@@ -133,15 +134,15 @@ export const TorqueRegisterForm: React.FC<Props> = ({ initialData, onSave, onCan
          <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-20 text-xs uppercase">CLIENTE:</span>
-               <input name="client" value={metadata.client} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
+               <input name="client" value={metadata.client} onChange={handleMetadataChange} title="Cliente" className="flex-1 outline-none bg-transparent uppercase" />
             </div>
             <div className="flex-1 flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-24 text-xs uppercase">YACIMIENTO:</span>
-               <input name="field" value={metadata.field} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
+               <input name="field" value={metadata.field} onChange={handleMetadataChange} title="Yacimiento" className="flex-1 outline-none bg-transparent uppercase" />
             </div>
             <div className="flex-1 flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-16 text-xs uppercase">POZO:</span>
-               <input name="well" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
+               <input name="well" value={metadata.well} onChange={handleMetadataChange} title="Pozo" className="flex-1 outline-none bg-transparent uppercase" />
             </div>
          </div>
       </div>
@@ -194,6 +195,7 @@ export const TorqueRegisterForm: React.FC<Props> = ({ initialData, onSave, onCan
                     {/* Location */}
                     <td className="border-r border-black p-0">
                        <input 
+                          title="Ubicación"
                           className="w-full h-full p-1 outline-none bg-transparent"
                           value={row.location}
                           onChange={(e) => handleRowChange(row.id, 'location', e.target.value)}
@@ -217,6 +219,7 @@ export const TorqueRegisterForm: React.FC<Props> = ({ initialData, onSave, onCan
                     {/* Values */}
                     <td className="border-r border-black p-0">
                        <input 
+                          title="Torque Recomendado"
                           className="w-full h-full p-1 text-center outline-none bg-transparent"
                           value={row.recommendedTorque}
                           onChange={(e) => handleRowChange(row.id, 'recommendedTorque', e.target.value)}
@@ -224,6 +227,7 @@ export const TorqueRegisterForm: React.FC<Props> = ({ initialData, onSave, onCan
                     </td>
                     <td className="border-r border-black p-0">
                        <input 
+                          title="Torque Aplicado"
                           className="w-full h-full p-1 text-center outline-none bg-transparent"
                           value={row.appliedTorque}
                           onChange={(e) => handleRowChange(row.id, 'appliedTorque', e.target.value)}
@@ -231,6 +235,7 @@ export const TorqueRegisterForm: React.FC<Props> = ({ initialData, onSave, onCan
                     </td>
                     <td className="border-r border-black p-0">
                        <input 
+                          title="Observaciones"
                           className="w-full h-full p-1 outline-none bg-transparent"
                           value={row.observations}
                           onChange={(e) => handleRowChange(row.id, 'observations', e.target.value)}
@@ -295,6 +300,7 @@ export const TorqueRegisterForm: React.FC<Props> = ({ initialData, onSave, onCan
                filename={`registro_torque_${metadata.date}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<TorqueRegisterPdf report={{ id: initialData?.id ?? '', metadata, rows, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

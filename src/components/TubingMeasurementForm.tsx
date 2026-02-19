@@ -4,6 +4,7 @@ import { TubingMeasurementReport } from '../types';
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { TubingMeasurementPdf } from '../pdf/TubingMeasurementPdf';
 
 interface Props {
   initialData?: TubingMeasurementReport;
@@ -149,7 +150,7 @@ export const TubingMeasurementForm: React.FC<Props> = ({ initialData, onSave, on
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-4">
            <div>
               <label className="block font-bold mb-1 uppercase text-gray-600">Grado</label>
-              <select name="grado" value={metadata.grado} onChange={handleMetadataChange} className="w-full border border-gray-300 rounded px-2 py-1.5 outline-none bg-white">
+              <select name="grado" title="Grado" value={metadata.grado} onChange={handleMetadataChange} className="w-full border border-gray-300 rounded px-2 py-1.5 outline-none bg-white">
                  <option value="">- Seleccionar -</option>
                  <option value="J55">J55</option>
                  <option value="N80">N80</option>
@@ -158,7 +159,7 @@ export const TubingMeasurementForm: React.FC<Props> = ({ initialData, onSave, on
            </div>
            <div>
               <label className="block font-bold mb-1 uppercase text-gray-600">Diámetro</label>
-              <select name="diametro" value={metadata.diametro} onChange={handleMetadataChange} className="w-full border border-gray-300 rounded px-2 py-1.5 outline-none bg-white">
+              <select name="diametro" title="Diámetro" value={metadata.diametro} onChange={handleMetadataChange} className="w-full border border-gray-300 rounded px-2 py-1.5 outline-none bg-white">
                  <option value="">- Seleccionar -</option>
                  <option value="2.375">2.375"</option>
                  <option value="2.875">2.875"</option>
@@ -167,11 +168,11 @@ export const TubingMeasurementForm: React.FC<Props> = ({ initialData, onSave, on
            </div>
            <div>
               <label className="block font-bold mb-1 uppercase text-gray-600">N° de Pieza</label>
-              <input name="nPieza" value={metadata.nPieza} onChange={handleMetadataChange} className="w-full border border-gray-300 rounded px-2 py-1.5 outline-none bg-white" />
+              <input name="nPieza" title="N° de Pieza" value={metadata.nPieza} onChange={handleMetadataChange} className="w-full border border-gray-300 rounded px-2 py-1.5 outline-none bg-white" />
            </div>
            <div>
               <label className="block font-bold mb-1 uppercase text-gray-600">Equipo / Tacker</label>
-              <select name="equipo" value={metadata.equipo} onChange={handleMetadataChange} className="w-full border border-gray-300 rounded px-2 py-1.5 outline-none bg-white uppercase">
+              <select name="equipo" title="Equipo" value={metadata.equipo} onChange={handleMetadataChange} className="w-full border border-gray-300 rounded px-2 py-1.5 outline-none bg-white uppercase">
 <option value="tacker01">TACKER01</option>
 <option value="tacker05">TACKER05</option>
 <option value="tacker06">TACKER06</option>
@@ -189,15 +190,15 @@ export const TubingMeasurementForm: React.FC<Props> = ({ initialData, onSave, on
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
            <div>
               <label className="block font-bold mb-1 uppercase text-gray-600">Fecha</label>
-              <input type="date" name="fecha" value={metadata.fecha} onChange={handleMetadataChange} className="w-full border border-gray-300 rounded px-2 py-1.5 outline-none bg-white" />
+              <input type="date" name="fecha" title="Fecha" value={metadata.fecha} onChange={handleMetadataChange} className="w-full border border-gray-300 rounded px-2 py-1.5 outline-none bg-white" />
            </div>
            <div>
               <label className="block font-bold mb-1 uppercase text-gray-600">Pozo</label>
-              <input name="pozo" value={metadata.pozo} onChange={handleMetadataChange} className="w-full border border-gray-300 rounded px-2 py-1.5 outline-none bg-white uppercase" />
+              <input name="pozo" title="Pozo" value={metadata.pozo} onChange={handleMetadataChange} className="w-full border border-gray-300 rounded px-2 py-1.5 outline-none bg-white uppercase" />
            </div>
            <div className="sm:col-span-2">
               <label className="block font-bold mb-1 uppercase text-gray-600">Observaciones</label>
-              <textarea name="observations" rows={1} value={metadata.observations} onChange={handleMetadataChange} className="w-full border border-gray-300 rounded px-2 py-1.5 outline-none bg-white resize-none" />
+              <textarea name="observations" title="Observaciones" rows={1} value={metadata.observations} onChange={handleMetadataChange} className="w-full border border-gray-300 rounded px-2 py-1.5 outline-none bg-white resize-none" />
            </div>
         </div>
       </div>
@@ -270,6 +271,7 @@ export const TubingMeasurementForm: React.FC<Props> = ({ initialData, onSave, on
                            <input 
                               type="number" 
                               step="0.01" 
+                              title="Metros"
                               className="w-full h-full text-center outline-none bg-transparent p-1 font-bold"
                               value={tool.metros}
                               onChange={(e) => handlePoolChange(tool.id, e.target.value)}
@@ -289,6 +291,7 @@ export const TubingMeasurementForm: React.FC<Props> = ({ initialData, onSave, on
                   <span className="font-bold w-40 text-gray-700">Carrera Zto Tope Final:</span>
                   <input 
                      name="carreraZtoTopeFinal" 
+                     title="Carrera Zto Tope Final"
                      value={metadata.carreraZtoTopeFinal} 
                      onChange={handleMetadataChange} 
                      className="flex-1 border border-gray-300 rounded px-3 py-1.5 outline-none bg-white" 
@@ -298,6 +301,7 @@ export const TubingMeasurementForm: React.FC<Props> = ({ initialData, onSave, on
                   <span className="font-bold w-40 text-gray-700">HTA C/B N°:</span>
                   <input 
                      name="htaCbNumero" 
+                     title="HTA C/B N°"
                      value={metadata.htaCbNumero} 
                      onChange={handleMetadataChange} 
                      className="flex-1 border border-gray-300 rounded px-3 py-1.5 outline-none bg-white" 
@@ -326,6 +330,7 @@ export const TubingMeasurementForm: React.FC<Props> = ({ initialData, onSave, on
                         <input 
                            type="number" 
                            step="0.01"
+                           title={`Tubo ${idx + 1}`}
                            className="w-full text-center text-xs p-2 bg-white focus:bg-blue-50 focus:outline-none"
                            value={val === 0 ? '' : val}
                            onChange={(e) => handleTuboChange(idx, e.target.value)}
@@ -399,6 +404,7 @@ export const TubingMeasurementForm: React.FC<Props> = ({ initialData, onSave, on
                 <label className="block text-xs font-bold uppercase mb-1 text-gray-500">Nombre Inspector:</label>
                 <input 
                    className="w-full border-b border-gray-400 bg-transparent outline-none text-sm py-1 font-medium" 
+                   title="Nombre Inspector"
                    value={signatures.inspector?.name || ''}
                    onChange={(e) => handleSignatureChange('inspector', undefined, e.target.value)}
                    placeholder="Ingrese nombre..."
@@ -420,6 +426,7 @@ export const TubingMeasurementForm: React.FC<Props> = ({ initialData, onSave, on
                 <label className="block text-xs font-bold uppercase mb-1 text-gray-500">Nombre Supervisor:</label>
                 <input 
                    className="w-full border-b border-gray-400 bg-transparent outline-none text-sm py-1 font-medium" 
+                   title="Nombre Supervisor"
                    value={signatures.supervisor?.name || ''}
                    onChange={(e) => handleSignatureChange('supervisor', undefined, e.target.value)}
                    placeholder="Ingrese nombre..."
@@ -450,6 +457,7 @@ export const TubingMeasurementForm: React.FC<Props> = ({ initialData, onSave, on
                filename={`medicion_tuberia_${metadata.fecha}_${metadata.pozo || 'pozo'}`}
                orientation="l"
                className="w-full"
+               pdfComponent={<TubingMeasurementPdf report={{ id: initialData?.id ?? '', metadata, tubos, poolHerramientas, specs: activeSpec || null, calculados: calculated, signatures }} />}
              />
          </div>
          <Button variant="primary" onClick={() => onSave({ 

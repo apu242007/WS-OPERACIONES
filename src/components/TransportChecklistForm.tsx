@@ -4,6 +4,7 @@ import { TransportChecklistReport, TransportChecklistMetadata, TransportChecklis
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { TransportChecklistPdf } from '../pdf/TransportChecklistPdf';
 
 interface Props {
   initialData?: TransportChecklistReport;
@@ -301,6 +302,7 @@ export const TransportChecklistForm: React.FC<Props> = ({ initialData, onSave, o
                       {/* Observations */}
                       <div className="col-span-4 p-0 border-t sm:border-t-0 border-gray-200">
                          <input 
+                           title="Observaciones"
                            className="w-full h-full min-h-[32px] p-2 sm:p-1 sm:pl-2 outline-none bg-transparent placeholder-gray-400"
                            value={row.observations}
                            onChange={(e) => handleRowChange(item, 'observations', e.target.value)}
@@ -345,6 +347,7 @@ export const TransportChecklistForm: React.FC<Props> = ({ initialData, onSave, o
                filename={`checklist_transporte_${metadata.date}_${metadata.equipment || 'eq'}`}
                orientation="l"
                className="w-full"
+               pdfComponent={<TransportChecklistPdf report={{ id: initialData?.id ?? '', metadata, rows, signature }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

@@ -4,6 +4,7 @@ import { InertiaReport, InertiaMetadata, InertiaData } from '../types';
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { InertiaCalcPdf } from '../pdf/InertiaCalcPdf';
 
 interface Props {
   initialData?: InertiaReport;
@@ -154,7 +155,8 @@ export const InertiaCalcForm: React.FC<Props> = ({ initialData, onSave, onCancel
                   <label className="text-xs font-bold uppercase text-gray-600">Altura torre - Tablón (AC)</label>
                   <div className="flex items-center gap-2">
                      <input 
-                       type="number" 
+                       type="number"
+                       title="Altura torre - Tablón (AC)"
                        className="w-20 p-1 border border-gray-300 rounded text-center font-medium"
                        value={data.towerHeight || ''}
                        onChange={(e) => handleDataChange('towerHeight', e.target.value)}
@@ -168,7 +170,8 @@ export const InertiaCalcForm: React.FC<Props> = ({ initialData, onSave, onCancel
                   <label className="text-xs font-bold uppercase text-yellow-800">Inercia (DF)</label>
                   <div className="flex items-center gap-2">
                      <input 
-                       type="number" 
+                       type="number"
+                       title="Inercia (DF)"
                        className="w-20 p-1 border border-yellow-400 rounded text-center font-bold bg-white text-yellow-900"
                        value={data.inertia || ''}
                        onChange={(e) => handleDataChange('inertia', e.target.value)}
@@ -191,7 +194,8 @@ export const InertiaCalcForm: React.FC<Props> = ({ initialData, onSave, onCancel
                         <span className="text-sm text-gray-600">{field.label}</span>
                         <div className="flex items-center gap-2">
                            <input 
-                             type="number" 
+                             type="number"
+                             title={field.label}
                              className="w-20 p-1 bg-gray-50 border-b border-gray-300 text-center text-sm outline-none focus:bg-white focus:border-brand-red transition-colors"
                              value={data[field.key as keyof InertiaData] || ''}
                              onChange={(e) => handleDataChange(field.key as keyof InertiaData, e.target.value)}
@@ -248,6 +252,7 @@ export const InertiaCalcForm: React.FC<Props> = ({ initialData, onSave, onCancel
                filename={`calculo_inercia_${metadata.date}_${metadata.well || 'pozo'}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<InertiaCalcPdf report={{ id: initialData?.id || crypto.randomUUID(), metadata, data, signature }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

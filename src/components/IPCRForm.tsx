@@ -4,6 +4,7 @@ import { IPCRReport, IPCRMetadata, IPCRRiskRow, IPCREPP, IPCRSignatures } from '
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { IPCRPdf } from '../pdf/IPCRPdf';
 
 interface Props {
   initialData?: IPCRReport;
@@ -222,34 +223,34 @@ export const IPCRForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => 
          <div className="md:border-r border-black">
             <div className="flex border-b border-gray-300">
                <span className="w-32 md:w-48 p-1 font-medium bg-gray-100 print:bg-transparent text-[10px] flex items-center">Tarea / Actividad:</span>
-               <input name="task" value={metadata.task} onChange={handleMetadataChange} className="flex-1 outline-none px-1 py-1" />
+               <input name="task" title="Tarea / Actividad" value={metadata.task} onChange={handleMetadataChange} className="flex-1 outline-none px-1 py-1" />
             </div>
             <div className="flex border-b border-gray-300">
                <span className="w-24 p-1 font-medium bg-gray-100 print:bg-transparent text-[10px] flex items-center">Subtarea:</span>
-               <input name="subtask" value={metadata.subtask} onChange={handleMetadataChange} className="flex-1 outline-none px-1 py-1" />
+               <input name="subtask" title="Subtarea" value={metadata.subtask} onChange={handleMetadataChange} className="flex-1 outline-none px-1 py-1" />
             </div>
             <div className="flex border-b border-black">
                <span className="w-32 p-1 font-medium bg-gray-100 print:bg-transparent text-[10px] flex items-center">Lugar ejecución:</span>
-               <input name="location" value={metadata.location} onChange={handleMetadataChange} className="flex-1 outline-none px-1 py-1" />
+               <input name="location" title="Lugar de ejecución" value={metadata.location} onChange={handleMetadataChange} className="flex-1 outline-none px-1 py-1" />
             </div>
             
             <div className="flex border-b border-gray-300">
                <span className="w-32 p-1 font-medium bg-gray-100 print:bg-transparent text-[10px] flex items-center">Fecha confección:</span>
-               <input type="date" name="creationDate" value={metadata.creationDate} onChange={handleMetadataChange} className="flex-1 outline-none px-1 py-1" />
+               <input type="date" name="creationDate" title="Fecha de confección" value={metadata.creationDate} onChange={handleMetadataChange} className="flex-1 outline-none px-1 py-1" />
             </div>
             <div className="flex border-b border-black">
                <span className="w-32 p-1 font-medium bg-gray-100 print:bg-transparent text-[10px] flex items-center">Fecha ejecución:</span>
-               <input type="date" name="executionDate" value={metadata.executionDate} onChange={handleMetadataChange} className="flex-1 outline-none px-1 py-1" />
+               <input type="date" name="executionDate" title="Fecha de ejecución" value={metadata.executionDate} onChange={handleMetadataChange} className="flex-1 outline-none px-1 py-1" />
             </div>
 
             <div className="flex border-b border-black">
                <div className="flex-1 flex border-r border-gray-300">
                   <span className="w-16 p-1 font-medium bg-gray-100 print:bg-transparent text-[10px] flex items-center">Revisión:</span>
-                  <input name="revision" value={metadata.revision} onChange={handleMetadataChange} className="flex-1 outline-none px-1 text-center py-1" />
+                  <input name="revision" title="Revisión" value={metadata.revision} onChange={handleMetadataChange} className="flex-1 outline-none px-1 text-center py-1" />
                </div>
                <div className="flex-1 flex">
                   <span className="w-32 p-1 font-medium bg-gray-100 print:bg-transparent text-[10px] flex items-center">Cant. Hojas:</span>
-                  <input name="sheet" value={metadata.sheet} onChange={handleMetadataChange} className="flex-1 outline-none px-1 text-center py-1" />
+                  <input name="sheet" title="Cantidad de hojas" value={metadata.sheet} onChange={handleMetadataChange} className="flex-1 outline-none px-1 text-center py-1" />
                </div>
             </div>
 
@@ -271,37 +272,37 @@ export const IPCRForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => 
          <div>
             <div className="flex border-b border-black">
                <span className="w-32 p-1 font-medium bg-gray-100 print:bg-transparent text-[10px] flex items-center">Equipo Eval.:</span>
-               <input name="evaluatorTeam" value={metadata.evaluatorTeam} onChange={handleMetadataChange} className="flex-1 outline-none px-1 py-1" />
+               <input name="evaluatorTeam" title="Equipo Evaluador" value={metadata.evaluatorTeam} onChange={handleMetadataChange} className="flex-1 outline-none px-1 py-1" />
                <div className="border-l border-black pl-1 flex items-center">
                   <span className="bg-gray-100 print:bg-transparent font-medium mr-1 text-[10px] p-1">N° IPCR:</span>
-                  <input name="ipcrNumber" value={metadata.ipcrNumber} onChange={handleMetadataChange} className="w-16 outline-none py-1" />
+                  <input name="ipcrNumber" title="N° IPCR" value={metadata.ipcrNumber} onChange={handleMetadataChange} className="w-16 outline-none py-1" />
                </div>
             </div>
             
             <div className="border-b border-black">
                <div className="flex border-b border-gray-300">
                   <span className="w-48 p-1 font-medium bg-gray-100 print:bg-transparent text-[10px] flex items-center">Res. 51/97?</span>
-                  <input name="res5197" value={metadata.res5197} onChange={handleMetadataChange} className="w-12 outline-none px-1 py-1" />
+                  <input name="res5197" title="Resolución 51/97" value={metadata.res5197} onChange={handleMetadataChange} className="w-12 outline-none px-1 py-1" />
                </div>
                <div className="flex">
                   <span className="w-48 p-1 font-medium bg-gray-100 print:bg-transparent text-[10px] flex items-center">ART/Fecha:</span>
-                  <input name="artDate" value={metadata.artDate} onChange={handleMetadataChange} className="flex-1 outline-none px-1 py-1" />
+                  <input name="artDate" title="ART / Fecha" value={metadata.artDate} onChange={handleMetadataChange} className="flex-1 outline-none px-1 py-1" />
                </div>
             </div>
 
             <div className="border-b border-black">
                <div className="p-1 font-medium bg-gray-100 print:bg-transparent border-b border-gray-300 text-[10px]">Resp. Seguridad / Matrícula:</div>
-               <input name="safetyResponsible" value={metadata.safetyResponsible} onChange={handleMetadataChange} className="w-full p-1 outline-none" />
+               <input name="safetyResponsible" title="Responsable de Seguridad / Matrícula" value={metadata.safetyResponsible} onChange={handleMetadataChange} className="w-full p-1 outline-none" />
             </div>
 
             <div className="flex border-b border-black">
                <span className="w-48 p-1 font-medium bg-gray-100 print:bg-transparent text-[10px] flex items-center">Contratista:</span>
-               <input name="contractor" value={metadata.contractor} onChange={handleMetadataChange} className="flex-1 outline-none px-1 py-1" />
+               <input name="contractor" title="Contratista" value={metadata.contractor} onChange={handleMetadataChange} className="flex-1 outline-none px-1 py-1" />
             </div>
 
             <div className="flex p-1">
                <span className="font-medium mr-2 text-[10px] p-1">Otros IPCR:</span>
-               <input name="otherIpcr" value={metadata.otherIpcr} onChange={handleMetadataChange} className="flex-1 outline-none py-1" />
+               <input name="otherIpcr" title="Otros IPCR" value={metadata.otherIpcr} onChange={handleMetadataChange} className="flex-1 outline-none py-1" />
             </div>
          </div>
       </div>
@@ -363,31 +364,31 @@ export const IPCRForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => 
             <tbody>
                {rows.map((row) => (
                   <tr key={row.id} className="border-b border-black hover:bg-gray-50 text-[9px] align-top">
-                     <td className="border-r border-black p-0 h-full"><textarea rows={3} className="w-full h-full p-0.5 outline-none resize-none bg-transparent" value={row.activitySteps} onChange={e => handleRowChange(row.id, 'activitySteps', e.target.value)} /></td>
-                     <td className="border-r border-black p-0 h-full"><textarea rows={3} className="w-full h-full p-0.5 outline-none resize-none bg-transparent" value={row.subTask} onChange={e => handleRowChange(row.id, 'subTask', e.target.value)} /></td>
-                     <td className="border-r border-black p-0 h-full"><textarea rows={3} className="w-full h-full p-0.5 outline-none resize-none bg-transparent" value={row.hazards} onChange={e => handleRowChange(row.id, 'hazards', e.target.value)} /></td>
-                     <td className="border-r border-black p-0 h-full"><textarea rows={3} className="w-full h-full p-0.5 outline-none resize-none bg-transparent" value={row.lossCategory} onChange={e => handleRowChange(row.id, 'lossCategory', e.target.value)} /></td>
+                     <td className="border-r border-black p-0 h-full"><textarea rows={3} title="Pasos de actividad" className="w-full h-full p-0.5 outline-none resize-none bg-transparent" value={row.activitySteps} onChange={e => handleRowChange(row.id, 'activitySteps', e.target.value)} /></td>
+                     <td className="border-r border-black p-0 h-full"><textarea rows={3} title="Sub Tarea" className="w-full h-full p-0.5 outline-none resize-none bg-transparent" value={row.subTask} onChange={e => handleRowChange(row.id, 'subTask', e.target.value)} /></td>
+                     <td className="border-r border-black p-0 h-full"><textarea rows={3} title="Peligros" className="w-full h-full p-0.5 outline-none resize-none bg-transparent" value={row.hazards} onChange={e => handleRowChange(row.id, 'hazards', e.target.value)} /></td>
+                     <td className="border-r border-black p-0 h-full"><textarea rows={3} title="Categoría de pérdidas" className="w-full h-full p-0.5 outline-none resize-none bg-transparent" value={row.lossCategory} onChange={e => handleRowChange(row.id, 'lossCategory', e.target.value)} /></td>
                      
                      <td className="border-r border-black p-0 text-center align-middle">
-                        <select className="w-full bg-transparent outline-none text-[8px]" value={row.legalRequirement || ''} onChange={e => handleRowChange(row.id, 'legalRequirement', e.target.value)}>
+                        <select title="Requisito Legal" className="w-full bg-transparent outline-none text-[8px]" value={row.legalRequirement || ''} onChange={e => handleRowChange(row.id, 'legalRequirement', e.target.value)}>
                            <option value=""></option>
                            <option value="SI">S</option>
                            <option value="NO">N</option>
                         </select>
                      </td>
 
-                     <td className="border-r border-black p-0 align-middle"><input className="w-full text-center outline-none bg-transparent" type="number" min="1" max="5" value={row.initialProb} onChange={e => handleRowChange(row.id, 'initialProb', e.target.value)} /></td>
-                     <td className="border-r border-black p-0 align-middle"><input className="w-full text-center outline-none bg-transparent" type="number" min="1" max="5" value={row.initialSev} onChange={e => handleRowChange(row.id, 'initialSev', e.target.value)} /></td>
+                     <td className="border-r border-black p-0 align-middle"><input title="Probabilidad inicial" className="w-full text-center outline-none bg-transparent" type="number" min="1" max="5" value={row.initialProb} onChange={e => handleRowChange(row.id, 'initialProb', e.target.value)} /></td>
+                     <td className="border-r border-black p-0 align-middle"><input title="Severidad inicial" className="w-full text-center outline-none bg-transparent" type="number" min="1" max="5" value={row.initialSev} onChange={e => handleRowChange(row.id, 'initialSev', e.target.value)} /></td>
                      <td className="border-r border-black p-0 bg-yellow-50 text-center font-bold align-middle">{row.initialRisk}</td>
 
-                     <td className="border-r border-black p-0 h-full"><textarea rows={3} className="w-full h-full p-0.5 outline-none resize-none bg-transparent" value={row.preventiveMeasures} onChange={e => handleRowChange(row.id, 'preventiveMeasures', e.target.value)} /></td>
-                     <td className="border-r border-black p-0 text-center align-middle"><input type="checkbox" checked={row.checkPreventive} onChange={e => handleRowChange(row.id, 'checkPreventive', e.target.checked)} /></td>
+                     <td className="border-r border-black p-0 h-full"><textarea rows={3} title="Medidas de prevención" className="w-full h-full p-0.5 outline-none resize-none bg-transparent" value={row.preventiveMeasures} onChange={e => handleRowChange(row.id, 'preventiveMeasures', e.target.value)} /></td>
+                     <td className="border-r border-black p-0 text-center align-middle"><input type="checkbox" title="Prevención verificada" checked={row.checkPreventive} onChange={e => handleRowChange(row.id, 'checkPreventive', e.target.checked)} /></td>
                      
-                     <td className="border-r border-black p-0 h-full"><textarea rows={3} className="w-full h-full p-0.5 outline-none resize-none bg-transparent" value={row.mitigationMeasures} onChange={e => handleRowChange(row.id, 'mitigationMeasures', e.target.value)} /></td>
-                     <td className="border-r border-black p-0 text-center align-middle"><input type="checkbox" checked={row.checkMitigation} onChange={e => handleRowChange(row.id, 'checkMitigation', e.target.checked)} /></td>
+                     <td className="border-r border-black p-0 h-full"><textarea rows={3} title="Medidas de mitigación" className="w-full h-full p-0.5 outline-none resize-none bg-transparent" value={row.mitigationMeasures} onChange={e => handleRowChange(row.id, 'mitigationMeasures', e.target.value)} /></td>
+                     <td className="border-r border-black p-0 text-center align-middle"><input type="checkbox" title="Mitigación verificada" checked={row.checkMitigation} onChange={e => handleRowChange(row.id, 'checkMitigation', e.target.checked)} /></td>
 
-                     <td className="border-r border-black p-0 align-middle"><input className="w-full text-center outline-none bg-transparent" type="number" min="1" max="5" value={row.residualProb} onChange={e => handleRowChange(row.id, 'residualProb', e.target.value)} /></td>
-                     <td className="border-r border-black p-0 align-middle"><input className="w-full text-center outline-none bg-transparent" type="number" min="1" max="5" value={row.residualSev} onChange={e => handleRowChange(row.id, 'residualSev', e.target.value)} /></td>
+                     <td className="border-r border-black p-0 align-middle"><input title="Probabilidad residual" className="w-full text-center outline-none bg-transparent" type="number" min="1" max="5" value={row.residualProb} onChange={e => handleRowChange(row.id, 'residualProb', e.target.value)} /></td>
+                     <td className="border-r border-black p-0 align-middle"><input title="Severidad residual" className="w-full text-center outline-none bg-transparent" type="number" min="1" max="5" value={row.residualSev} onChange={e => handleRowChange(row.id, 'residualSev', e.target.value)} /></td>
                      <td className="p-0 bg-green-50 text-center font-bold align-middle">{row.residualRisk}</td>
                      
                      <td className="no-print p-0 text-center align-middle">
@@ -444,7 +445,8 @@ export const IPCRForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => 
          <div className="border-b md:border-b-0 md:border-r border-black p-2 flex flex-col justify-between min-h-[120px]">
             <div className="font-bold text-center border-b border-gray-300 pb-1 mb-2">Apellido y Nombre<br/>Legajo ó DNI</div>
             <input 
-               placeholder="Nombre y Apellido" 
+               placeholder="Nombre y Apellido"
+               title="Nombre receptor"
                className="w-full text-center outline-none text-[10px] mb-2 p-1 border border-gray-100 rounded"
                value={signatures.receiverName || ''}
                onChange={e => handleSignatureNameChange('receiverName', e.target.value)}
@@ -465,7 +467,8 @@ export const IPCRForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => 
             <div className="flex-1 border-b border-black p-2 flex flex-col justify-between">
                <div className="font-bold text-center mb-1">Aprobó por la Contratista<br/>Apellido y Nombre RT / DNI</div>
                <input 
-                  placeholder="Nombre y Apellido" 
+                  placeholder="Nombre y Apellido"
+                  title="Nombre aprobador"
                   className="w-full text-center outline-none text-[10px] mb-1 p-1 border border-gray-100 rounded"
                   value={signatures.approverName || ''}
                   onChange={e => handleSignatureNameChange('approverName', e.target.value)}
@@ -483,7 +486,8 @@ export const IPCRForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => 
             <div className="flex-1 p-2 flex flex-col justify-between">
                <div className="font-bold text-center mb-1">Visado SHI<br/>Matrícula</div>
                <input 
-                  placeholder="Nombre y Matrícula" 
+                  placeholder="Nombre y Matrícula"
+                  title="Nombre SHI / Matrícula"
                   className="w-full text-center outline-none text-[10px] mb-1 p-1 border border-gray-100 rounded"
                   value={signatures.shiName || ''}
                   onChange={e => handleSignatureNameChange('shiName', e.target.value)}
@@ -514,6 +518,7 @@ export const IPCRForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => 
                filename={`ipcr_${metadata.ipcrNumber}_${metadata.executionDate}`}
                orientation="l"
                className="w-full"
+               pdfComponent={<IPCRPdf report={{ id: initialData?.id || crypto.randomUUID(), metadata, rows, epp, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

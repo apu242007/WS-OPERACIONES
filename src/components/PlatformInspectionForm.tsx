@@ -4,6 +4,7 @@ import { PlatformInspectionReport, PlatformInspectionMetadata, PlatformInspectio
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { PlatformInspectionPdf } from '../pdf/PlatformInspectionPdf';
 
 interface Props {
   initialData?: PlatformInspectionReport;
@@ -123,6 +124,7 @@ export const PlatformInspectionForm: React.FC<Props> = ({ initialData, onSave, o
             <div className="w-full sm:w-16 sm:border-l border-gray-300 p-1 sm:p-0">
               <select 
                 className="w-full h-full bg-transparent outline-none text-center font-bold text-xs appearance-none cursor-pointer border sm:border-0 rounded sm:rounded-none py-1 sm:py-0"
+                title={item}
                 value={row.status}
                 onChange={(e) => handleStatusChange(row.id, e.target.value)}
               >
@@ -165,15 +167,15 @@ export const PlatformInspectionForm: React.FC<Props> = ({ initialData, onSave, o
          <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1 flex flex-col gap-1">
                <span className="font-bold text-xs uppercase text-gray-500">FECHA INSPECCIÓN</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" />
+               <input type="date" name="date" title="Fecha de Inspección" value={metadata.date} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" />
             </div>
             <div className="flex-1 flex flex-col gap-1">
                <span className="font-bold text-xs uppercase text-gray-500">MARCA</span>
-               <input name="brand" value={metadata.brand} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white uppercase" />
+               <input name="brand" title="Marca" value={metadata.brand} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white uppercase" />
             </div>
             <div className="flex-1 flex flex-col gap-1">
                <span className="font-bold text-xs uppercase text-gray-500">INTERNO Nº</span>
-               <input name="internalNumber" value={metadata.internalNumber} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white uppercase" />
+               <input name="internalNumber" title="Interno Nº" value={metadata.internalNumber} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white uppercase" />
             </div>
          </div>
 
@@ -181,11 +183,11 @@ export const PlatformInspectionForm: React.FC<Props> = ({ initialData, onSave, o
          <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1 flex flex-col gap-1">
                <span className="font-bold text-xs uppercase text-gray-500">NUMERO SERIE</span>
-               <input name="serialNumber" value={metadata.serialNumber} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white uppercase" />
+               <input name="serialNumber" title="Número de Serie" value={metadata.serialNumber} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white uppercase" />
             </div>
             <div className="flex-1 flex flex-col gap-1">
                <span className="font-bold text-xs uppercase text-gray-500">OPERADOR</span>
-               <input name="operator" value={metadata.operator} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white uppercase" />
+               <input name="operator" title="Operador" value={metadata.operator} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white uppercase" />
             </div>
          </div>
 
@@ -193,26 +195,26 @@ export const PlatformInspectionForm: React.FC<Props> = ({ initialData, onSave, o
          <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1 flex flex-col gap-1">
                <span className="font-bold text-xs uppercase text-gray-500">CAPACIDAD CARGA</span>
-               <input name="loadCapacity" value={metadata.loadCapacity} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" />
+               <input name="loadCapacity" title="Capacidad de Carga" value={metadata.loadCapacity} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" />
             </div>
             <div className="flex-1 flex flex-col gap-1">
                <span className="font-bold text-xs uppercase text-gray-500">LICENCIA Nº</span>
-               <input name="licenseNumber" value={metadata.licenseNumber} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" />
+               <input name="licenseNumber" title="Licencia Nº" value={metadata.licenseNumber} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" />
             </div>
             <div className="w-full sm:w-24 flex flex-col gap-1">
                <span className="font-bold text-xs uppercase text-gray-500">TIPO</span>
-               <input name="type" value={metadata.type} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" />
+               <input name="type" title="Tipo" value={metadata.type} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" />
             </div>
             <div className="w-full sm:w-24 flex flex-col gap-1">
                <span className="font-bold text-xs uppercase text-gray-500">VTO.</span>
-               <input name="expiration" value={metadata.expiration} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" />
+               <input name="expiration" title="Vencimiento" value={metadata.expiration} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white" />
             </div>
          </div>
 
          {/* Row 4 */}
          <div className="flex flex-col gap-1">
             <span className="font-bold text-xs uppercase text-gray-500">LUGAR DE OPERACION</span>
-            <input name="location" value={metadata.location} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white uppercase" />
+            <input name="location" title="Lugar de Operación" value={metadata.location} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white uppercase" />
          </div>
       </div>
 
@@ -235,6 +237,7 @@ export const PlatformInspectionForm: React.FC<Props> = ({ initialData, onSave, o
                <div className="font-bold text-xs mb-1 text-gray-500 uppercase">Ente Certificador del Equipo:</div>
                <input 
                   name="certifyingEntity"
+                  title="Ente Certificador del Equipo"
                   value={metadata.certifyingEntity} 
                   onChange={handleMetadataChange} 
                   className="w-full border-b border-gray-400 outline-none bg-transparent py-1"
@@ -247,8 +250,8 @@ export const PlatformInspectionForm: React.FC<Props> = ({ initialData, onSave, o
       <div className="p-4 border-t border-black page-break-inside-avoid">
          <div className="font-bold text-xs mb-1 uppercase text-gray-500">Observaciones:</div>
          <textarea 
-            className="w-full h-32 p-2 resize-none outline-none border border-gray-300 rounded text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6"
-            style={{ backgroundSize: '100% 24px' }}
+            className="w-full h-32 p-2 resize-none outline-none border border-gray-300 rounded text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] [background-size:100%_24px] leading-6"
+            title="Observaciones"
             value={observations}
             onChange={(e) => setObservations(e.target.value)}
          />
@@ -293,6 +296,7 @@ export const PlatformInspectionForm: React.FC<Props> = ({ initialData, onSave, o
                filename={`insp_plataforma_${metadata.date}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<PlatformInspectionPdf report={{ id: initialData?.id ?? '', metadata, rows, observations, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

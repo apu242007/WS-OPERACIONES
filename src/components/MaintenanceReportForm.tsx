@@ -4,6 +4,7 @@ import { MaintenanceReport, MaintenanceMetadata, MaintenanceItem } from '../type
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { MaintenanceReportPdf } from '../pdf/MaintenanceReportPdf';
 
 interface Props {
   initialData?: MaintenanceReport;
@@ -94,27 +95,27 @@ export const MaintenanceReportForm: React.FC<Props> = ({ initialData, onSave, on
          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-32 sm:w-40">SOLICITUD N°:</span>
-               <input name="reportNumber" value={metadata.reportNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="reportNumber" title="Solicitud N°" value={metadata.reportNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-20 sm:w-40">FECHA:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input type="date" name="date" title="Fecha" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-40">NOMBRE SUPERVISOR:</span>
-               <input name="supervisorName" value={metadata.supervisorName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="supervisorName" title="Nombre Supervisor" value={metadata.supervisorName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-40">NOMBRE MECANICO:</span>
-               <input name="mechanicName" value={metadata.mechanicName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="mechanicName" title="Nombre Mecánico" value={metadata.mechanicName} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-20 sm:w-24">EQUIPO:</span>
-               <select name="equipmentNumber" value={metadata.equipmentNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent">
+               <select name="equipmentNumber" title="Equipo" value={metadata.equipmentNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent">
 <option value="tacker01">TACKER01</option>
 <option value="tacker05">TACKER05</option>
 <option value="tacker06">TACKER06</option>
@@ -130,15 +131,15 @@ export const MaintenanceReportForm: React.FC<Props> = ({ initialData, onSave, on
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-20 sm:w-24">CLIENTE:</span>
-               <input name="client" value={metadata.client} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="client" title="Cliente" value={metadata.client} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-16 sm:w-24">YAC.:</span>
-               <input name="field" value={metadata.field} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="field" title="Yacimiento" value={metadata.field} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold w-16">POZO:</span>
-               <input name="well" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="well" title="Pozo" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
       </div>
@@ -159,8 +160,8 @@ export const MaintenanceReportForm: React.FC<Props> = ({ initialData, onSave, on
                 <div className="mb-4">
                    <div className="font-bold mb-1">DESCRIPCIÓN DE LA ANOMALIA:</div>
                    <textarea 
-                      className="w-full h-24 p-2 border border-gray-300 rounded resize-none outline-none bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6"
-                      style={{ backgroundSize: '100% 24px' }}
+                      title="Descripción de la anomalía"
+                      className="w-full h-24 p-2 border border-gray-300 rounded resize-none outline-none bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] [background-size:100%_24px] leading-6"
                       value={item.anomalyDescription}
                       onChange={(e) => handleItemChange(item.id, 'anomalyDescription', e.target.value)}
                    />
@@ -169,8 +170,8 @@ export const MaintenanceReportForm: React.FC<Props> = ({ initialData, onSave, on
                 <div className="mb-4">
                    <div className="font-bold mb-1">MANTENIMIENTO REALIZADO:</div>
                    <textarea 
-                      className="w-full h-24 p-2 border border-gray-300 rounded resize-none outline-none bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6"
-                      style={{ backgroundSize: '100% 24px' }}
+                      title="Mantenimiento realizado"
+                      className="w-full h-24 p-2 border border-gray-300 rounded resize-none outline-none bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] [background-size:100%_24px] leading-6"
                       value={item.maintenancePerformed}
                       onChange={(e) => handleItemChange(item.id, 'maintenancePerformed', e.target.value)}
                    />
@@ -228,15 +229,15 @@ export const MaintenanceReportForm: React.FC<Props> = ({ initialData, onSave, on
                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4 pt-2 border-t border-gray-200">
                       <div className="flex flex-col gap-1">
                          <span className="font-bold text-xs">Fecha Realización:</span>
-                         <input type="date" value={item.date} onChange={(e) => handleItemChange(item.id, 'date', e.target.value)} className="border border-gray-300 rounded p-1 outline-none bg-transparent" />
+                         <input type="date" title="Fecha realización" value={item.date} onChange={(e) => handleItemChange(item.id, 'date', e.target.value)} className="border border-gray-300 rounded p-1 outline-none bg-transparent" />
                       </div>
                       <div className="flex flex-col gap-1">
                          <span className="font-bold text-xs">Hora Inicio:</span>
-                         <input type="time" value={item.startTime} onChange={(e) => handleItemChange(item.id, 'startTime', e.target.value)} className="border border-gray-300 rounded p-1 outline-none bg-transparent" />
+                         <input type="time" title="Hora inicio" value={item.startTime} onChange={(e) => handleItemChange(item.id, 'startTime', e.target.value)} className="border border-gray-300 rounded p-1 outline-none bg-transparent" />
                       </div>
                       <div className="flex flex-col gap-1">
                          <span className="font-bold text-xs">Hora Finalización:</span>
-                         <input type="time" value={item.endTime} onChange={(e) => handleItemChange(item.id, 'endTime', e.target.value)} className="border border-gray-300 rounded p-1 outline-none bg-transparent" />
+                         <input type="time" title="Hora finalización" value={item.endTime} onChange={(e) => handleItemChange(item.id, 'endTime', e.target.value)} className="border border-gray-300 rounded p-1 outline-none bg-transparent" />
                       </div>
                    </div>
                 </div>
@@ -287,6 +288,7 @@ export const MaintenanceReportForm: React.FC<Props> = ({ initialData, onSave, on
                filename={`mantenimiento_${metadata.date}_${metadata.equipmentNumber || 'eq'}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<MaintenanceReportPdf report={{ id: initialData?.id ?? '', metadata, items, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

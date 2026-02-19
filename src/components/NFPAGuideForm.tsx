@@ -1,5 +1,6 @@
 import React from 'react';
 import { ExportPdfButton } from './ExportPdfButton';
+import { NFPAGuidePdf } from '../pdf/NFPAGuidePdf';
 
 interface Props {
   onCancel: () => void;
@@ -21,7 +22,7 @@ export const NFPAGuideForm: React.FC<Props> = ({ onCancel }) => {
         >
           {String.fromCharCode(8592)} Volver
         </button>
-        <ExportPdfButton filename="NFPA-704-Guia-Clasificaciones" orientation="l" />
+        <ExportPdfButton filename="NFPA-704-Guia-Clasificaciones" orientation="l" pdfComponent={<NFPAGuidePdf />} />
       </div>
 
       {/* Guide image */}

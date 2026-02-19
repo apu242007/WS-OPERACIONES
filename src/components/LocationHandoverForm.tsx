@@ -5,6 +5,7 @@ import { uploadFile } from '../lib/uploadFile';
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { LocationHandoverPdf } from '../pdf/LocationHandoverPdf';
 import { WellLayoutEditor } from './ui/WellLayoutEditor';
 
 interface Props {
@@ -169,6 +170,7 @@ export const LocationHandoverForm: React.FC<Props> = ({ initialData, onSave, onC
       <div className="p-4 border-b border-black">
          <div className="font-bold mb-1 uppercase text-sm">Observaciones:</div>
          <textarea 
+            title="Observaciones"
             className="w-full h-32 p-2 resize-none outline-none border border-gray-300 rounded text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] bg-[size:100%_24px] leading-6"
             value={observations}
             onChange={(e) => setObservations(e.target.value)}
@@ -260,6 +262,7 @@ export const LocationHandoverForm: React.FC<Props> = ({ initialData, onSave, onC
                filename={`recibo_entrega_${metadata.type}_${metadata.date}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<LocationHandoverPdf report={{ id: initialData?.id ?? '', metadata, schemeImage, layoutElements, observations, photos, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

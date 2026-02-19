@@ -4,6 +4,7 @@ import { SlingInspectionReport, SlingInspectionRow, SlingColor, SlingCondition }
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { SlingInspectionPdf } from '../pdf/SlingInspectionPdf';
 
 interface Props {
   initialData?: SlingInspectionReport;
@@ -116,17 +117,17 @@ export const SlingInspectionForm: React.FC<Props> = ({ initialData, onSave, onCa
               {rows.map((row, index) => (
                 <tr key={row.id} className="hover:bg-gray-50 group border-b border-black h-10">
                   <td className="border-r border-black p-1 text-center font-bold">{index + 1}</td>
-                  <td className="border-r border-black p-0"><input className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.quantity} onChange={(e) => handleRowChange(row.id, 'quantity', e.target.value)} /></td>
-                  <td className="border-r border-black p-0"><input type="date" className="w-full h-full p-1 text-center bg-transparent outline-none text-xs" value={row.serviceDate} onChange={(e) => handleRowChange(row.id, 'serviceDate', e.target.value)} /></td>
-                  <td className="border-r border-black p-0"><input type="date" className="w-full h-full p-1 text-center bg-transparent outline-none text-xs" value={row.inspectionDate} onChange={(e) => handleRowChange(row.id, 'inspectionDate', e.target.value)} /></td>
-                  <td className="border-r border-black p-0"><input className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.lotNumber} onChange={(e) => handleRowChange(row.id, 'lotNumber', e.target.value)} /></td>
-                  <td className="border-r border-black p-0"><input className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.certNumber} onChange={(e) => handleRowChange(row.id, 'certNumber', e.target.value)} /></td>
-                  <td className="border-r border-black p-0"><input className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.length} onChange={(e) => handleRowChange(row.id, 'length', e.target.value)} /></td>
-                  <td className="border-r border-black p-0"><input className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.diameter} onChange={(e) => handleRowChange(row.id, 'diameter', e.target.value)} /></td>
-                  <td className="border-r border-black p-0"><input className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.type} onChange={(e) => handleRowChange(row.id, 'type', e.target.value)} /></td>
-                  <td className="border-r border-black p-0"><input className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.workingLoad} onChange={(e) => handleRowChange(row.id, 'workingLoad', e.target.value)} /></td>
+                  <td className="border-r border-black p-0"><input title="Cantidad" className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.quantity} onChange={(e) => handleRowChange(row.id, 'quantity', e.target.value)} /></td>
+                  <td className="border-r border-black p-0"><input type="date" title="Puesta en Servicio" className="w-full h-full p-1 text-center bg-transparent outline-none text-xs" value={row.serviceDate} onChange={(e) => handleRowChange(row.id, 'serviceDate', e.target.value)} /></td>
+                  <td className="border-r border-black p-0"><input type="date" title="Fecha de Inspección" className="w-full h-full p-1 text-center bg-transparent outline-none text-xs" value={row.inspectionDate} onChange={(e) => handleRowChange(row.id, 'inspectionDate', e.target.value)} /></td>
+                  <td className="border-r border-black p-0"><input title="N° Lote" className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.lotNumber} onChange={(e) => handleRowChange(row.id, 'lotNumber', e.target.value)} /></td>
+                  <td className="border-r border-black p-0"><input title="N° Certificado" className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.certNumber} onChange={(e) => handleRowChange(row.id, 'certNumber', e.target.value)} /></td>
+                  <td className="border-r border-black p-0"><input title="Longitud (cm)" className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.length} onChange={(e) => handleRowChange(row.id, 'length', e.target.value)} /></td>
+                  <td className="border-r border-black p-0"><input title="Diámetro (pulg)" className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.diameter} onChange={(e) => handleRowChange(row.id, 'diameter', e.target.value)} /></td>
+                  <td className="border-r border-black p-0"><input title="Tipo" className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.type} onChange={(e) => handleRowChange(row.id, 'type', e.target.value)} /></td>
+                  <td className="border-r border-black p-0"><input title="Carga de Trabajo (kg)" className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.workingLoad} onChange={(e) => handleRowChange(row.id, 'workingLoad', e.target.value)} /></td>
                   <td className="border-r border-black p-0">
-                     <select className="w-full h-full p-1 bg-transparent outline-none text-center appearance-none cursor-pointer hover:bg-gray-100" value={row.color} onChange={(e) => handleRowChange(row.id, 'color', e.target.value)}>
+                     <select title="Color" className="w-full h-full p-1 bg-transparent outline-none text-center appearance-none cursor-pointer hover:bg-gray-100" value={row.color} onChange={(e) => handleRowChange(row.id, 'color', e.target.value)}>
                        <option value="">-</option>
                        {COLORS.map(c => <option key={c} value={c}>{c}</option>)}
                      </select>
@@ -137,8 +138,8 @@ export const SlingInspectionForm: React.FC<Props> = ({ initialData, onSave, onCa
                          <button type="button" className={`flex-1 flex items-center justify-center transition-colors focus:outline-none h-full ${row.condition === 'FS' ? 'bg-red-600 text-white' : 'hover:bg-gray-200'}`} onClick={() => handleConditionToggle(row.id, 'FS')}>{row.condition === 'FS' && <span className="font-bold">X</span>}</button>
                       </div>
                   </td>
-                  <td className="border-r border-black p-0"><input className="w-full h-full p-1 bg-transparent outline-none" value={row.location} onChange={(e) => handleRowChange(row.id, 'location', e.target.value)} /></td>
-                  <td className="border-r border-black p-0"><input className="w-full h-full p-1 bg-transparent outline-none" value={row.observations} onChange={(e) => handleRowChange(row.id, 'observations', e.target.value)} /></td>
+                  <td className="border-r border-black p-0"><input title="Ubicación" className="w-full h-full p-1 bg-transparent outline-none" value={row.location} onChange={(e) => handleRowChange(row.id, 'location', e.target.value)} /></td>
+                  <td className="border-r border-black p-0"><input title="Observaciones" className="w-full h-full p-1 bg-transparent outline-none" value={row.observations} onChange={(e) => handleRowChange(row.id, 'observations', e.target.value)} /></td>
                   <td className="p-0 text-center no-print"><button onClick={() => removeRow(row.id)} className="text-gray-400 hover:text-red-500 font-bold opacity-0 group-hover:opacity-100">&times;</button></td>
                 </tr>
               ))}
@@ -158,35 +159,35 @@ export const SlingInspectionForm: React.FC<Props> = ({ initialData, onSave, onCa
                  <div className="grid grid-cols-2 gap-3 text-xs">
                     <div>
                        <label className="block font-semibold text-gray-500">Cantidad</label>
-                       <input className="w-full border-b border-gray-400 bg-transparent py-1" value={row.quantity} onChange={(e) => handleRowChange(row.id, 'quantity', e.target.value)} />
+                       <input title="Cantidad" className="w-full border-b border-gray-400 bg-transparent py-1" value={row.quantity} onChange={(e) => handleRowChange(row.id, 'quantity', e.target.value)} />
                     </div>
                     <div>
                        <label className="block font-semibold text-gray-500">Fecha Insp.</label>
-                       <input type="date" className="w-full border-b border-gray-400 bg-transparent py-1" value={row.inspectionDate} onChange={(e) => handleRowChange(row.id, 'inspectionDate', e.target.value)} />
+                       <input type="date" title="Fecha de Inspección" className="w-full border-b border-gray-400 bg-transparent py-1" value={row.inspectionDate} onChange={(e) => handleRowChange(row.id, 'inspectionDate', e.target.value)} />
                     </div>
                     <div>
                        <label className="block font-semibold text-gray-500">N° Certificado</label>
-                       <input className="w-full border-b border-gray-400 bg-transparent py-1" value={row.certNumber} onChange={(e) => handleRowChange(row.id, 'certNumber', e.target.value)} />
+                       <input title="N° Certificado" className="w-full border-b border-gray-400 bg-transparent py-1" value={row.certNumber} onChange={(e) => handleRowChange(row.id, 'certNumber', e.target.value)} />
                     </div>
                     <div>
                        <label className="block font-semibold text-gray-500">N° Lote</label>
-                       <input className="w-full border-b border-gray-400 bg-transparent py-1" value={row.lotNumber} onChange={(e) => handleRowChange(row.id, 'lotNumber', e.target.value)} />
+                       <input title="N° Lote" className="w-full border-b border-gray-400 bg-transparent py-1" value={row.lotNumber} onChange={(e) => handleRowChange(row.id, 'lotNumber', e.target.value)} />
                     </div>
                     <div>
                        <label className="block font-semibold text-gray-500">Longitud (cm)</label>
-                       <input className="w-full border-b border-gray-400 bg-transparent py-1" value={row.length} onChange={(e) => handleRowChange(row.id, 'length', e.target.value)} />
+                       <input title="Longitud (cm)" className="w-full border-b border-gray-400 bg-transparent py-1" value={row.length} onChange={(e) => handleRowChange(row.id, 'length', e.target.value)} />
                     </div>
                     <div>
                        <label className="block font-semibold text-gray-500">Diámetro (plg)</label>
-                       <input className="w-full border-b border-gray-400 bg-transparent py-1" value={row.diameter} onChange={(e) => handleRowChange(row.id, 'diameter', e.target.value)} />
+                       <input title="Diámetro (pulg)" className="w-full border-b border-gray-400 bg-transparent py-1" value={row.diameter} onChange={(e) => handleRowChange(row.id, 'diameter', e.target.value)} />
                     </div>
                     <div>
                        <label className="block font-semibold text-gray-500">Carga (kg)</label>
-                       <input className="w-full border-b border-gray-400 bg-transparent py-1" value={row.workingLoad} onChange={(e) => handleRowChange(row.id, 'workingLoad', e.target.value)} />
+                       <input title="Carga de Trabajo (kg)" className="w-full border-b border-gray-400 bg-transparent py-1" value={row.workingLoad} onChange={(e) => handleRowChange(row.id, 'workingLoad', e.target.value)} />
                     </div>
                     <div>
                        <label className="block font-semibold text-gray-500">Color</label>
-                       <select className="w-full border-b border-gray-400 bg-transparent py-1" value={row.color} onChange={(e) => handleRowChange(row.id, 'color', e.target.value)}>
+                       <select title="Color" className="w-full border-b border-gray-400 bg-transparent py-1" value={row.color} onChange={(e) => handleRowChange(row.id, 'color', e.target.value)}>
                           <option value="">-</option>
                           {COLORS.map(c => <option key={c} value={c}>{c}</option>)}
                        </select>
@@ -213,11 +214,11 @@ export const SlingInspectionForm: React.FC<Props> = ({ initialData, onSave, onCa
 
                  <div className="mt-3">
                     <label className="block font-semibold text-gray-500 text-xs">Ubicación</label>
-                    <input className="w-full border-b border-gray-400 bg-transparent py-1 text-sm" value={row.location} onChange={(e) => handleRowChange(row.id, 'location', e.target.value)} />
+                    <input title="Ubicación" className="w-full border-b border-gray-400 bg-transparent py-1 text-sm" value={row.location} onChange={(e) => handleRowChange(row.id, 'location', e.target.value)} />
                  </div>
                  <div className="mt-2">
                     <label className="block font-semibold text-gray-500 text-xs">Observaciones</label>
-                    <input className="w-full border-b border-gray-400 bg-transparent py-1 text-sm" value={row.observations} onChange={(e) => handleRowChange(row.id, 'observations', e.target.value)} />
+                    <input title="Observaciones" className="w-full border-b border-gray-400 bg-transparent py-1 text-sm" value={row.observations} onChange={(e) => handleRowChange(row.id, 'observations', e.target.value)} />
                  </div>
               </div>
            ))}
@@ -236,6 +237,7 @@ export const SlingInspectionForm: React.FC<Props> = ({ initialData, onSave, onCa
              <label className="font-bold text-xs mb-1">Nombre y Apellido del Inspector:</label>
              <input 
                 className="w-full border-b border-black outline-none bg-transparent py-1" 
+                title="Nombre y Apellido del Inspector"
                 value={inspectorName}
                 onChange={(e) => setInspectorName(e.target.value)}
                 placeholder="Ingrese nombre..."
@@ -267,6 +269,7 @@ export const SlingInspectionForm: React.FC<Props> = ({ initialData, onSave, onCa
                filename={`eslingas_${rows[0]?.inspectionDate}`}
                orientation="l"
                className="w-full"
+               pdfComponent={<SlingInspectionPdf report={{ id: initialData?.id ?? '', rows, inspectorName, signature, date: rows[0]?.inspectionDate || new Date().toISOString() }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

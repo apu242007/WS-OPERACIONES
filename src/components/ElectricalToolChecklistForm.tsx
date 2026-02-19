@@ -4,6 +4,7 @@ import { ElectricalToolChecklistReport, ElectricalToolChecklistMetadata, Electri
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { ElectricalToolChecklistPdf } from '../pdf/ElectricalToolChecklistPdf';
 
 interface Props {
   initialData?: ElectricalToolChecklistReport;
@@ -93,6 +94,7 @@ export const ElectricalToolChecklistForm: React.FC<Props> = ({ initialData, onSa
             <span className="font-bold mr-2 uppercase w-32">HERRAMIENTA:</span>
             <input 
                name="toolName" 
+               title="Herramienta"
                value={metadata.toolName} 
                onChange={handleMetadataChange} 
                className="flex-1 outline-none bg-transparent"
@@ -102,6 +104,7 @@ export const ElectricalToolChecklistForm: React.FC<Props> = ({ initialData, onSa
             <span className="font-bold mr-2 uppercase w-16">ÁREA:</span>
             <input 
                name="area" 
+               title="Área"
                value={metadata.area} 
                onChange={handleMetadataChange} 
                className="flex-1 outline-none bg-transparent"
@@ -163,8 +166,8 @@ export const ElectricalToolChecklistForm: React.FC<Props> = ({ initialData, onSa
       <div className="p-4 border-b border-black">
          <div className="font-bold text-sm mb-1 uppercase">OBSERVACIONES:</div>
          <textarea 
-            className="w-full h-24 p-2 resize-none outline-none border border-gray-300 rounded text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6"
-            style={{ backgroundSize: '100% 24px' }}
+            title="Observaciones"
+            className="w-full h-24 p-2 resize-none outline-none border border-gray-300 rounded text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] [background-size:100%_24px] leading-6"
             value={observations}
             onChange={(e) => setObservations(e.target.value)}
          />
@@ -178,11 +181,11 @@ export const ElectricalToolChecklistForm: React.FC<Props> = ({ initialData, onSa
              
              <div className="flex gap-2 mb-2 items-end">
                 <span className="font-bold text-xs w-16">NOMBRE:</span>
-                <input name="inspectorName" value={metadata.inspectorName} onChange={handleMetadataChange} className="flex-1 border-b border-gray-400 outline-none text-xs bg-transparent" />
+                <input name="inspectorName" title="Nombre" value={metadata.inspectorName} onChange={handleMetadataChange} className="flex-1 border-b border-gray-400 outline-none text-xs bg-transparent" />
              </div>
              <div className="flex gap-2 mb-4 items-end">
                 <span className="font-bold text-xs w-16">CARGO:</span>
-                <input name="inspectorJobTitle" value={metadata.inspectorJobTitle} onChange={handleMetadataChange} className="flex-1 border-b border-gray-400 outline-none text-xs bg-transparent" />
+                <input name="inspectorJobTitle" title="Cargo" value={metadata.inspectorJobTitle} onChange={handleMetadataChange} className="flex-1 border-b border-gray-400 outline-none text-xs bg-transparent" />
              </div>
 
              <div className="flex gap-4 items-end mt-4">
@@ -197,7 +200,7 @@ export const ElectricalToolChecklistForm: React.FC<Props> = ({ initialData, onSa
                 </div>
                 <div className="w-24">
                    <div className="text-xs font-bold mb-1">FECHA</div>
-                   <input type="date" name="inspectorDate" value={metadata.inspectorDate} onChange={handleMetadataChange} className="w-full border-b border-black outline-none text-xs bg-transparent" />
+                   <input type="date" name="inspectorDate" title="Fecha" value={metadata.inspectorDate} onChange={handleMetadataChange} className="w-full border-b border-black outline-none text-xs bg-transparent" />
                 </div>
              </div>
           </div>
@@ -208,7 +211,7 @@ export const ElectricalToolChecklistForm: React.FC<Props> = ({ initialData, onSa
              
              <div className="flex gap-2 mb-10 items-end">
                 <span className="font-bold text-xs w-24">SUPERVISOR:</span>
-                <input name="supervisorName" value={metadata.supervisorName} onChange={handleMetadataChange} className="flex-1 border-b border-gray-400 outline-none text-xs bg-transparent" />
+                <input name="supervisorName" title="Supervisor" value={metadata.supervisorName} onChange={handleMetadataChange} className="flex-1 border-b border-gray-400 outline-none text-xs bg-transparent" />
              </div>
 
              <div className="flex gap-4 items-end mt-4">
@@ -223,7 +226,7 @@ export const ElectricalToolChecklistForm: React.FC<Props> = ({ initialData, onSa
                 </div>
                 <div className="w-24">
                    <div className="text-xs font-bold mb-1">FECHA</div>
-                   <input type="date" name="supervisorDate" value={metadata.supervisorDate} onChange={handleMetadataChange} className="w-full border-b border-black outline-none text-xs bg-transparent" />
+                   <input type="date" name="supervisorDate" title="Fecha" value={metadata.supervisorDate} onChange={handleMetadataChange} className="w-full border-b border-black outline-none text-xs bg-transparent" />
                 </div>
              </div>
           </div>
@@ -242,6 +245,7 @@ export const ElectricalToolChecklistForm: React.FC<Props> = ({ initialData, onSa
                filename={`checklist_herramientas_${metadata.inspectorDate}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<ElectricalToolChecklistPdf report={{ id: initialData?.id ?? '', metadata, rows, observations, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

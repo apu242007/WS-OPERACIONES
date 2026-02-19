@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from './ui/Button';
 import { ExportPdfButton } from './ExportPdfButton';
+import { InspectionFrequencyPdf } from '../pdf/InspectionFrequencyPdf';
 
 interface Props {
   onCancel: () => void;
@@ -141,6 +142,7 @@ export const InspectionFrequencyForm: React.FC<Props> = ({ onCancel }) => {
             filename="frecuencia_minima_inspeccion"
             orientation="l"
             className="w-full"
+            pdfComponent={<InspectionFrequencyPdf />}
           />
         </div>
       </div>

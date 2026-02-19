@@ -4,6 +4,7 @@ import { WellFillingReport, WellFillingMetadata, WellFillingTechData, WellFillin
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { WellFillingPdf } from '../pdf/WellFillingPdf';
 
 interface Props {
   initialData?: WellFillingReport;
@@ -107,7 +108,7 @@ export const WellFillingForm: React.FC<Props> = ({ initialData, onSave, onCancel
          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2">EQUIPO:</span>
-               <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase">
+               <select name="equipment" title="Equipo" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase">
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
                   <option value="tacker06">TACKER06</option>
@@ -123,11 +124,11 @@ export const WellFillingForm: React.FC<Props> = ({ initialData, onSave, onCancel
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2">POZO:</span>
-               <input name="well" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
+               <input name="well" title="Pozo" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2">FECHA:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent text-center" />
+               <input type="date" name="date" title="Fecha" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent text-center" />
             </div>
          </div>
       </div>
@@ -139,16 +140,16 @@ export const WellFillingForm: React.FC<Props> = ({ initialData, onSave, onCancel
            <div className="flex flex-wrap items-center gap-4 text-xs">
               <div className="flex items-center w-40">
                  <span className="font-bold mr-1">TUB.PERF. Ø Ext.:</span>
-                 <input className="border-b border-black w-12 text-center outline-none bg-transparent" value={techData.tubPerf.diameter} onChange={(e) => handleTechDataChange('tubPerf', 'diameter', e.target.value)} />
+                 <input className="border-b border-black w-12 text-center outline-none bg-transparent" title="Diámetro Ext." value={techData.tubPerf.diameter} onChange={(e) => handleTechDataChange('tubPerf', 'diameter', e.target.value)} />
               </div>
               <span className="font-bold text-gray-500">DESPLAZAMIENTO:</span>
               <div className="flex items-center">
                  <span className="mr-1 font-bold">SECO:</span>
-                 <input className="border-b border-black w-16 text-center outline-none bg-transparent" value={techData.tubPerf.displacementDry} onChange={(e) => handleTechDataChange('tubPerf', 'displacementDry', e.target.value)} />
+                 <input className="border-b border-black w-16 text-center outline-none bg-transparent" title="Desplazamiento Seco TUB.PERF." value={techData.tubPerf.displacementDry} onChange={(e) => handleTechDataChange('tubPerf', 'displacementDry', e.target.value)} />
               </div>
               <div className="flex items-center">
                  <span className="mr-1 font-bold">MOJADO:</span>
-                 <input className="border-b border-black w-16 text-center outline-none bg-transparent" value={techData.tubPerf.displacementWet} onChange={(e) => handleTechDataChange('tubPerf', 'displacementWet', e.target.value)} />
+                 <input className="border-b border-black w-16 text-center outline-none bg-transparent" title="Desplazamiento Mojado TUB.PERF." value={techData.tubPerf.displacementWet} onChange={(e) => handleTechDataChange('tubPerf', 'displacementWet', e.target.value)} />
               </div>
            </div>
 
@@ -156,16 +157,16 @@ export const WellFillingForm: React.FC<Props> = ({ initialData, onSave, onCancel
            <div className="flex flex-wrap items-center gap-4 text-xs">
               <div className="flex items-center w-40">
                  <span className="font-bold mr-1">BARRA Ø Ext.:</span>
-                 <input className="border-b border-black w-12 text-center outline-none bg-transparent" value={techData.barra.diameter} onChange={(e) => handleTechDataChange('barra', 'diameter', e.target.value)} />
+                 <input className="border-b border-black w-12 text-center outline-none bg-transparent" title="Diámetro Ext. BARRA" value={techData.barra.diameter} onChange={(e) => handleTechDataChange('barra', 'diameter', e.target.value)} />
               </div>
               <span className="font-bold text-gray-500">DESPLAZAMIENTO:</span>
               <div className="flex items-center">
                  <span className="mr-1 font-bold">SECO:</span>
-                 <input className="border-b border-black w-16 text-center outline-none bg-transparent" value={techData.barra.displacementDry} onChange={(e) => handleTechDataChange('barra', 'displacementDry', e.target.value)} />
+                 <input className="border-b border-black w-16 text-center outline-none bg-transparent" title="Desplazamiento Seco BARRA" value={techData.barra.displacementDry} onChange={(e) => handleTechDataChange('barra', 'displacementDry', e.target.value)} />
               </div>
               <div className="flex items-center">
                  <span className="mr-1 font-bold">MOJADO:</span>
-                 <input className="border-b border-black w-16 text-center outline-none bg-transparent" value={techData.barra.displacementWet} onChange={(e) => handleTechDataChange('barra', 'displacementWet', e.target.value)} />
+                 <input className="border-b border-black w-16 text-center outline-none bg-transparent" title="Desplazamiento Mojado BARRA" value={techData.barra.displacementWet} onChange={(e) => handleTechDataChange('barra', 'displacementWet', e.target.value)} />
               </div>
            </div>
 
@@ -173,16 +174,16 @@ export const WellFillingForm: React.FC<Props> = ({ initialData, onSave, onCancel
            <div className="flex flex-wrap items-center gap-4 text-xs">
               <div className="flex items-center w-40">
                  <span className="font-bold mr-1">TUBING Ø:</span>
-                 <input className="border-b border-black w-12 text-center outline-none bg-transparent" value={techData.tubing.diameter} onChange={(e) => handleTechDataChange('tubing', 'diameter', e.target.value)} />
+                 <input className="border-b border-black w-12 text-center outline-none bg-transparent" title="Diámetro TUBING" value={techData.tubing.diameter} onChange={(e) => handleTechDataChange('tubing', 'diameter', e.target.value)} />
               </div>
               <span className="font-bold text-gray-500">DESPLAZAMIENTO:</span>
               <div className="flex items-center">
                  <span className="mr-1 font-bold">SECO:</span>
-                 <input className="border-b border-black w-16 text-center outline-none bg-transparent" value={techData.tubing.displacementDry} onChange={(e) => handleTechDataChange('tubing', 'displacementDry', e.target.value)} />
+                 <input className="border-b border-black w-16 text-center outline-none bg-transparent" title="Desplazamiento Seco TUBING" value={techData.tubing.displacementDry} onChange={(e) => handleTechDataChange('tubing', 'displacementDry', e.target.value)} />
               </div>
               <div className="flex items-center">
                  <span className="mr-1 font-bold">MOJADO:</span>
-                 <input className="border-b border-black w-16 text-center outline-none bg-transparent" value={techData.tubing.displacementWet} onChange={(e) => handleTechDataChange('tubing', 'displacementWet', e.target.value)} />
+                 <input className="border-b border-black w-16 text-center outline-none bg-transparent" title="Desplazamiento Mojado TUBING" value={techData.tubing.displacementWet} onChange={(e) => handleTechDataChange('tubing', 'displacementWet', e.target.value)} />
               </div>
            </div>
 
@@ -190,20 +191,20 @@ export const WellFillingForm: React.FC<Props> = ({ initialData, onSave, onCancel
            <div className="flex flex-wrap items-center gap-4 text-xs">
               <div className="flex items-center">
                  <span className="font-bold mr-1">PORTAMECHA Ø.Ext.:</span>
-                 <input className="border-b border-black w-12 text-center outline-none bg-transparent" value={techData.portamecha.diameter} onChange={(e) => handleTechDataChange('portamecha', 'diameter', e.target.value)} />
+                 <input className="border-b border-black w-12 text-center outline-none bg-transparent" title="Diámetro Ext. PORTAMECHA" value={techData.portamecha.diameter} onChange={(e) => handleTechDataChange('portamecha', 'diameter', e.target.value)} />
               </div>
               <div className="flex items-center">
                  <span className="font-bold mr-1">D.I.:</span>
-                 <input className="border-b border-black w-12 text-center outline-none bg-transparent" value={techData.portamecha.innerDiameter} onChange={(e) => handleTechDataChange('portamecha', 'innerDiameter', e.target.value)} />
+                 <input className="border-b border-black w-12 text-center outline-none bg-transparent" title="Diámetro Interior PORTAMECHA" value={techData.portamecha.innerDiameter} onChange={(e) => handleTechDataChange('portamecha', 'innerDiameter', e.target.value)} />
               </div>
               <span className="font-bold text-gray-500">DESPLAZAMIENTO:</span>
               <div className="flex items-center">
                  <span className="mr-1 font-bold">SECO:</span>
-                 <input className="border-b border-black w-16 text-center outline-none bg-transparent" value={techData.portamecha.displacementDry} onChange={(e) => handleTechDataChange('portamecha', 'displacementDry', e.target.value)} />
+                 <input className="border-b border-black w-16 text-center outline-none bg-transparent" title="Desplazamiento Seco PORTAMECHA" value={techData.portamecha.displacementDry} onChange={(e) => handleTechDataChange('portamecha', 'displacementDry', e.target.value)} />
               </div>
               <div className="flex items-center">
                  <span className="mr-1 font-bold">MOJADO:</span>
-                 <input className="border-b border-black w-16 text-center outline-none bg-transparent" value={techData.portamecha.displacementWet} onChange={(e) => handleTechDataChange('portamecha', 'displacementWet', e.target.value)} />
+                 <input className="border-b border-black w-16 text-center outline-none bg-transparent" title="Desplazamiento Mojado PORTAMECHA" value={techData.portamecha.displacementWet} onChange={(e) => handleTechDataChange('portamecha', 'displacementWet', e.target.value)} />
               </div>
            </div>
         </div>
@@ -234,28 +235,28 @@ export const WellFillingForm: React.FC<Props> = ({ initialData, onSave, onCancel
                {rows.map((row) => (
                   <tr key={row.id} className="border-b border-black hover:bg-gray-50 h-10 group">
                      <td className="border-r border-black p-0">
-                        <input className="w-full h-full text-center outline-none bg-transparent p-1" value={row.shotNumber} onChange={(e) => handleRowChange(row.id, 'shotNumber', e.target.value)} />
+                        <input title="Tiro N°" className="w-full h-full text-center outline-none bg-transparent p-1" value={row.shotNumber} onChange={(e) => handleRowChange(row.id, 'shotNumber', e.target.value)} />
                      </td>
                      <td className="border-r border-black p-0">
-                        <input className="w-full h-full text-center outline-none bg-transparent p-1" value={row.tankVolume} onChange={(e) => handleRowChange(row.id, 'tankVolume', e.target.value)} />
+                        <input title="Volumen de Tanque" className="w-full h-full text-center outline-none bg-transparent p-1" value={row.tankVolume} onChange={(e) => handleRowChange(row.id, 'tankVolume', e.target.value)} />
                      </td>
                      <td className="border-r border-black p-0">
-                        <input className="w-full h-full text-center outline-none bg-transparent p-1" value={row.calcVol} onChange={(e) => handleRowChange(row.id, 'calcVol', e.target.value)} />
+                        <input title="Calc. Volumen" className="w-full h-full text-center outline-none bg-transparent p-1" value={row.calcVol} onChange={(e) => handleRowChange(row.id, 'calcVol', e.target.value)} />
                      </td>
                      <td className="border-r border-black p-0">
-                        <input className="w-full h-full text-center outline-none bg-transparent p-1" value={row.calcTotal} onChange={(e) => handleRowChange(row.id, 'calcTotal', e.target.value)} />
+                        <input title="Calc. Total" className="w-full h-full text-center outline-none bg-transparent p-1" value={row.calcTotal} onChange={(e) => handleRowChange(row.id, 'calcTotal', e.target.value)} />
                      </td>
                      <td className="border-r border-black p-0">
-                        <input className="w-full h-full text-center outline-none bg-transparent p-1" value={row.measVol} onChange={(e) => handleRowChange(row.id, 'measVol', e.target.value)} />
+                        <input title="Med. Volumen" className="w-full h-full text-center outline-none bg-transparent p-1" value={row.measVol} onChange={(e) => handleRowChange(row.id, 'measVol', e.target.value)} />
                      </td>
                      <td className="border-r border-black p-0">
-                        <input className="w-full h-full text-center outline-none bg-transparent p-1" value={row.measTotal} onChange={(e) => handleRowChange(row.id, 'measTotal', e.target.value)} />
+                        <input title="Med. Total" className="w-full h-full text-center outline-none bg-transparent p-1" value={row.measTotal} onChange={(e) => handleRowChange(row.id, 'measTotal', e.target.value)} />
                      </td>
                      <td className="border-r border-black p-0">
-                        <input className="w-full h-full text-center outline-none bg-transparent p-1" value={row.barrelTrend} onChange={(e) => handleRowChange(row.id, 'barrelTrend', e.target.value)} />
+                        <input title="Tendencia Barriles" className="w-full h-full text-center outline-none bg-transparent p-1" value={row.barrelTrend} onChange={(e) => handleRowChange(row.id, 'barrelTrend', e.target.value)} />
                      </td>
                      <td className="border-r border-black p-0">
-                        <input className="w-full h-full outline-none bg-transparent p-1 px-2" value={row.observations} onChange={(e) => handleRowChange(row.id, 'observations', e.target.value)} />
+                        <input title="Observaciones" className="w-full h-full outline-none bg-transparent p-1 px-2" value={row.observations} onChange={(e) => handleRowChange(row.id, 'observations', e.target.value)} />
                      </td>
                      <td className="text-center no-print">
                         <button onClick={() => removeRow(row.id)} className="text-red-500 font-bold hover:bg-red-50 w-full h-full opacity-100 sm:opacity-0 sm:group-hover:opacity-100">×</button>
@@ -326,6 +327,7 @@ export const WellFillingForm: React.FC<Props> = ({ initialData, onSave, onCancel
                filename={`llenado_pozo_${metadata.date}`}
                orientation="l"
                className="w-full"
+               pdfComponent={<WellFillingPdf report={{ id: initialData?.id ?? '', metadata, techData, rows, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

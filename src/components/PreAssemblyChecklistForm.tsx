@@ -5,6 +5,7 @@ import { PreAssemblyChecklistReport, PreAssemblyChecklistMetadata, PreAssemblyCh
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { PreAssemblyChecklistPdf } from '../pdf/PreAssemblyChecklistPdf';
 
 interface Props {
   initialData?: PreAssemblyChecklistReport;
@@ -176,6 +177,7 @@ export const PreAssemblyChecklistForm: React.FC<Props> = ({ initialData, onSave,
               <div className="w-full sm:col-span-4 p-0 border-t sm:border-t-0 border-gray-200">
                  <input 
                     className="w-full h-10 sm:h-full px-3 sm:px-2 outline-none bg-transparent placeholder-gray-400 sm:placeholder-transparent text-sm sm:text-xs"
+                    title="Observaciones"
                     value={item.observation}
                     onChange={(e) => handleItemChange(item.id, 'observation', e.target.value)}
                     placeholder="Observaciones..."
@@ -267,6 +269,7 @@ export const PreAssemblyChecklistForm: React.FC<Props> = ({ initialData, onSave,
                filename={`checklist_pre_montaje_${metadata.date}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<PreAssemblyChecklistPdf report={{ id: initialData?.id ?? '', metadata, items, signatures, images }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

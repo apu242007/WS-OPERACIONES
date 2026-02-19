@@ -4,6 +4,7 @@ import { ToolMovementReport, ToolMovementMetadata, ToolMovementRow } from '../ty
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { ToolMovementPdf } from '../pdf/ToolMovementPdf';
 
 interface Props {
   initialData?: ToolMovementReport;
@@ -111,12 +112,12 @@ export const ToolMovementForm: React.FC<Props> = ({ initialData, onSave, onCance
          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex border-b border-gray-400 border-dashed pb-1 mb-2 items-end">
                <span className="font-bold w-24 text-gray-500 uppercase">Fecha:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} title="Fecha" className="flex-1 outline-none bg-transparent" />
             </div>
             
             <div className="flex border-b border-gray-400 border-dashed pb-1 mb-2 items-end">
                <span className="font-bold w-24 text-gray-500 uppercase">Equipo:</span>
-               <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent">
+               <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} title="Equipo" className="flex-1 outline-none bg-transparent">
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
                   <option value="tacker06">TACKER06</option>
@@ -133,11 +134,11 @@ export const ToolMovementForm: React.FC<Props> = ({ initialData, onSave, onCance
             <div className="flex gap-4">
                 <div className="flex-1 flex border-b border-gray-400 border-dashed pb-1 mb-2 items-end">
                    <span className="font-bold w-16 text-gray-500 uppercase">Pozo:</span>
-                   <input name="well" value={metadata.well} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+                   <input name="well" value={metadata.well} onChange={handleMetadataChange} title="Pozo" className="flex-1 outline-none bg-transparent" />
                 </div>
                 <div className="flex-1 flex border-b border-gray-400 border-dashed pb-1 mb-2 items-end">
                    <span className="font-bold w-24 text-gray-500 uppercase">Fluido Term:</span>
-                   <input name="termFluid" value={metadata.termFluid} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+                   <input name="termFluid" value={metadata.termFluid} onChange={handleMetadataChange} title="Fluido Terminator" className="flex-1 outline-none bg-transparent" />
                 </div>
             </div>
          </div>
@@ -163,19 +164,19 @@ export const ToolMovementForm: React.FC<Props> = ({ initialData, onSave, onCance
              {rows.map((row) => (
                <tr key={row.id} className="hover:bg-gray-50 group border-b border-black h-10">
                   <td className="border-r border-black p-0 sticky left-0 bg-white z-10 group-hover:bg-gray-50">
-                     <input type="number" className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.tubingLength} onChange={(e) => handleRowChange(row.id, 'tubingLength', e.target.value)} />
+                     <input type="number" title="Long. Tubing (Lts/10 tiros)" className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.tubingLength} onChange={(e) => handleRowChange(row.id, 'tubingLength', e.target.value)} />
                   </td>
                   <td className="border-r border-black p-0">
-                     <input type="number" className="w-full h-full p-1 text-center bg-transparent outline-none font-medium" value={row.steelVol} onChange={(e) => handleRowChange(row.id, 'steelVol', e.target.value)} placeholder="A" />
+                     <input type="number" title="Vol. Acero (A)" className="w-full h-full p-1 text-center bg-transparent outline-none font-medium" value={row.steelVol} onChange={(e) => handleRowChange(row.id, 'steelVol', e.target.value)} placeholder="A" />
                   </td>
                   <td className="border-r border-black p-0">
-                     <input type="number" className="w-full h-full p-1 text-center bg-transparent outline-none font-medium" value={row.pumpVol} onChange={(e) => handleRowChange(row.id, 'pumpVol', e.target.value)} placeholder="B" />
+                     <input type="number" title="Vol Bombeo (B)" className="w-full h-full p-1 text-center bg-transparent outline-none font-medium" value={row.pumpVol} onChange={(e) => handleRowChange(row.id, 'pumpVol', e.target.value)} placeholder="B" />
                   </td>
                   <td className="border-r border-black p-0">
-                     <input type="number" className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.tankLevel} onChange={(e) => handleRowChange(row.id, 'tankLevel', e.target.value)} />
+                     <input type="number" title="Nivel Pileta (cm)" className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.tankLevel} onChange={(e) => handleRowChange(row.id, 'tankLevel', e.target.value)} />
                   </td>
                   <td className="border-r border-black p-0">
-                     <input type="number" className="w-full h-full p-1 text-center bg-transparent outline-none font-medium" value={row.returnVol} onChange={(e) => handleRowChange(row.id, 'returnVol', e.target.value)} placeholder="C" />
+                     <input type="number" title="Vol Retorno (C)" className="w-full h-full p-1 text-center bg-transparent outline-none font-medium" value={row.returnVol} onChange={(e) => handleRowChange(row.id, 'returnVol', e.target.value)} placeholder="C" />
                   </td>
                   
                   {/* Calculated Columns */}
@@ -187,7 +188,7 @@ export const ToolMovementForm: React.FC<Props> = ({ initialData, onSave, onCance
                   </td>
 
                   <td className="border-r border-black p-0">
-                     <input className="w-full h-full p-1 bg-transparent outline-none pl-2" value={row.observations} onChange={(e) => handleRowChange(row.id, 'observations', e.target.value)} />
+                     <input title="Observaciones" className="w-full h-full p-1 bg-transparent outline-none pl-2" value={row.observations} onChange={(e) => handleRowChange(row.id, 'observations', e.target.value)} />
                   </td>
                   <td className="p-0 text-center no-print">
                      <button onClick={() => removeRow(row.id)} className="text-gray-400 hover:text-red-500 font-bold opacity-0 group-hover:opacity-100">&times;</button>
@@ -249,6 +250,7 @@ export const ToolMovementForm: React.FC<Props> = ({ initialData, onSave, onCance
                filename={`mov_herramientas_${metadata.date}`}
                orientation="l"
                className="w-full"
+               pdfComponent={<ToolMovementPdf report={{ id: initialData?.id ?? '', metadata, rows, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

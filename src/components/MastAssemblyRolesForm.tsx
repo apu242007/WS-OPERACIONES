@@ -4,6 +4,7 @@ import { MastAssemblyRolesReport, MastAssemblyRolesMetadata, MastRoleRow } from 
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { MastAssemblyRolesPdf } from '../pdf/MastAssemblyRolesPdf';
 
 interface Props {
   initialData?: MastAssemblyRolesReport;
@@ -96,11 +97,11 @@ export const MastAssemblyRolesForm: React.FC<Props> = ({ initialData, onSave, on
          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-16">FECHA:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input type="date" name="date" title="Fecha" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-16">EQUIPO:</span>
-               <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase">
+               <select name="equipment" title="Equipo" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase">
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
                   <option value="tacker06">TACKER06</option>
@@ -116,7 +117,7 @@ export const MastAssemblyRolesForm: React.FC<Props> = ({ initialData, onSave, on
             </div>
             <div className="flex border-b border-black border-dashed pb-1 items-end">
                <span className="font-bold mr-2 w-20">LOCACIÓN:</span>
-               <input name="location" value={metadata.location} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
+               <input name="location" title="Locación" value={metadata.location} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
             </div>
          </div>
       </div>
@@ -144,6 +145,7 @@ export const MastAssemblyRolesForm: React.FC<Props> = ({ initialData, onSave, on
                         <td className="border-r border-black p-0">
                            <input 
                               className="w-full h-full px-2 outline-none bg-transparent text-center"
+                              title="Nombre y Apellido"
                               placeholder="Ingrese nombre..."
                               value={row.personName}
                               onChange={(e) => handleRoleChange(row.id, e.target.value)}
@@ -176,7 +178,8 @@ export const MastAssemblyRolesForm: React.FC<Props> = ({ initialData, onSave, on
                    <div className="mb-2">
                       <label className="block text-xs font-bold text-gray-500 mb-1">NOMBRE:</label>
                       <input 
-                          className="w-full border border-gray-300 rounded p-2 text-sm bg-white" 
+                          className="w-full border border-gray-300 rounded p-2 text-sm bg-white"
+                          title="Nombre y Apellido"
                           placeholder="Ingrese nombre..."
                           value={row.personName}
                           onChange={(e) => handleRoleChange(row.id, e.target.value)}
@@ -212,6 +215,7 @@ export const MastAssemblyRolesForm: React.FC<Props> = ({ initialData, onSave, on
             <div className="text-xs font-bold text-gray-500 uppercase mb-1">Novedades / Observaciones 1º Tramo:</div>
             <textarea 
                className="w-full h-32 bg-transparent outline-none resize-none text-sm"
+               title="Novedades / Observaciones 1º Tramo"
                placeholder="Registre aquí cualquier observación..."
                value={section1Observations}
                onChange={(e) => setSection1Observations(e.target.value)}
@@ -232,6 +236,7 @@ export const MastAssemblyRolesForm: React.FC<Props> = ({ initialData, onSave, on
             <div className="text-xs font-bold text-gray-500 uppercase mb-1">Novedades / Observaciones 2º Tramo:</div>
             <textarea 
                className="w-full h-32 bg-transparent outline-none resize-none text-sm"
+               title="Novedades / Observaciones 2º Tramo"
                placeholder="Registre aquí cualquier observación..."
                value={section2Observations}
                onChange={(e) => setSection2Observations(e.target.value)}
@@ -268,6 +273,7 @@ export const MastAssemblyRolesForm: React.FC<Props> = ({ initialData, onSave, on
                filename={`roles_montaje_${metadata.date}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<MastAssemblyRolesPdf report={{ id: initialData?.id || crypto.randomUUID(), metadata, roles, section1Observations, section2Observations, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

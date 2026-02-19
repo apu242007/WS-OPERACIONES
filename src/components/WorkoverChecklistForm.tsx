@@ -4,6 +4,7 @@ import { WorkoverChecklistReport, WorkoverChecklistMetadata, WorkoverChecklistRo
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { WorkoverChecklistPdf } from '../pdf/WorkoverChecklistPdf';
 
 interface Props {
   initialData?: WorkoverChecklistReport;
@@ -357,11 +358,11 @@ export const WorkoverChecklistForm: React.FC<Props> = ({ initialData, onSave, on
          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-1">
             <div className="flex border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold w-24">COMPAÑÍA:</span>
-               <input name="company" value={metadata.company} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="company" title="Compañía" value={metadata.company} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold w-24">Nº EQUIPO:</span>
-               <select name="equipmentNumber" value={metadata.equipmentNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent">
+               <select name="equipmentNumber" title="Nº Equipo" value={metadata.equipmentNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent">
 <option value="tacker01">TACKER01</option>
 <option value="tacker05">TACKER05</option>
 <option value="tacker06">TACKER06</option>
@@ -375,30 +376,30 @@ export const WorkoverChecklistForm: React.FC<Props> = ({ initialData, onSave, on
 <option value="mase04">MASE04</option>
 </select>
                <span className="font-bold w-24 pl-2">YACIMIENTO:</span>
-               <input name="field" value={metadata.field} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="field" title="Yacimiento" value={metadata.field} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
 
             <div className="flex border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold w-24">LOCACIÓN:</span>
-               <input name="location" value={metadata.location} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="location" title="Locación" value={metadata.location} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold w-24">FECHA:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input type="date" name="date" title="Fecha" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
 
             <div className="flex border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold w-24">SUPERVISOR:</span>
-               <input name="supervisor" value={metadata.supervisor} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="supervisor" title="Supervisor" value={metadata.supervisor} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
              <div className="flex border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold w-32">INSPECC POR:</span>
-               <input name="inspectedBy" value={metadata.inspectedBy} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="inspectedBy" title="Inspeccionado por" value={metadata.inspectedBy} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
 
             <div className="flex border-b border-gray-400 border-dashed pb-0.5 md:col-span-2">
                <span className="font-bold w-24">OPERACIÓN:</span>
-               <input name="operation" value={metadata.operation} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="operation" title="Operación" value={metadata.operation} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
       </div>
@@ -448,16 +449,16 @@ export const WorkoverChecklistForm: React.FC<Props> = ({ initialData, onSave, on
                    {observations.map((obs) => (
                       <tr key={obs.id}>
                          <td className="border border-black p-0 h-8">
-                            <input className="w-full h-full p-1 outline-none bg-transparent" value={obs.observation} onChange={(e) => handleObservationChange(obs.id, 'observation', e.target.value)} />
+                            <input title="Observación" className="w-full h-full p-1 outline-none bg-transparent" value={obs.observation} onChange={(e) => handleObservationChange(obs.id, 'observation', e.target.value)} />
                          </td>
                          <td className="border border-black p-0">
-                            <input className="w-full h-full p-1 outline-none bg-transparent" value={obs.responsible} onChange={(e) => handleObservationChange(obs.id, 'responsible', e.target.value)} />
+                            <input title="Responsable de Acción" className="w-full h-full p-1 outline-none bg-transparent" value={obs.responsible} onChange={(e) => handleObservationChange(obs.id, 'responsible', e.target.value)} />
                          </td>
                          <td className="border border-black p-0">
-                            <input className="w-full h-full p-1 outline-none bg-transparent text-center" value={obs.compliance} onChange={(e) => handleObservationChange(obs.id, 'compliance', e.target.value)} />
+                            <input title="Cumplimiento" className="w-full h-full p-1 outline-none bg-transparent text-center" value={obs.compliance} onChange={(e) => handleObservationChange(obs.id, 'compliance', e.target.value)} />
                          </td>
                          <td className="border border-black p-0">
-                            <input type="date" className="w-full h-full p-1 outline-none bg-transparent text-center" value={obs.date} onChange={(e) => handleObservationChange(obs.id, 'date', e.target.value)} />
+                            <input type="date" title="Fecha" className="w-full h-full p-1 outline-none bg-transparent text-center" value={obs.date} onChange={(e) => handleObservationChange(obs.id, 'date', e.target.value)} />
                          </td>
                          <td className="border border-black p-0 text-center no-print">
                             <button onClick={() => removeObservation(obs.id)} className="text-red-500 font-bold hover:bg-red-50 w-full h-full">×</button>
@@ -478,6 +479,7 @@ export const WorkoverChecklistForm: React.FC<Props> = ({ initialData, onSave, on
                   <div className="mb-2">
                      <label className="block text-xs font-bold text-gray-500 mb-1">OBSERVACIÓN:</label>
                      <textarea 
+                        title="Observación"
                         className="w-full border border-gray-300 rounded p-2 text-sm bg-white" 
                         rows={2}
                         value={obs.observation} 
@@ -487,6 +489,7 @@ export const WorkoverChecklistForm: React.FC<Props> = ({ initialData, onSave, on
                   <div className="mb-2">
                      <label className="block text-xs font-bold text-gray-500 mb-1">RESPONSABLE:</label>
                      <input 
+                        title="Responsable"
                         className="w-full border border-gray-300 rounded p-2 text-sm bg-white" 
                         value={obs.responsible} 
                         onChange={(e) => handleObservationChange(obs.id, 'responsible', e.target.value)} 
@@ -496,6 +499,7 @@ export const WorkoverChecklistForm: React.FC<Props> = ({ initialData, onSave, on
                      <div className="flex-1">
                         <label className="block text-xs font-bold text-gray-500 mb-1">CUMPLIMIENTO:</label>
                         <input 
+                           title="Cumplimiento"
                            className="w-full border border-gray-300 rounded p-2 text-sm bg-white" 
                            value={obs.compliance} 
                            onChange={(e) => handleObservationChange(obs.id, 'compliance', e.target.value)} 
@@ -505,6 +509,7 @@ export const WorkoverChecklistForm: React.FC<Props> = ({ initialData, onSave, on
                         <label className="block text-xs font-bold text-gray-500 mb-1">FECHA:</label>
                         <input 
                            type="date"
+                           title="Fecha"
                            className="w-full border border-gray-300 rounded p-2 text-sm bg-white" 
                            value={obs.date} 
                            onChange={(e) => handleObservationChange(obs.id, 'date', e.target.value)} 
@@ -547,6 +552,7 @@ export const WorkoverChecklistForm: React.FC<Props> = ({ initialData, onSave, on
                filename={`checklist_workover_${metadata.date}_${metadata.equipmentNumber || 'eq'}`}
                orientation="l"
                className="w-full"
+               pdfComponent={<WorkoverChecklistPdf report={{ id: initialData?.id ?? '', metadata, rows, observations, signature }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

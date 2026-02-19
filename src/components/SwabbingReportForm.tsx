@@ -4,6 +4,7 @@ import { SwabbingReport, SwabbingMetadata, SwabbingRow } from '../types';
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { SwabbingReportPdf } from '../pdf/SwabbingReportPdf';
 
 interface Props {
   initialData?: SwabbingReport;
@@ -91,6 +92,7 @@ export const SwabbingReportForm: React.FC<Props> = ({ initialData, onSave, onCan
                     name="date"
                     value={metadata.date}
                     onChange={handleMetadataChange}
+                    title="Fecha"
                     className="border border-gray-300 rounded p-1.5 outline-none bg-white"
                 />
             </div>
@@ -100,6 +102,7 @@ export const SwabbingReportForm: React.FC<Props> = ({ initialData, onSave, onCan
                     name="well"
                     value={metadata.well}
                     onChange={handleMetadataChange}
+                    title="Pozo"
                     className="border border-gray-300 rounded p-1.5 outline-none bg-white"
                 />
             </div>
@@ -109,6 +112,7 @@ export const SwabbingReportForm: React.FC<Props> = ({ initialData, onSave, onCan
                     name="company"
                     value={metadata.company}
                     onChange={handleMetadataChange}
+                    title="Compañía"
                     className="border border-gray-300 rounded p-1.5 outline-none bg-white"
                 />
             </div>
@@ -116,7 +120,7 @@ export const SwabbingReportForm: React.FC<Props> = ({ initialData, onSave, onCan
         
         <div className="flex flex-col gap-1 sm:w-1/3">
             <span className="font-bold uppercase text-xs text-gray-500">Equipo</span>
-            <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white">
+            <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} title="Equipo" className="border border-gray-300 rounded p-1.5 outline-none bg-white">
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
                   <option value="tacker06">TACKER06</option>
@@ -167,49 +171,49 @@ export const SwabbingReportForm: React.FC<Props> = ({ initialData, onSave, onCan
                {rows.map((row, index) => (
                  <tr key={row.id} className="hover:bg-gray-50 group border-b border-black h-8">
                     <td className="border-r border-black p-0">
-                       <input type="time" className="w-full h-full p-1 text-center bg-transparent outline-none text-xs" value={row.timeFrom} onChange={(e) => handleRowChange(row.id, 'timeFrom', e.target.value)} />
+                       <input type="time" title="Hora Desde" className="w-full h-full p-1 text-center bg-transparent outline-none text-xs" value={row.timeFrom} onChange={(e) => handleRowChange(row.id, 'timeFrom', e.target.value)} />
                     </td>
                     <td className="border-r border-black p-0">
-                       <input type="time" className="w-full h-full p-1 text-center bg-transparent outline-none text-xs" value={row.timeTo} onChange={(e) => handleRowChange(row.id, 'timeTo', e.target.value)} />
-                    </td>
-                    
-                    <td className="border-r border-black p-0">
-                       <input className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.depth} onChange={(e) => handleRowChange(row.id, 'depth', e.target.value)} />
-                    </td>
-                    <td className="border-r border-black p-0">
-                       <input className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.fluidLevel} onChange={(e) => handleRowChange(row.id, 'fluidLevel', e.target.value)} />
+                       <input type="time" title="Hora Hasta" className="w-full h-full p-1 text-center bg-transparent outline-none text-xs" value={row.timeTo} onChange={(e) => handleRowChange(row.id, 'timeTo', e.target.value)} />
                     </td>
                     
                     <td className="border-r border-black p-0">
-                       <input className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.extractedLiters} onChange={(e) => handleRowChange(row.id, 'extractedLiters', e.target.value)} />
+                       <input title="Profundidad (m)" className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.depth} onChange={(e) => handleRowChange(row.id, 'depth', e.target.value)} />
                     </td>
                     <td className="border-r border-black p-0">
-                       <input className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.accumulatedM3} onChange={(e) => handleRowChange(row.id, 'accumulatedM3', e.target.value)} />
-                    </td>
-                    
-                    <td className="border-r border-black p-0">
-                       <input className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.waterCut} onChange={(e) => handleRowChange(row.id, 'waterCut', e.target.value)} />
-                    </td>
-                    <td className="border-r border-black p-0">
-                       <input className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.emulsion} onChange={(e) => handleRowChange(row.id, 'emulsion', e.target.value)} />
+                       <input title="Nivel de Fluido (m)" className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.fluidLevel} onChange={(e) => handleRowChange(row.id, 'fluidLevel', e.target.value)} />
                     </td>
                     
                     <td className="border-r border-black p-0">
-                       <input className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.sandMud} onChange={(e) => handleRowChange(row.id, 'sandMud', e.target.value)} />
+                       <input title="Litros Extraídos" className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.extractedLiters} onChange={(e) => handleRowChange(row.id, 'extractedLiters', e.target.value)} />
                     </td>
                     <td className="border-r border-black p-0">
-                       <input className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.totalImpurities} onChange={(e) => handleRowChange(row.id, 'totalImpurities', e.target.value)} />
+                       <input title="M3 Acumulados" className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.accumulatedM3} onChange={(e) => handleRowChange(row.id, 'accumulatedM3', e.target.value)} />
                     </td>
                     
                     <td className="border-r border-black p-0">
-                       <input className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.chlorides} onChange={(e) => handleRowChange(row.id, 'chlorides', e.target.value)} />
+                       <input title="Corte de Agua (%)" className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.waterCut} onChange={(e) => handleRowChange(row.id, 'waterCut', e.target.value)} />
                     </td>
                     <td className="border-r border-black p-0">
-                       <input className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.strokesPerHour} onChange={(e) => handleRowChange(row.id, 'strokesPerHour', e.target.value)} />
+                       <input title="Emulsión" className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.emulsion} onChange={(e) => handleRowChange(row.id, 'emulsion', e.target.value)} />
+                    </td>
+                    
+                    <td className="border-r border-black p-0">
+                       <input title="Arena y Barro (%)" className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.sandMud} onChange={(e) => handleRowChange(row.id, 'sandMud', e.target.value)} />
+                    </td>
+                    <td className="border-r border-black p-0">
+                       <input title="Impurezas Totales (%)" className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.totalImpurities} onChange={(e) => handleRowChange(row.id, 'totalImpurities', e.target.value)} />
+                    </td>
+                    
+                    <td className="border-r border-black p-0">
+                       <input title="Cl (g/l)" className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.chlorides} onChange={(e) => handleRowChange(row.id, 'chlorides', e.target.value)} />
+                    </td>
+                    <td className="border-r border-black p-0">
+                       <input title="Carreras por Hora" className="w-full h-full p-1 text-center bg-transparent outline-none" value={row.strokesPerHour} onChange={(e) => handleRowChange(row.id, 'strokesPerHour', e.target.value)} />
                     </td>
                     
                     <td className="p-0 border-r border-black">
-                       <input className="w-full h-full p-1 bg-transparent outline-none" value={row.observations} onChange={(e) => handleRowChange(row.id, 'observations', e.target.value)} />
+                       <input title="Observaciones" className="w-full h-full p-1 bg-transparent outline-none" value={row.observations} onChange={(e) => handleRowChange(row.id, 'observations', e.target.value)} />
                     </td>
                     <td className="p-0 text-center no-print">
                        <button onClick={() => removeRow(row.id)} className="text-gray-400 hover:text-red-500 font-bold opacity-100 sm:opacity-0 sm:group-hover:opacity-100">&times;</button>
@@ -257,6 +261,7 @@ export const SwabbingReportForm: React.FC<Props> = ({ initialData, onSave, onCan
                filename={`pistoneo_${metadata.date}_${metadata.well || 'pozo'}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<SwabbingReportPdf report={{ id: initialData?.id ?? '', metadata, rows, signature }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

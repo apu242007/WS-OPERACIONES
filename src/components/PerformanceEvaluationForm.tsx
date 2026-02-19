@@ -4,6 +4,7 @@ import { PerformanceEvaluationReport, PerformanceEvaluationMetadata, Performance
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { PerformanceEvaluationPdf } from '../pdf/PerformanceEvaluationPdf';
 
 interface Props {
   initialData?: PerformanceEvaluationReport;
@@ -149,15 +150,15 @@ export const PerformanceEvaluationForm: React.FC<Props> = ({ initialData, onSave
                 <div className="space-y-3 mt-1">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                      <span className="w-24 font-bold text-xs text-gray-500">NOMBRE:</span>
-                     <input name="evaluatedName" value={metadata.evaluatedName} onChange={handleMetadataChange} className="flex-1 border-b border-gray-300 outline-none bg-transparent" />
+                     <input name="evaluatedName" title="Nombre del evaluado" value={metadata.evaluatedName} onChange={handleMetadataChange} className="flex-1 border-b border-gray-300 outline-none bg-transparent" />
                   </div>
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                      <span className="w-24 font-bold text-xs text-gray-500">PUESTO:</span>
-                     <input name="evaluatedPosition" value={metadata.evaluatedPosition} onChange={handleMetadataChange} className="flex-1 border-b border-gray-300 outline-none bg-transparent" />
+                     <input name="evaluatedPosition" title="Puesto del evaluado" value={metadata.evaluatedPosition} onChange={handleMetadataChange} className="flex-1 border-b border-gray-300 outline-none bg-transparent" />
                   </div>
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                      <span className="w-24 font-bold text-xs text-gray-500">ÁREA/SECTOR:</span>
-                     <input name="evaluatedArea" value={metadata.evaluatedArea} onChange={handleMetadataChange} className="flex-1 border-b border-gray-300 outline-none bg-transparent" />
+                     <input name="evaluatedArea" title="Área/Sector del evaluado" value={metadata.evaluatedArea} onChange={handleMetadataChange} className="flex-1 border-b border-gray-300 outline-none bg-transparent" />
                   </div>
                 </div>
             </div>
@@ -168,15 +169,15 @@ export const PerformanceEvaluationForm: React.FC<Props> = ({ initialData, onSave
                 <div className="space-y-3 mt-1">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                      <span className="w-24 font-bold text-xs text-gray-500">NOMBRE:</span>
-                     <input name="evaluatorName" value={metadata.evaluatorName} onChange={handleMetadataChange} className="flex-1 border-b border-gray-300 outline-none bg-transparent" />
+                     <input name="evaluatorName" title="Nombre del evaluador" value={metadata.evaluatorName} onChange={handleMetadataChange} className="flex-1 border-b border-gray-300 outline-none bg-transparent" />
                   </div>
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                      <span className="w-24 font-bold text-xs text-gray-500">PUESTO:</span>
-                     <input name="evaluatorPosition" value={metadata.evaluatorPosition} onChange={handleMetadataChange} className="flex-1 border-b border-gray-300 outline-none bg-transparent" />
+                     <input name="evaluatorPosition" title="Puesto del evaluador" value={metadata.evaluatorPosition} onChange={handleMetadataChange} className="flex-1 border-b border-gray-300 outline-none bg-transparent" />
                   </div>
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                      <span className="w-24 font-bold text-xs text-gray-500">ÁREA/SECTOR:</span>
-                     <input name="evaluatorArea" value={metadata.evaluatorArea} onChange={handleMetadataChange} className="flex-1 border-b border-gray-300 outline-none bg-transparent" />
+                     <input name="evaluatorArea" title="Área/Sector del evaluador" value={metadata.evaluatorArea} onChange={handleMetadataChange} className="flex-1 border-b border-gray-300 outline-none bg-transparent" />
                   </div>
                 </div>
             </div>
@@ -185,7 +186,7 @@ export const PerformanceEvaluationForm: React.FC<Props> = ({ initialData, onSave
          <div className="flex justify-end mt-2">
             <div className="flex items-center gap-2">
                <span className="font-bold text-xs uppercase text-gray-500">Fecha de Evaluación:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="border-b border-black outline-none bg-transparent text-sm" />
+               <input type="date" name="date" title="Fecha de evaluación" value={metadata.date} onChange={handleMetadataChange} className="border-b border-black outline-none bg-transparent text-sm" />
             </div>
          </div>
       </div>
@@ -245,8 +246,8 @@ export const PerformanceEvaluationForm: React.FC<Props> = ({ initialData, onSave
       <div className="p-4 border-b border-black">
          <div className="font-bold mb-2 uppercase text-xs text-gray-500">Necesidades de Capacitación / Entrenamiento Detectadas:</div>
          <textarea 
-            className="w-full h-32 p-3 resize-none outline-none border border-gray-300 rounded text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6"
-            style={{ backgroundSize: '100% 24px' }}
+            className="w-full h-32 p-3 resize-none outline-none border border-gray-300 rounded text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] [background-size:100%_24px] leading-6"
+            title="Necesidades de capacitación"
             value={trainingNeeds}
             onChange={(e) => setTrainingNeeds(e.target.value)}
             placeholder="Detallar..."
@@ -303,6 +304,7 @@ export const PerformanceEvaluationForm: React.FC<Props> = ({ initialData, onSave
                filename={`evaluacion_desempeno_${metadata.date}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<PerformanceEvaluationPdf report={{ id: initialData?.id || crypto.randomUUID(), metadata, rows, trainingNeeds, averageScore: calculateAverage(), signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

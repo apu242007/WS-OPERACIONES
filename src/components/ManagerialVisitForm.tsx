@@ -5,6 +5,7 @@ import { ManagerialVisitReport, ManagerialVisitMetadata, ManagerialVisitItem } f
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { ManagerialVisitPdf } from '../pdf/ManagerialVisitPdf';
 
 interface Props {
   initialData?: ManagerialVisitReport;
@@ -256,6 +257,7 @@ export const ManagerialVisitForm: React.FC<Props> = ({ initialData, onSave, onCa
                <div className="col-span-2 w-full sm:w-auto p-0 border-t sm:border-t-0 border-gray-100">
                   <input 
                      className="w-full h-10 sm:h-full px-3 sm:px-2 outline-none bg-transparent placeholder-gray-400 sm:placeholder-transparent text-sm sm:text-xs"
+                     title="Observaciones"
                      value={item.observation}
                      onChange={(e) => handleItemChange(item.id, 'observation', e.target.value)}
                      placeholder="Observaciones..."
@@ -373,6 +375,7 @@ export const ManagerialVisitForm: React.FC<Props> = ({ initialData, onSave, onCa
                filename={`visita_gerencial_${metadata.date}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<ManagerialVisitPdf report={{ id: initialData?.id || crypto.randomUUID(), metadata, items, conclusions, images, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

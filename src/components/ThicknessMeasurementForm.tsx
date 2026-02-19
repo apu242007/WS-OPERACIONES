@@ -4,6 +4,7 @@ import { ThicknessReport, ThicknessMetadata, ThicknessRow } from '../types';
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { ThicknessMeasurementPdf } from '../pdf/ThicknessMeasurementPdf';
 
 interface Props {
   initialData?: ThicknessReport;
@@ -100,7 +101,7 @@ export const ThicknessMeasurementForm: React.FC<Props> = ({ initialData, onSave,
          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
             <div className="flex flex-col sm:flex-row sm:items-end gap-1 border-b border-black border-dashed pb-1">
                <span className="font-bold w-16 text-xs uppercase">EQUIPO:</span>
-               <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase">
+               <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} title="Equipo" className="flex-1 outline-none bg-transparent uppercase">
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
                   <option value="tacker06">TACKER06</option>
@@ -116,25 +117,25 @@ export const ThicknessMeasurementForm: React.FC<Props> = ({ initialData, onSave,
             </div>
             <div className="flex flex-col sm:flex-row sm:items-end gap-1 border-b border-black border-dashed pb-1">
                <span className="font-bold w-24 text-xs uppercase">LOCACIÓN:</span>
-               <input name="location" value={metadata.location} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
+               <input name="location" value={metadata.location} onChange={handleMetadataChange} title="Locación" className="flex-1 outline-none bg-transparent uppercase" />
             </div>
             <div className="flex flex-col sm:flex-row sm:items-end gap-1 border-b border-black border-dashed pb-1">
                <span className="font-bold w-16 text-xs uppercase">FECHA:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} title="Fecha" className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="flex flex-col sm:flex-row sm:items-end gap-1 border-b border-black border-dashed pb-1">
                <span className="font-bold w-20 text-xs uppercase">Ubicación:</span>
-               <input name="specificLocation" value={metadata.specificLocation} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" placeholder="Ej: Pileta, Bomba..." />
+               <input name="specificLocation" value={metadata.specificLocation} onChange={handleMetadataChange} title="Ubicación específica" className="flex-1 outline-none bg-transparent uppercase" placeholder="Ej: Pileta, Bomba..." />
             </div>
             <div className="flex flex-col sm:flex-row sm:items-end gap-1 border-b border-black border-dashed pb-1">
                <span className="font-bold w-24 text-xs uppercase">Identificación:</span>
-               <input name="identification" value={metadata.identification} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" placeholder="Ej: Linea #1" />
+               <input name="identification" value={metadata.identification} onChange={handleMetadataChange} title="Identificación" className="flex-1 outline-none bg-transparent uppercase" placeholder="Ej: Linea #1" />
             </div>
             <div className="flex flex-col sm:flex-row sm:items-end gap-1 border-b border-black border-dashed pb-1">
                <span className="font-bold w-24 text-xs uppercase">Resp. Medición:</span>
-               <input name="responsible" value={metadata.responsible} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase" />
+               <input name="responsible" value={metadata.responsible} onChange={handleMetadataChange} title="Responsable de Medición" className="flex-1 outline-none bg-transparent uppercase" />
             </div>
          </div>
       </div>
@@ -206,6 +207,7 @@ export const ThicknessMeasurementForm: React.FC<Props> = ({ initialData, onSave,
                    name="instrumentCode" 
                    value={metadata.instrumentCode} 
                    onChange={handleMetadataChange} 
+                   title="Código del Instrumento"
                    className="w-full bg-white border-b border-black outline-none p-1 font-mono"
                 />
             </div>
@@ -236,6 +238,7 @@ export const ThicknessMeasurementForm: React.FC<Props> = ({ initialData, onSave,
                            <input 
                               type="number" 
                               step="0.1"
+                              title="Referencia 0° (mm)"
                               className="w-full h-full text-center outline-none bg-transparent" 
                               value={row.measure0} 
                               onChange={(e) => handleRowChange(row.id, 'measure0', e.target.value)}
@@ -246,6 +249,7 @@ export const ThicknessMeasurementForm: React.FC<Props> = ({ initialData, onSave,
                            <input 
                               type="number" 
                               step="0.1"
+                              title="Referencia 90° (mm)"
                               className="w-full h-full text-center outline-none bg-transparent" 
                               value={row.measure90} 
                               onChange={(e) => handleRowChange(row.id, 'measure90', e.target.value)}
@@ -256,6 +260,7 @@ export const ThicknessMeasurementForm: React.FC<Props> = ({ initialData, onSave,
                            <input 
                               type="number" 
                               step="0.1"
+                              title="Referencia 180° (mm)"
                               className="w-full h-full text-center outline-none bg-transparent" 
                               value={row.measure180} 
                               onChange={(e) => handleRowChange(row.id, 'measure180', e.target.value)}
@@ -266,6 +271,7 @@ export const ThicknessMeasurementForm: React.FC<Props> = ({ initialData, onSave,
                            <input 
                               type="number" 
                               step="0.1"
+                              title="Referencia 270° (mm)"
                               className="w-full h-full text-center outline-none bg-transparent" 
                               value={row.measure270} 
                               onChange={(e) => handleRowChange(row.id, 'measure270', e.target.value)}
@@ -292,6 +298,7 @@ export const ThicknessMeasurementForm: React.FC<Props> = ({ initialData, onSave,
             <div className="flex-1">
                <div className="font-bold mb-1 text-xs uppercase">OBSERVACIONES:</div>
                <textarea 
+                  title="Observaciones"
                   className="w-full p-2 border border-gray-300 rounded h-24 resize-none outline-none text-sm"
                   value={observations}
                   onChange={(e) => setObservations(e.target.value)}
@@ -355,6 +362,7 @@ export const ThicknessMeasurementForm: React.FC<Props> = ({ initialData, onSave,
                filename={`espesores_${metadata.date}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<ThicknessMeasurementPdf report={{ id: initialData?.id ?? '', metadata, rows, observations, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

@@ -4,6 +4,7 @@ import { TowerPressureReport, TowerPressureMetadata, TowerPressureData } from '.
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { TowerPressurePdf } from '../pdf/TowerPressurePdf';
 
 interface Props {
   initialData?: TowerPressureReport;
@@ -84,7 +85,7 @@ export const TowerPressureForm: React.FC<Props> = ({ initialData, onSave, onCanc
          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
             <div className="flex flex-col sm:flex-row sm:items-end gap-1 border-b border-black border-dashed pb-1">
                <span className="font-bold w-16 text-xs uppercase">EQUIPO:</span>
-               <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent uppercase">
+               <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} title="Equipo" className="flex-1 outline-none bg-transparent uppercase">
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
                   <option value="tacker06">TACKER06</option>
@@ -100,7 +101,7 @@ export const TowerPressureForm: React.FC<Props> = ({ initialData, onSave, onCanc
             </div>
             <div className="flex flex-col sm:flex-row sm:items-end gap-1 border-b border-black border-dashed pb-1">
                <span className="font-bold w-16 text-xs uppercase">FECHA:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} title="Fecha" className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
       </div>
@@ -124,6 +125,7 @@ export const TowerPressureForm: React.FC<Props> = ({ initialData, onSave, onCanc
                <label className="text-[10px] font-bold uppercase text-gray-500">Presión Inicial (PSI)</label>
                <input 
                   type="number"
+                  title="Presión Inicial (PSI)"
                   className="border border-gray-300 p-2 rounded outline-none"
                   value={data.section1_initialPressure}
                   onChange={(e) => handleDataChange('section1_initialPressure', e.target.value)}
@@ -134,6 +136,7 @@ export const TowerPressureForm: React.FC<Props> = ({ initialData, onSave, onCanc
                <label className="text-[10px] font-bold uppercase text-gray-500">Presión Intermedia (PSI)</label>
                <input 
                   type="number"
+                  title="Presión Intermedia (PSI)"
                   className="border border-gray-300 p-2 rounded outline-none"
                   value={data.section1_intermediatePressure}
                   onChange={(e) => handleDataChange('section1_intermediatePressure', e.target.value)}
@@ -144,6 +147,7 @@ export const TowerPressureForm: React.FC<Props> = ({ initialData, onSave, onCanc
                <label className="text-[10px] font-bold uppercase text-gray-500">Presión Final (PSI)</label>
                <input 
                   type="number"
+                  title="Presión Final (PSI)"
                   className="border border-gray-300 p-2 rounded outline-none"
                   value={data.section1_finalPressure}
                   onChange={(e) => handleDataChange('section1_finalPressure', e.target.value)}
@@ -174,6 +178,7 @@ export const TowerPressureForm: React.FC<Props> = ({ initialData, onSave, onCanc
             <label className="text-[10px] font-bold uppercase text-gray-500">Presión de Trabajo (PSI)</label>
             <input 
                type="number"
+               title="Presión de Trabajo (PSI)"
                className="border border-gray-300 p-2 rounded outline-none"
                value={data.section2_pressure}
                onChange={(e) => handleDataChange('section2_pressure', e.target.value)}
@@ -204,8 +209,8 @@ export const TowerPressureForm: React.FC<Props> = ({ initialData, onSave, onCanc
       <div className="p-4 border-b border-black">
          <div className="font-bold mb-1 uppercase text-xs">Observaciones:</div>
          <textarea 
-            className="w-full h-24 p-2 resize-none outline-none border border-gray-300 rounded text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6"
-            style={{ backgroundSize: '100% 24px' }}
+            title="Observaciones"
+            className="w-full h-24 p-2 resize-none outline-none border border-gray-300 rounded text-sm bg-[linear-gradient(transparent,transparent_23px,#e5e7eb_24px)] leading-6 [background-size:100%_24px]"
             value={observations}
             onChange={(e) => setObservations(e.target.value)}
          />
@@ -239,6 +244,7 @@ export const TowerPressureForm: React.FC<Props> = ({ initialData, onSave, onCanc
                filename={`presiones_torre_${metadata.date}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<TowerPressurePdf report={{ id: initialData?.id ?? '', metadata, data, observations, signature }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

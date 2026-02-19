@@ -4,6 +4,7 @@ import { OutsourcedReport, OutsourcedMetadata, ChecklistRowData } from '../types
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { OutsourcedOperationsPdf } from '../pdf/OutsourcedOperationsPdf';
 
 interface Props {
   initialData?: OutsourcedReport;
@@ -131,30 +132,30 @@ export const OutsourcedOperationsForm: React.FC<Props> = ({ initialData, onSave,
         <div className="flex flex-col sm:grid sm:grid-cols-12 border-b border-black">
           <div className="col-span-8 flex flex-col sm:flex-row border-b sm:border-b-0 sm:border-r border-black">
             <div className="w-full sm:w-40 p-2 bg-gray-50 font-bold text-xs uppercase sm:border-r border-black flex items-center print:bg-transparent">Sector / Equipo:</div>
-            <input name="sector" value={metadata.sector} onChange={handleMetadataChange} className="flex-1 p-2 outline-none uppercase w-full" />
+            <input name="sector" title="Sector / Equipo" value={metadata.sector} onChange={handleMetadataChange} className="flex-1 p-2 outline-none uppercase w-full" />
           </div>
           <div className="col-span-4 flex flex-col sm:flex-row">
             <div className="w-full sm:w-20 p-2 bg-gray-50 font-bold text-xs uppercase sm:border-r border-black flex items-center print:bg-transparent">Fecha:</div>
-            <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 p-2 outline-none text-center w-full" />
+            <input type="date" name="date" title="Fecha" value={metadata.date} onChange={handleMetadataChange} className="flex-1 p-2 outline-none text-center w-full" />
           </div>
         </div>
         <div className="flex flex-col sm:grid sm:grid-cols-12 border-b border-black">
           <div className="col-span-6 flex flex-col sm:flex-row border-b sm:border-b-0 sm:border-r border-black">
             <div className="w-full sm:w-20 p-2 bg-gray-50 font-bold text-xs uppercase sm:border-r border-black flex items-center print:bg-transparent">Pozo:</div>
-            <input name="well" value={metadata.well} onChange={handleMetadataChange} className="flex-1 p-2 outline-none uppercase w-full" />
+            <input name="well" title="Pozo" value={metadata.well} onChange={handleMetadataChange} className="flex-1 p-2 outline-none uppercase w-full" />
           </div>
           <div className="col-span-6 flex flex-col sm:flex-row">
             <div className="w-full sm:w-32 p-2 bg-gray-50 font-bold text-xs uppercase sm:border-r border-black flex items-center print:bg-transparent">Sub-Contratista:</div>
-            <input name="subContractor" value={metadata.subContractor} onChange={handleMetadataChange} className="flex-1 p-2 outline-none uppercase w-full" />
+            <input name="subContractor" title="Sub-Contratista" value={metadata.subContractor} onChange={handleMetadataChange} className="flex-1 p-2 outline-none uppercase w-full" />
           </div>
         </div>
         <div className="flex flex-col sm:flex-row border-b border-black">
             <div className="w-full sm:w-40 p-2 bg-gray-50 font-bold text-xs uppercase sm:border-r border-black flex items-center print:bg-transparent">Descripción Trabajo:</div>
-            <input name="jobDescription" value={metadata.jobDescription} onChange={handleMetadataChange} className="flex-1 p-2 outline-none w-full" />
+            <input name="jobDescription" title="Descripción del Trabajo" value={metadata.jobDescription} onChange={handleMetadataChange} className="flex-1 p-2 outline-none w-full" />
         </div>
          <div className="flex flex-col sm:flex-row border-b border-black">
             <div className="w-full sm:w-40 p-2 bg-gray-50 font-bold text-xs uppercase sm:border-r border-black flex items-center print:bg-transparent">Objetivo:</div>
-            <textarea name="objective" rows={2} value={metadata.objective} onChange={handleMetadataChange} className="flex-1 p-2 outline-none resize-none w-full" />
+            <textarea name="objective" title="Objetivo" rows={2} value={metadata.objective} onChange={handleMetadataChange} className="flex-1 p-2 outline-none resize-none w-full" />
         </div>
       </div>
 
@@ -229,6 +230,7 @@ export const OutsourcedOperationsForm: React.FC<Props> = ({ initialData, onSave,
                   <div className="col-span-2 p-1 border-t sm:border-t-0 border-gray-200">
                     <textarea 
                       className="w-full h-full min-h-[40px] p-1 text-xs outline-none bg-transparent resize-none border sm:border-0 rounded sm:rounded-none border-gray-200"
+                      title="Observaciones"
                       placeholder="Observaciones..."
                       value={rowData.observation}
                       onChange={(e) => handleRowChange(item.id, 'observation', e.target.value)}
@@ -274,6 +276,7 @@ export const OutsourcedOperationsForm: React.FC<Props> = ({ initialData, onSave,
                filename={`tercerizados_${metadata.date}_${metadata.well || 'pozo'}`}
                orientation="p"
                className="w-full"
+               pdfComponent={<OutsourcedOperationsPdf report={{ id: initialData?.id || crypto.randomUUID(), metadata, rows, signatures }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ id: initialData?.id || crypto.randomUUID(), metadata, rows, signatures })} className="w-full sm:w-auto order-first sm:order-last">

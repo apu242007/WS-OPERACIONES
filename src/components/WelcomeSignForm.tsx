@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { WelcomeSignData } from '../types';
 import { Button } from './ui/Button';
 import { ExportPdfButton } from './ExportPdfButton';
+import { WelcomeSignPdf } from '../pdf/WelcomeSignPdf';
 
 interface Props {
   initialData?: WelcomeSignData;
@@ -48,7 +49,7 @@ export const WelcomeSignForm: React.FC<Props> = ({ initialData, onSave, onCancel
             <div className="space-y-4">
                <div>
                   <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Empresa</label>
-                  <input name="company" value={data.company} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Ej: TACKER SOLUTIONS" />
+                  <input name="company" title="Empresa" value={data.company} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Ej: TACKER SOLUTIONS" />
                </div>
                <div>
                   <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Equipo N°</label>
@@ -74,15 +75,15 @@ export const WelcomeSignForm: React.FC<Props> = ({ initialData, onSave, onCancel
             <div className="space-y-4">
                <div>
                   <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Yacimiento / Locación</label>
-                  <input name="location" value={data.location} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Ej: LOMA CAMPANA" />
+                  <input name="location" title="Yacimiento / Locación" value={data.location} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Ej: LOMA CAMPANA" />
                </div>
                <div>
                   <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Pozo</label>
-                  <input name="well" value={data.well} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Ej: YPF.Nq.LCa-123" />
+                  <input name="well" title="Pozo" value={data.well} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Ej: YPF.Nq.LCa-123" />
                </div>
                <div>
                   <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Texto Adicional (Opcional)</label>
-                  <input name="additionalText" value={data.additionalText} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Ej: PROHIBIDO INGRESAR SIN AUTORIZACIÓN" />
+                  <input name="additionalText" title="Texto Adicional" value={data.additionalText} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Ej: PROHIBIDO INGRESAR SIN AUTORIZACIÓN" />
                </div>
             </div>
          </div>
@@ -187,6 +188,7 @@ export const WelcomeSignForm: React.FC<Props> = ({ initialData, onSave, onCancel
                orientation="l"
                label="Exportar PDF"
                className="w-full"
+               pdfComponent={<WelcomeSignPdf data={data} />}
              />
          </div>
          <Button variant="primary" onClick={() => onSave(data)} className="w-full sm:w-auto order-first sm:order-last">Guardar</Button>

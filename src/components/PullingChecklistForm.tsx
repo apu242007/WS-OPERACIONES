@@ -4,6 +4,7 @@ import { PullingChecklistReport, PullingChecklistMetadata, PullingChecklistRow, 
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { PullingChecklistPdf } from '../pdf/PullingChecklistPdf';
 
 interface Props {
   initialData?: PullingChecklistReport;
@@ -281,11 +282,11 @@ export const PullingChecklistForm: React.FC<Props> = ({ initialData, onSave, onC
          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-1">
             <div className="flex border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold w-24">COMPAÑÍA:</span>
-               <input name="company" value={metadata.company} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="company" title="Compañía" value={metadata.company} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold w-24">Nº EQUIPO:</span>
-               <select name="equipmentNumber" value={metadata.equipmentNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent">
+               <select name="equipmentNumber" title="Nº Equipo" value={metadata.equipmentNumber} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent">
 <option value="tacker01">TACKER01</option>
 <option value="tacker05">TACKER05</option>
 <option value="tacker06">TACKER06</option>
@@ -301,32 +302,32 @@ export const PullingChecklistForm: React.FC<Props> = ({ initialData, onSave, onC
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold w-24">YACIMIENTO:</span>
-               <input name="field" value={metadata.field} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="field" title="Yacimiento" value={metadata.field} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
 
             <div className="flex border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold w-24">LOCACIÓN:</span>
-               <input name="location" value={metadata.location} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="location" title="Locación" value={metadata.location} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="flex border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold w-24">FECHA:</span>
-               <input type="date" name="date" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input type="date" name="date" title="Fecha" value={metadata.date} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="hidden md:block"></div>
 
             <div className="flex border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold w-36">RESP. DEL EQUIPO:</span>
-               <input name="equipmentResponsible" value={metadata.equipmentResponsible} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="equipmentResponsible" title="Responsable del Equipo" value={metadata.equipmentResponsible} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
              <div className="flex border-b border-gray-400 border-dashed pb-0.5">
                <span className="font-bold w-24">INSPECC POR:</span>
-               <input name="inspectedBy" value={metadata.inspectedBy} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="inspectedBy" title="Inspeccionado Por" value={metadata.inspectedBy} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
             <div className="hidden md:block"></div>
 
             <div className="flex border-b border-gray-400 border-dashed pb-0.5 col-span-1 sm:col-span-2">
                <span className="font-bold w-24">OPERACIÓN:</span>
-               <input name="operation" value={metadata.operation} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
+               <input name="operation" title="Operación" value={metadata.operation} onChange={handleMetadataChange} className="flex-1 outline-none bg-transparent" />
             </div>
          </div>
       </div>
@@ -371,6 +372,7 @@ export const PullingChecklistForm: React.FC<Props> = ({ initialData, onSave, onC
                filename={`check_pulling_${metadata.date}`}
                orientation="l"
                className="w-full"
+               pdfComponent={<PullingChecklistPdf report={{ id: initialData?.id ?? '', metadata, rows, signature }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 

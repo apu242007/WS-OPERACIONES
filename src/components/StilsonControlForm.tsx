@@ -4,6 +4,7 @@ import { StilsonControlReport, StilsonControlMetadata, StilsonControlRow } from 
 import { Button } from './ui/Button';
 import { SignaturePad } from './ui/SignaturePad';
 import { ExportPdfButton } from './ExportPdfButton';
+import { StilsonControlPdf } from '../pdf/StilsonControlPdf';
 
 interface Props {
   initialData?: StilsonControlReport;
@@ -66,10 +67,11 @@ export const StilsonControlForm: React.FC<Props> = ({ initialData, onSave, onCan
     }
   };
 
-  const renderConditionSelect = (id: string, field: keyof StilsonControlRow, value: string) => (
+  const renderConditionSelect = (id: string, field: keyof StilsonControlRow, value: string, titleLabel: string) => (
     <select
       className="w-full h-full bg-transparent outline-none text-center text-xs appearance-none p-1 cursor-pointer hover:bg-gray-100"
       value={value}
+      title={titleLabel}
       onChange={(e) => handleRowChange(id, field, e.target.value)}
     >
       <option value=""></option>
@@ -111,7 +113,7 @@ export const StilsonControlForm: React.FC<Props> = ({ initialData, onSave, onCan
          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div className="flex flex-col gap-1">
                 <span className="font-bold text-xs uppercase text-gray-500">Equipo</span>
-                <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} className="border border-gray-300 rounded p-1.5 outline-none bg-white w-full">
+                <select name="equipment" value={metadata.equipment} onChange={handleMetadataChange} title="Equipo" className="border border-gray-300 rounded p-1.5 outline-none bg-white w-full">
                   <option value="tacker01">TACKER01</option>
                   <option value="tacker05">TACKER05</option>
                   <option value="tacker06">TACKER06</option>
@@ -131,6 +133,7 @@ export const StilsonControlForm: React.FC<Props> = ({ initialData, onSave, onCan
                   name="month" 
                   value={metadata.month} 
                   onChange={handleMetadataChange} 
+                  title="Mes/Año"
                   className="border border-gray-300 rounded p-1.5 outline-none bg-white w-full"
                 />
             </div>
@@ -140,6 +143,7 @@ export const StilsonControlForm: React.FC<Props> = ({ initialData, onSave, onCan
                   name="location" 
                   value={metadata.location} 
                   onChange={handleMetadataChange} 
+                  title="Locación"
                   className="border border-gray-300 rounded p-1.5 outline-none bg-white w-full"
                 />
             </div>
@@ -170,26 +174,26 @@ export const StilsonControlForm: React.FC<Props> = ({ initialData, onSave, onCan
                {rows.map((row) => (
                  <tr key={row.id} className="border-b border-black hover:bg-gray-50 h-12">
                     <td className="border-r border-black p-0">
-                       <input type="date" className="w-full h-full p-1 text-center outline-none bg-transparent" value={row.date} onChange={(e) => handleRowChange(row.id, 'date', e.target.value)} />
+                       <input type="date" title="Fecha" className="w-full h-full p-1 text-center outline-none bg-transparent" value={row.date} onChange={(e) => handleRowChange(row.id, 'date', e.target.value)} />
                     </td>
                     <td className="border-r border-black p-0">
-                       <input type="time" className="w-full h-full p-1 text-center outline-none bg-transparent" value={row.timeFrom} onChange={(e) => handleRowChange(row.id, 'timeFrom', e.target.value)} />
+                       <input type="time" title="Hora Desde" className="w-full h-full p-1 text-center outline-none bg-transparent" value={row.timeFrom} onChange={(e) => handleRowChange(row.id, 'timeFrom', e.target.value)} />
                     </td>
                     <td className="border-r border-black p-0">
-                       <input className="w-full h-full p-1 outline-none bg-transparent" value={row.responsible} onChange={(e) => handleRowChange(row.id, 'responsible', e.target.value)} />
+                       <input title="Responsable" className="w-full h-full p-1 outline-none bg-transparent" value={row.responsible} onChange={(e) => handleRowChange(row.id, 'responsible', e.target.value)} />
                     </td>
                     <td className="border-r border-black p-0">
-                       <input className="w-full h-full p-1 outline-none bg-transparent" value={row.activity} onChange={(e) => handleRowChange(row.id, 'activity', e.target.value)} />
+                       <input title="Actividad" className="w-full h-full p-1 outline-none bg-transparent" value={row.activity} onChange={(e) => handleRowChange(row.id, 'activity', e.target.value)} />
                     </td>
                     
                     {/* Conditions */}
-                    <td className="border-r border-black p-0">{renderConditionSelect(row.id, 'talon', row.talon)}</td>
-                    <td className="border-r border-black p-0">{renderConditionSelect(row.id, 'gavilan', row.gavilan)}</td>
-                    <td className="border-r border-black p-0">{renderConditionSelect(row.id, 'gripPoint', row.gripPoint)}</td>
-                    <td className="border-r border-black p-0">{renderConditionSelect(row.id, 'nuts', row.nuts)}</td>
+                    <td className="border-r border-black p-0">{renderConditionSelect(row.id, 'talon', row.talon, 'Talón')}</td>
+                    <td className="border-r border-black p-0">{renderConditionSelect(row.id, 'gavilan', row.gavilan, 'Gavilán')}</td>
+                    <td className="border-r border-black p-0">{renderConditionSelect(row.id, 'gripPoint', row.gripPoint, 'Punto de Agarre')}</td>
+                    <td className="border-r border-black p-0">{renderConditionSelect(row.id, 'nuts', row.nuts, 'Tuercas')}</td>
 
                     <td className="border-r border-black p-0">
-                       <input type="time" className="w-full h-full p-1 text-center outline-none bg-transparent" value={row.timeTo} onChange={(e) => handleRowChange(row.id, 'timeTo', e.target.value)} />
+                       <input type="time" title="Hora Hasta" className="w-full h-full p-1 text-center outline-none bg-transparent" value={row.timeTo} onChange={(e) => handleRowChange(row.id, 'timeTo', e.target.value)} />
                     </td>
                     
                     <td className="border-r border-black p-0 align-middle">
@@ -204,7 +208,7 @@ export const StilsonControlForm: React.FC<Props> = ({ initialData, onSave, onCan
                     </td>
 
                     <td className="border-r border-black p-0">
-                       <input className="w-full h-full p-1 outline-none bg-transparent" value={row.observations} onChange={(e) => handleRowChange(row.id, 'observations', e.target.value)} />
+                       <input title="Observaciones" className="w-full h-full p-1 outline-none bg-transparent" value={row.observations} onChange={(e) => handleRowChange(row.id, 'observations', e.target.value)} />
                     </td>
                     
                     <td className="p-0 text-center no-print">
@@ -238,6 +242,7 @@ export const StilsonControlForm: React.FC<Props> = ({ initialData, onSave, onCan
                filename={`control_stilson_${metadata.month || 'mes'}`}
                orientation="l"
                className="w-full"
+               pdfComponent={<StilsonControlPdf report={{ id: initialData?.id ?? '', metadata, rows }} />}
              />
            </div>
            <Button variant="primary" onClick={() => onSave({ 
