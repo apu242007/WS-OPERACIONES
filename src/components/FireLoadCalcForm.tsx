@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from './ui/Button';
 import { ExportPdfButton } from './ExportPdfButton';
+import { FireLoadCalcPdf } from '../pdf/FireLoadCalcPdf';
 
 interface Props {
   onCancel: () => void;
@@ -1038,7 +1039,30 @@ export const FireLoadCalcForm: React.FC<Props> = ({ onCancel }) => {
         <Button variant="secondary" onClick={onCancel} className="w-full sm:w-auto">Cerrar</Button>
         <Button variant="secondary" onClick={() => window.print()} className="w-full sm:w-auto">🖨️ Imprimir</Button>
         <div className="w-full sm:w-auto">
-          <ExportPdfButton filename="calculo_carga_de_fuego" orientation="p" className="w-full" />
+          <ExportPdfButton
+            filename="calculo_carga_de_fuego"
+            orientation="p"
+            className="w-full"
+            pdfComponent={
+              <FireLoadCalcPdf
+                state={s}
+                calculados={{
+                  totalPesoKg,
+                  totalCalorias,
+                  pesoMadera,
+                  qf,
+                  qfTotal,
+                  clasificacionLabel: clasificacion.label,
+                  potA,
+                  potB,
+                  extintoresSug,
+                  usoM2,
+                  nFactorOcupacion,
+                  nPersonasOcup20,
+                }}
+              />
+            }
+          />
         </div>
       </div>
     </div>
