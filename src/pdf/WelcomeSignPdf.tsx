@@ -3,157 +3,166 @@ import { Document, Page, View, Text, StyleSheet } from '@react-pdf/renderer';
 import { WelcomeSignData } from '../types';
 import { colors } from './styles';
 
-const EPP_ITEMS = ['Casco', 'Anteojos', 'Botines', 'Mameluco FR', 'Guantes', 'Protección Auditiva', 'Chaleco'];
+// 7 EPP badge labels
+const EPP_ITEMS = ['Casco', 'Anteojos', 'Botines', 'Mameluco FR', 'Guantes', 'Prot. Auditiva', 'Chaleco'];
 
 const s = StyleSheet.create({
   page: {
     fontFamily: 'Helvetica',
     backgroundColor: '#FFFFFF',
-    padding: 16,
+    paddingHorizontal: 22,
+    paddingVertical: 16,
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
+  // ── Top bar ──────────────────────────────────────────────
   topBar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     borderBottomWidth: 3,
     borderBottomColor: colors.black,
-    paddingBottom: 8,
-    marginBottom: 12,
+    paddingBottom: 6,
+    marginBottom: 8,
   },
   company: {
-    fontSize: 28,
+    fontSize: 22,
     fontFamily: 'Helvetica-Bold',
     color: colors.textDark,
     textTransform: 'uppercase',
   },
+  topRight: { alignItems: 'flex-end' },
   operationsLabel: {
-    fontSize: 22,
+    fontSize: 16,
     fontFamily: 'Helvetica-Bold',
     color: colors.brand,
     textAlign: 'right',
   },
   subLabel: {
-    fontSize: 9,
+    fontSize: 8,
     fontFamily: 'Helvetica-Bold',
     color: colors.textMid,
     textAlign: 'right',
     textTransform: 'uppercase',
+    letterSpacing: 1,
   },
+  // ── Main ─────────────────────────────────────────────────
   main: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
   bienvenidos: {
-    fontSize: 80,
+    fontSize: 64,
     fontFamily: 'Helvetica-Bold',
     color: colors.textDark,
     textTransform: 'uppercase',
-    letterSpacing: 8,
-    marginBottom: 20,
+    letterSpacing: 6,
+    marginBottom: 10,
     textAlign: 'center',
   },
   divider: {
-    width: '80%',
+    width: '75%',
     height: 2,
     backgroundColor: colors.textMid,
     opacity: 0.2,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   dataRow: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'baseline',
     justifyContent: 'center',
-    marginBottom: 10,
-    gap: 12,
+    marginBottom: 6,
+    gap: 10,
   },
   dataLabel: {
-    fontSize: 22,
+    fontSize: 16,
     color: colors.textMid,
     textTransform: 'uppercase',
   },
   dataValue: {
-    fontSize: 48,
+    fontSize: 40,
     fontFamily: 'Helvetica-Bold',
     color: colors.black,
     textTransform: 'uppercase',
   },
   wellValue: {
-    fontSize: 38,
+    fontSize: 32,
     fontFamily: 'Helvetica-Bold',
     color: '#1E3A8A',
     textTransform: 'uppercase',
   },
   locationValue: {
-    fontSize: 24,
+    fontSize: 18,
     fontFamily: 'Helvetica-Bold',
     color: colors.textMid,
     textTransform: 'uppercase',
     textAlign: 'center',
-    marginTop: 6,
+    marginTop: 4,
   },
   additionalBg: {
-    marginTop: 18,
+    marginTop: 10,
     backgroundColor: colors.brand,
-    paddingHorizontal: 28,
-    paddingVertical: 8,
-    borderRadius: 32,
+    paddingHorizontal: 24,
+    paddingVertical: 6,
+    borderRadius: 24,
   },
   additionalText: {
-    fontSize: 18,
+    fontSize: 14,
     fontFamily: 'Helvetica-Bold',
     color: '#FFFFFF',
     textTransform: 'uppercase',
     textAlign: 'center',
   },
+  // ── Footer ───────────────────────────────────────────────
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-end',
+    alignItems: 'center',
     borderTopWidth: 3,
     borderTopColor: colors.black,
-    paddingTop: 8,
-    marginTop: 12,
+    paddingTop: 6,
+    marginTop: 8,
   },
+  // EPP badges spread evenly in a single row
   eppList: {
     flexDirection: 'row',
-    gap: 10,
-    flexWrap: 'wrap',
     flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   eppItem: {
     backgroundColor: '#EFF6FF',
-    borderWidth: 2,
+    borderWidth: 1.5,
     borderColor: '#2563EB',
-    borderRadius: 20,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
+    borderRadius: 16,
+    paddingHorizontal: 9,
+    paddingVertical: 6,
     alignItems: 'center',
     justifyContent: 'center',
+    minWidth: 56,
   },
   eppText: {
-    fontSize: 7,
+    fontSize: 6.5,
     fontFamily: 'Helvetica-Bold',
     color: '#1D4ED8',
     textTransform: 'uppercase',
     textAlign: 'center',
   },
   eppNote: {
-    flex: 0,
-    marginLeft: 16,
+    marginLeft: 14,
     alignItems: 'flex-end',
+    width: 140,
   },
   eppNoteMain: {
-    fontSize: 14,
+    fontSize: 11,
     fontFamily: 'Helvetica-Bold',
     color: colors.brand,
     textTransform: 'uppercase',
     textAlign: 'right',
   },
   eppNoteSub: {
-    fontSize: 8,
+    fontSize: 7,
     color: colors.textMid,
     textTransform: 'uppercase',
     textAlign: 'right',
@@ -166,12 +175,12 @@ interface Props {
 
 export const WelcomeSignPdf: React.FC<Props> = ({ data }) => (
   <Document>
-    <Page size="A4" orientation="landscape" style={s.page}>
+    <Page size="A4" orientation="landscape" style={s.page} wrap={false}>
 
       {/* Top Bar */}
       <View style={s.topBar}>
         <Text style={s.company}>{data.company || 'EMPRESA'}</Text>
-        <View>
+        <View style={s.topRight}>
           <Text style={s.operationsLabel}>OPERACIONES</Text>
           <Text style={s.subLabel}>SEGURIDAD INDUSTRIAL</Text>
         </View>
@@ -205,19 +214,19 @@ export const WelcomeSignPdf: React.FC<Props> = ({ data }) => (
         ) : null}
       </View>
 
-      {/* Footer */}
+      {/* Footer — EPP badges + note */}
       <View style={s.footer}>
         <View style={s.eppList}>
-          {EPP_ITEMS.map((item, i) => (
+          {EPP_ITEMS.map((label, i) => (
             <View key={i} style={s.eppItem}>
-              <Text style={s.eppText}>{item}</Text>
+              <Text style={s.eppText}>{label}</Text>
             </View>
           ))}
         </View>
         <View style={s.eppNote}>
-          <Text style={s.eppNoteMain}>USO OBLIGATORIO DE E.P.P.</Text>
-          <Text style={s.eppNoteSub}>Prohibido el ingreso a toda persona</Text>
-          <Text style={s.eppNoteSub}>ajena a la operación</Text>
+          <Text style={s.eppNoteMain}>USO OBLIGATORIO{'\n'}DE E.P.P.</Text>
+          <Text style={s.eppNoteSub}>Prohibido el ingreso a toda</Text>
+          <Text style={s.eppNoteSub}>persona ajena a la operación</Text>
         </View>
       </View>
 

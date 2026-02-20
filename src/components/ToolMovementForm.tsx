@@ -181,10 +181,10 @@ export const ToolMovementForm: React.FC<Props> = ({ initialData, onSave, onCance
                   
                   {/* Calculated Columns */}
                   <td className="border-r border-black p-0 bg-gray-50 print:bg-transparent">
-                     <input className="w-full h-full p-1 text-center bg-transparent outline-none font-bold text-gray-700" value={calculateAdmitted(row)} readOnly tabIndex={-1} />
+                     <input title="Fluido Admitido" className="w-full h-full p-1 text-center bg-transparent outline-none font-bold text-gray-700" value={calculateAdmitted(row)} readOnly tabIndex={-1} />
                   </td>
                   <td className="border-r border-black p-0 bg-gray-50 print:bg-transparent">
-                     <input className="w-full h-full p-1 text-center bg-transparent outline-none font-bold text-gray-700" value={calculateProduced(row)} readOnly tabIndex={-1} />
+                     <input title="Fluido Producido" className="w-full h-full p-1 text-center bg-transparent outline-none font-bold text-gray-700" value={calculateProduced(row)} readOnly tabIndex={-1} />
                   </td>
 
                   <td className="border-r border-black p-0">
