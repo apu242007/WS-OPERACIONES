@@ -1,0 +1,7 @@
+body { font-family: 'Inter', sans-serif; }
+
+@media print {
+  .no-print { display: none !important; }
+  body { margin: 0; padding: 0; }
+  #print-area { box-shadow: none !important; border: none !important; }
+}
