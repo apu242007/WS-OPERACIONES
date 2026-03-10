@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { LoginPage } from './components/LoginPage';
 import { 
@@ -18,62 +18,64 @@ import {
   DroppedObjectsReport, TubingMeasurementReport, LocationHandoverReport
 } from './types';
 import { checkConnection } from './services/api';
-import { DailyOperationsForm } from './components/DailyOperationsForm';
-import { OutsourcedOperationsForm } from './components/OutsourcedOperationsForm';
-import { FoamSystemForm } from './components/FoamSystemForm';
-import { InertiaCalcForm } from './components/InertiaCalcForm';
-import { ShiftChangeForm } from './components/ShiftChangeForm';
-import { SlingInspectionForm } from './components/SlingInspectionForm';
-import { SwabbingReportForm } from './components/SwabbingReportForm';
-import { QHSEReportForm } from './components/QHSEReportForm';
-import { TransportChecklistForm } from './components/TransportChecklistForm';
-import { WorkoverChecklistForm } from './components/WorkoverChecklistForm';
-import { ToolMovementForm } from './components/ToolMovementForm';
-import { CableWorkReportForm } from './components/CableWorkReportForm';
-import { PullingChecklistForm } from './components/PullingChecklistForm';
-import { MaintenanceReportForm } from './components/MaintenanceReportForm';
-import { FBUChecklistForm } from './components/FBUChecklistForm';
-import { CircuitBreakerForm } from './components/CircuitBreakerForm';
-import { FacilityInspectionForm } from './components/FacilityInspectionForm';
-import { VehicleInspectionForm } from './components/VehicleInspectionForm';
-import { StilsonInspectionForm } from './components/StilsonInspectionForm';
-import { StilsonControlForm } from './components/StilsonControlForm';
-import { FirstAidInspectionForm } from './components/FirstAidInspectionForm';
-import { FoamTestForm } from './components/FoamTestForm';
-import { BumpTestForm } from './components/BumpTestForm';
-import { INDControlForm } from './components/INDControlForm';
-import { ThicknessMeasurementForm } from './components/ThicknessMeasurementForm';
-import { ForkliftInspectionForm } from './components/ForkliftInspectionForm';
-import { ForkliftLiftingPlanForm } from './components/ForkliftLiftingPlanForm';
-import { TorqueRegisterForm } from './components/TorqueRegisterForm';
-import { PlatformInspectionForm } from './components/PlatformInspectionForm';
-import { WelcomeSignForm } from './components/WelcomeSignForm';
-import { ElectricalChecklistForm } from './components/ElectricalChecklistForm';
-import { ElectricalToolChecklistForm } from './components/ElectricalToolChecklistForm';
-import { CustomerPropertyCustodyForm } from './components/CustomerPropertyCustodyForm';
-import { IPCRForm } from './components/IPCRForm';
-import { AccumulatorTestForm } from './components/AccumulatorTestForm';
-import { PerformanceEvaluationForm } from './components/PerformanceEvaluationForm';
-import { BOPConnectionForm } from './components/BOPConnectionForm';
-import { ManagerialVisitForm } from './components/ManagerialVisitForm';
-import { TowerPressureForm } from './components/TowerPressureForm';
-import { MastAssemblyRolesForm } from './components/MastAssemblyRolesForm';
-import { PreAssemblyChecklistForm } from './components/PreAssemblyChecklistForm';
-import { WasteClassificationSignForm } from './components/WasteClassificationSignForm';
-import { WellFillingForm } from './components/WellFillingForm';
-import { OilChangeForm } from './components/OilChangeForm';
-import { MechanicalChecklistForm } from './components/MechanicalChecklistForm';
-import { FlareChecklistForm } from './components/FlareChecklistForm';
-import { EmergencyDrillForm } from './components/EmergencyDrillForm';
-import { DailyInspectionCatIForm } from './components/DailyInspectionCatIForm';
-import { DroppedObjectsForm } from './components/DroppedObjectsForm';
-import { TubingMeasurementForm } from './components/TubingMeasurementForm';
-import { ATSForm } from './components/ATSForm';
-import { LocationHandoverForm } from './components/LocationHandoverForm';
-import { InspectionFrequencyForm } from './components/InspectionFrequencyForm';
-import { FireLoadCalcForm } from './components/FireLoadCalcForm';
-import { NFPAGuideForm } from './components/NFPAGuideForm';
-import { AdminDashboard } from './components/AdminDashboard';
+
+// --- Lazy-loaded form components (only downloaded when needed) ---
+const DailyOperationsForm      = lazy(() => import('./components/DailyOperationsForm').then(m => ({ default: m.DailyOperationsForm })));
+const OutsourcedOperationsForm = lazy(() => import('./components/OutsourcedOperationsForm').then(m => ({ default: m.OutsourcedOperationsForm })));
+const FoamSystemForm           = lazy(() => import('./components/FoamSystemForm').then(m => ({ default: m.FoamSystemForm })));
+const InertiaCalcForm          = lazy(() => import('./components/InertiaCalcForm').then(m => ({ default: m.InertiaCalcForm })));
+const ShiftChangeForm          = lazy(() => import('./components/ShiftChangeForm').then(m => ({ default: m.ShiftChangeForm })));
+const SlingInspectionForm      = lazy(() => import('./components/SlingInspectionForm').then(m => ({ default: m.SlingInspectionForm })));
+const SwabbingReportForm       = lazy(() => import('./components/SwabbingReportForm').then(m => ({ default: m.SwabbingReportForm })));
+const QHSEReportForm           = lazy(() => import('./components/QHSEReportForm').then(m => ({ default: m.QHSEReportForm })));
+const TransportChecklistForm   = lazy(() => import('./components/TransportChecklistForm').then(m => ({ default: m.TransportChecklistForm })));
+const WorkoverChecklistForm    = lazy(() => import('./components/WorkoverChecklistForm').then(m => ({ default: m.WorkoverChecklistForm })));
+const ToolMovementForm         = lazy(() => import('./components/ToolMovementForm').then(m => ({ default: m.ToolMovementForm })));
+const CableWorkReportForm      = lazy(() => import('./components/CableWorkReportForm').then(m => ({ default: m.CableWorkReportForm })));
+const PullingChecklistForm     = lazy(() => import('./components/PullingChecklistForm').then(m => ({ default: m.PullingChecklistForm })));
+const MaintenanceReportForm    = lazy(() => import('./components/MaintenanceReportForm').then(m => ({ default: m.MaintenanceReportForm })));
+const FBUChecklistForm         = lazy(() => import('./components/FBUChecklistForm').then(m => ({ default: m.FBUChecklistForm })));
+const CircuitBreakerForm       = lazy(() => import('./components/CircuitBreakerForm').then(m => ({ default: m.CircuitBreakerForm })));
+const FacilityInspectionForm   = lazy(() => import('./components/FacilityInspectionForm').then(m => ({ default: m.FacilityInspectionForm })));
+const VehicleInspectionForm    = lazy(() => import('./components/VehicleInspectionForm').then(m => ({ default: m.VehicleInspectionForm })));
+const StilsonInspectionForm    = lazy(() => import('./components/StilsonInspectionForm').then(m => ({ default: m.StilsonInspectionForm })));
+const StilsonControlForm       = lazy(() => import('./components/StilsonControlForm').then(m => ({ default: m.StilsonControlForm })));
+const FirstAidInspectionForm   = lazy(() => import('./components/FirstAidInspectionForm').then(m => ({ default: m.FirstAidInspectionForm })));
+const FoamTestForm             = lazy(() => import('./components/FoamTestForm').then(m => ({ default: m.FoamTestForm })));
+const BumpTestForm             = lazy(() => import('./components/BumpTestForm').then(m => ({ default: m.BumpTestForm })));
+const INDControlForm           = lazy(() => import('./components/INDControlForm').then(m => ({ default: m.INDControlForm })));
+const ThicknessMeasurementForm = lazy(() => import('./components/ThicknessMeasurementForm').then(m => ({ default: m.ThicknessMeasurementForm })));
+const ForkliftInspectionForm   = lazy(() => import('./components/ForkliftInspectionForm').then(m => ({ default: m.ForkliftInspectionForm })));
+const ForkliftLiftingPlanForm  = lazy(() => import('./components/ForkliftLiftingPlanForm').then(m => ({ default: m.ForkliftLiftingPlanForm })));
+const TorqueRegisterForm       = lazy(() => import('./components/TorqueRegisterForm').then(m => ({ default: m.TorqueRegisterForm })));
+const PlatformInspectionForm   = lazy(() => import('./components/PlatformInspectionForm').then(m => ({ default: m.PlatformInspectionForm })));
+const WelcomeSignForm          = lazy(() => import('./components/WelcomeSignForm').then(m => ({ default: m.WelcomeSignForm })));
+const ElectricalChecklistForm  = lazy(() => import('./components/ElectricalChecklistForm').then(m => ({ default: m.ElectricalChecklistForm })));
+const ElectricalToolChecklistForm = lazy(() => import('./components/ElectricalToolChecklistForm').then(m => ({ default: m.ElectricalToolChecklistForm })));
+const CustomerPropertyCustodyForm = lazy(() => import('./components/CustomerPropertyCustodyForm').then(m => ({ default: m.CustomerPropertyCustodyForm })));
+const IPCRForm                 = lazy(() => import('./components/IPCRForm').then(m => ({ default: m.IPCRForm })));
+const AccumulatorTestForm      = lazy(() => import('./components/AccumulatorTestForm').then(m => ({ default: m.AccumulatorTestForm })));
+const PerformanceEvaluationForm = lazy(() => import('./components/PerformanceEvaluationForm').then(m => ({ default: m.PerformanceEvaluationForm })));
+const BOPConnectionForm        = lazy(() => import('./components/BOPConnectionForm').then(m => ({ default: m.BOPConnectionForm })));
+const ManagerialVisitForm      = lazy(() => import('./components/ManagerialVisitForm').then(m => ({ default: m.ManagerialVisitForm })));
+const TowerPressureForm        = lazy(() => import('./components/TowerPressureForm').then(m => ({ default: m.TowerPressureForm })));
+const MastAssemblyRolesForm    = lazy(() => import('./components/MastAssemblyRolesForm').then(m => ({ default: m.MastAssemblyRolesForm })));
+const PreAssemblyChecklistForm = lazy(() => import('./components/PreAssemblyChecklistForm').then(m => ({ default: m.PreAssemblyChecklistForm })));
+const WasteClassificationSignForm = lazy(() => import('./components/WasteClassificationSignForm').then(m => ({ default: m.WasteClassificationSignForm })));
+const WellFillingForm          = lazy(() => import('./components/WellFillingForm').then(m => ({ default: m.WellFillingForm })));
+const OilChangeForm            = lazy(() => import('./components/OilChangeForm').then(m => ({ default: m.OilChangeForm })));
+const MechanicalChecklistForm  = lazy(() => import('./components/MechanicalChecklistForm').then(m => ({ default: m.MechanicalChecklistForm })));
+const FlareChecklistForm       = lazy(() => import('./components/FlareChecklistForm').then(m => ({ default: m.FlareChecklistForm })));
+const EmergencyDrillForm       = lazy(() => import('./components/EmergencyDrillForm').then(m => ({ default: m.EmergencyDrillForm })));
+const DailyInspectionCatIForm  = lazy(() => import('./components/DailyInspectionCatIForm').then(m => ({ default: m.DailyInspectionCatIForm })));
+const DroppedObjectsForm       = lazy(() => import('./components/DroppedObjectsForm').then(m => ({ default: m.DroppedObjectsForm })));
+const TubingMeasurementForm    = lazy(() => import('./components/TubingMeasurementForm').then(m => ({ default: m.TubingMeasurementForm })));
+const ATSForm                  = lazy(() => import('./components/ATSForm').then(m => ({ default: m.ATSForm })));
+const LocationHandoverForm     = lazy(() => import('./components/LocationHandoverForm').then(m => ({ default: m.LocationHandoverForm })));
+const InspectionFrequencyForm  = lazy(() => import('./components/InspectionFrequencyForm').then(m => ({ default: m.InspectionFrequencyForm })));
+const FireLoadCalcForm         = lazy(() => import('./components/FireLoadCalcForm').then(m => ({ default: m.FireLoadCalcForm })));
+const NFPAGuideForm            = lazy(() => import('./components/NFPAGuideForm').then(m => ({ default: m.NFPAGuideForm })));
+const AdminDashboard           = lazy(() => import('./components/AdminDashboard').then(m => ({ default: m.AdminDashboard })));
 
 import { 
   dailyReportService, outsourcedService, foamService, inertiaService, shiftChangeService, 
@@ -695,7 +697,16 @@ const AppContent = () => {
         </div>
 
         <div className="w-full max-w-[1920px] mx-auto py-8 px-2 md:px-4 print:p-0 print:max-w-none">
-          {renderContent()}
+          <Suspense fallback={
+            <div className="flex items-center justify-center py-24">
+              <div className="text-center">
+                <div className="animate-spin h-8 w-8 border-4 border-brand-red border-t-transparent rounded-full mx-auto mb-3"></div>
+                <p className="text-sm font-medium text-gray-400 uppercase tracking-widest">Cargando...</p>
+              </div>
+            </div>
+          }>
+            {renderContent()}
+          </Suspense>
         </div>
       </main>
     </div>
