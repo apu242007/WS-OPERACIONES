@@ -50,7 +50,7 @@ function createService<T extends { id: string }>(tableName: string) {
         if (error) {
            console.error(`Error saving to ${tableName}:`, error);
            if (error.code === 'PGRST205' || error.message?.includes('does not exist')) {
-              alert(`Error: La tabla '${tableName}' no existe en la base de datos. Por favor contacte al soporte.`);
+              console.error(`CRITICAL: Table '${tableName}' does not exist. Please run migration.sql in Supabase SQL Editor.`);
            }
            // Fallback to local storage
            const local = localStorage.getItem(tableName);
@@ -134,7 +134,8 @@ export const TABLE_MAP = {
   daily_inspections_cat_i: 'daily_inspections_cat_i',
   dropped_objects_reports: 'dropped_objects_reports',
   tubing_measurement_reports: 'tubing_measurement_reports',
-  location_handover_reports: 'location_handover_reports'
+  location_handover_reports: 'location_handover_reports',
+  ats_reports: 'ats_reports',
 };
 
 export const dailyReportService = createService<DailyReport>(TABLE_MAP.daily_reports);
@@ -189,4 +190,4 @@ export const droppedObjectsService = createService<DroppedObjectsReport>(TABLE_M
 export const tubingMeasurementService = createService<TubingMeasurementReport>(TABLE_MAP.tubing_measurement_reports);
 export const locationHandoverService = createService<LocationHandoverReport>(TABLE_MAP.location_handover_reports);
 
-export const atsService = createService<ATSReport>('ats_reports');
+export const atsService = createService<ATSReport>(TABLE_MAP.ats_reports);

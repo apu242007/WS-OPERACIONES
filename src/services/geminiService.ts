@@ -12,7 +12,7 @@ export const summarizeActivity = async (details: string[]): Promise<string> => {
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-2.0-flash',
       contents: `You are an operations supervisor assistant. Summarize the following list of activity details from a daily oilfield report into a concise "Objective of Intervention" or "Summary of the Day" (max 30 words).
       
       Activities:

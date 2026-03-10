@@ -203,7 +203,8 @@ const AppContent = () => {
     dailyInspectionCatIReports: [],
     droppedObjectsReports: [],
     tubingMeasurementReports: [],
-    locationHandoverReports: []
+    locationHandoverReports: [],
+    atsReports: []
   });
 
   const closeSidebar = () => setSidebarOpen(false);
@@ -271,7 +272,8 @@ const AppContent = () => {
               dailyInspectionCatIService.getAll(userId, isAdmin),   // 47
               droppedObjectsService.getAll(userId, isAdmin),        // 48
               tubingMeasurementService.getAll(userId, isAdmin),     // 49
-              locationHandoverService.getAll(userId, isAdmin),      // 50
+              locationHandoverService.getAll(userId, isAdmin),       // 50
+              atsService.getAll(userId, isAdmin),                    // 51
             ]);
 
             const getVal = <T,>(result: PromiseSettledResult<T[]>): T[] => {
@@ -333,6 +335,7 @@ const AppContent = () => {
                 droppedObjectsReports: getVal(results[48]),
                 tubingMeasurementReports: getVal(results[49]),
                 locationHandoverReports: getVal(results[50]),
+                atsReports: getVal(results[51]),
             }));
           } catch (e) {
              console.error("Critical Error loading data", e);
@@ -595,22 +598,16 @@ const AppContent = () => {
           <button onClick={handleStartNewINDControl} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Planilla IND</button>
           <button onClick={handleStartNewInertia} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Calculo Inercia</button>
           <button onClick={handleStartNewMaintenance} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Mantenimiento</button>
-          <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-4 mb-2 px-2">📋 Reportes Operativos</div>
           <button onClick={handleStartNewOilChange} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Cambio Aceite y Filtros</button>
           <button onClick={handleStartNewOutsourced} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Control Tercerizados</button>
           <button onClick={handleStartNewSwabbing} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Inf. Pistoneo</button>
           <button onClick={handleStartNewQHSE} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Inf. Mensual QHSE</button>
-          <button onClick={handleStartNewMaintenance} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Mantenimiento</button>
           <button onClick={handleStartNewThickness} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Medición Espesores</button>
           <button onClick={handleStartNewToolMovement} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Mov. Herramientas</button>
-          <button onClick={handleStartNewDaily} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Parte Diario</button>
-          <button onClick={handleStartNewINDControl} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Planilla IND</button>
           <button onClick={handleStartNewWellFilling} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Planilla Llenado Pozo</button>
           <button onClick={handleStartNewTubingMeasurement} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Planilla Medición Tubing</button>
           <button onClick={handleStartNewTorque} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Registro de Torque</button>
           <button onClick={handleStartNewTowerPressure} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Reg. Presiones Torre</button>
-          <button onClick={handleStartNewCableWork} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Trab. Cable</button>
-          <button onClick={handleStartNewInertia} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Calculo Inercia</button>
 
           <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-4 mb-2 px-2">✅ Checklists</div>
           <button onClick={handleStartNewBOPConnection} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Conexión de BOP</button>
@@ -654,7 +651,6 @@ const AppContent = () => {
           <button onClick={handleStartNewPerformanceEvaluation} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Evaluación de Desempeño</button>
           <button onClick={handleStartNewLocationHandover} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Recibo y Entrega Locación</button>
           <button onClick={handleStartNewManagerialVisit} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Visita Gerencial</button>
-          <button onClick={handleStartNewPerformanceEvaluation} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">➕ Evaluación de Desempeño</button>
 
           <button onClick={handleOpenInspectionFrequency} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">📋 Frec. Mínima de Inspección</button>
           <button onClick={handleOpenFireLoadCalc} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700">🔥 Carga de Fuego</button>

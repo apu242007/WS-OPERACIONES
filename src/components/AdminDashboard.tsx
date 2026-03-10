@@ -1,9 +1,10 @@
 import React, { useState, useMemo } from 'react';
+import { AppState } from '../types';
 
 interface ReportEntry {
   id: string; type: string; category: string; equipment: string; date: string; user: string;
 }
-interface Props { state: any; }
+interface Props { state: AppState; }
 
 const EQUIPOS = ['tacker01','tacker05','tacker06','tacker07','tacker08','tacker10','tacker11','mase01','mase02','mase03','mase04'];
 
@@ -59,6 +60,7 @@ const FORM_MAP = [
   { key: 'performanceEvaluationReports',   label: 'Evaluación de Desempeño',        cat: 'Admin',               eq: (r:any) => r.metadata?.equipment||'', dt: (r:any) => r.metadata?.date||r.created_at||'' },
   { key: 'wasteSigns',                    label: 'Cartel Residuos',                cat: 'Admin',               eq: (_:any) => '', dt: (r:any) => r.created_at||'' },
   { key: 'welcomeSigns',                  label: 'Cartel Bienvenidos',             cat: 'Admin',               eq: (_:any) => '', dt: (r:any) => r.created_at||'' },
+  { key: 'atsReports',                    label: 'ATS',                            cat: 'QHSE',                eq: (r:any) => r.metadata?.equipo||'', dt: (r:any) => r.metadata?.fecha||r.created_at||'' },
 ];
 
 const CAT_COLOR: Record<string,string> = {
@@ -77,8 +79,9 @@ export const AdminDashboard: React.FC<Props> = ({ state }) => {
 
   const all = useMemo(()=>{
     const arr: ReportEntry[]=[];
+    const stateMap = state as unknown as Record<string, any[]>;
     for(const f of FORM_MAP){
-      for(const r of (state[f.key]||[])){
+      for(const r of (stateMap[f.key]||[])){
         arr.push({ id:r.id||Math.random().toString(), type:f.label, category:f.cat,
           equipment:(f.eq(r)||'').toLowerCase().trim(), date:f.dt(r)||'', user:r.user_email||r.userId||'' });
       }
@@ -143,7 +146,7 @@ export const AdminDashboard: React.FC<Props> = ({ state }) => {
               onClick={()=>{setFType(fType===type?'':type);setPg(1);}}>
               <div className="w-44 truncate text-gray-600 font-medium">{type}</div>
               <div className="flex-1 bg-gray-100 rounded-full h-3.5 overflow-hidden">
-                <div className={`h-full rounded-full ${fType===type?'bg-brand-red':'bg-red-300'}`} style={{width:`${(count/max)*100}%`}}/>
+                <div className={`h-full rounded-full ${fType===type?'bg-brand-red':'bg-red-300'} transition-all duration-300`} style={{width:`${(count/max)*100}%`}}/>
               </div>
               <div className="w-7 text-right font-bold text-gray-700">{count}</div>
             </div>;
@@ -173,15 +176,15 @@ export const AdminDashboard: React.FC<Props> = ({ state }) => {
           <button onClick={reset} className="text-xs text-red-500 hover:text-red-700 font-bold">✕ Limpiar todo</button>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-          <select value={fEq} onChange={e=>{setFEq(e.target.value);setPg(1);}} className="border border-gray-300 rounded-lg p-2 text-xs outline-none bg-white">
+          <select title="Filtrar por equipo" value={fEq} onChange={e=>{setFEq(e.target.value);setPg(1);}} className="border border-gray-300 rounded-lg p-2 text-xs outline-none bg-white">
             <option value="">Todos los equipos</option>
             {EQUIPOS.map(e=><option key={e} value={e}>{e.toUpperCase()}</option>)}
           </select>
-          <select value={fCat} onChange={e=>{setFCat(e.target.value);setPg(1);}} className="border border-gray-300 rounded-lg p-2 text-xs outline-none bg-white">
+          <select title="Filtrar por categoría" value={fCat} onChange={e=>{setFCat(e.target.value);setPg(1);}} className="border border-gray-300 rounded-lg p-2 text-xs outline-none bg-white">
             <option value="">Todas las categorías</option>
             {Object.keys(CAT_ICON).map(c=><option key={c} value={c}>{c}</option>)}
           </select>
-          <select value={fType} onChange={e=>{setFType(e.target.value);setPg(1);}} className="border border-gray-300 rounded-lg p-2 text-xs outline-none bg-white">
+          <select title="Filtrar por formulario" value={fType} onChange={e=>{setFType(e.target.value);setPg(1);}} className="border border-gray-300 rounded-lg p-2 text-xs outline-none bg-white">
             <option value="">Todos los formularios</option>
             {FORM_MAP.map(f=><option key={f.key} value={f.label}>{f.label}</option>)}
           </select>

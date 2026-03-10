@@ -101,7 +101,7 @@ export const ATSForm: React.FC<Props> = ({ initialData, onSave, onCancel }) => {
         </div>
         <div className="flex items-center border-r border-black p-2 gap-1">
           <span className="font-bold whitespace-nowrap">Equipo:</span>
-          <select name="equipo" title="Equipo" value={(metadata as any).equipo || ''} onChange={handleMeta} className="flex-1 outline-none bg-transparent border-b border-gray-300">
+          <select name="equipo" title="Equipo" value={metadata.equipo || ''} onChange={handleMeta} className="flex-1 outline-none bg-transparent border-b border-gray-300">
             <option value="">-</option>
             {EQUIPOS.map(e => <option key={e} value={e}>{e.toUpperCase()}</option>)}
           </select>

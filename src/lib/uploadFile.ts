@@ -36,7 +36,6 @@ async function compressImage(file: File): Promise<File> {
         (blob) => {
           if (!blob) { resolve(file); return; }
           const compressed = new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), { type: 'image/jpeg' });
-          console.log(`[uploadFile] Compresión: ${(file.size / 1024).toFixed(0)}KB → ${(compressed.size / 1024).toFixed(0)}KB (${Math.round((1 - compressed.size / file.size) * 100)}% reducción)`);
           resolve(compressed);
         },
         'image/jpeg',
@@ -63,8 +62,6 @@ export async function uploadFile(
   const fileName = customFileName ?? `${Date.now()}_${fileToUpload.name}`;
   const filePath = `uploads/${new Date().toISOString().slice(0, 7)}/${fileName}`;
 
-  console.log('[uploadFile] Subiendo a Supabase Storage:', { bucket: BUCKET, filePath, size: fileToUpload.size, type: fileToUpload.type });
-
   const { data, error } = await supabase.storage
     .from(BUCKET)
     .upload(filePath, fileToUpload, {
@@ -81,6 +78,5 @@ export async function uploadFile(
   const { data: urlData } = supabase.storage.from(BUCKET).getPublicUrl(data.path);
   const publicUrl = urlData.publicUrl;
 
-  console.log('[uploadFile] ✅ Subida exitosa:', publicUrl);
   return publicUrl;
 }
