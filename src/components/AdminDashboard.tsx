@@ -1,5 +1,19 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { AppState } from '../types';
+
+/** Renders a bar whose width is set imperatively to avoid inline-style lint warnings. */
+const ProgressBar: React.FC<{ percent: number; active: boolean }> = ({ percent, active }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (ref.current) ref.current.style.width = `${percent}%`;
+  }, [percent]);
+  return (
+    <div
+      ref={ref}
+      className={`h-full rounded-full progress-bar transition-all duration-300 ${active ? 'bg-brand-red' : 'bg-red-300'}`}
+    />
+  );
+};
 
 interface ReportEntry {
   id: string; type: string; category: string; equipment: string; date: string; user: string;
@@ -146,7 +160,7 @@ export const AdminDashboard: React.FC<Props> = ({ state }) => {
               onClick={()=>{setFType(fType===type?'':type);setPg(1);}}>
               <div className="w-44 truncate text-gray-600 font-medium">{type}</div>
               <div className="flex-1 bg-gray-100 rounded-full h-3.5 overflow-hidden">
-                <div className={`h-full rounded-full ${fType===type?'bg-brand-red':'bg-red-300'} transition-all duration-300`} style={{width:`${(count/max)*100}%`}}/>
+                <ProgressBar percent={(count/max)*100} active={fType===type} />
               </div>
               <div className="w-7 text-right font-bold text-gray-700">{count}</div>
             </div>;
